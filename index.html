@@ -1,0 +1,325 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gestoría Paredes — Licencias y cambio de propietario sin hacer filas</title>
+<meta name="description" content="Gestoría vehicular en Quintana Roo. Tramitamos su licencia de conducir (motociclista, automovilista, chofer, servicio público) y el cambio de propietario de su auto. Consulte los requisitos y escríbanos por WhatsApp.">
+<meta name="theme-color" content="#141C1E">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="es_MX">
+<meta property="og:title" content="Gestoría Paredes — Trámites vehiculares sin hacer filas">
+<meta property="og:description" content="Licencias de conducir y cambio de propietario. Usted reúne sus documentos; nosotros nos encargamos de la cita, la gestión y el seguimiento.">
+<meta property="og:image" content="img/compartir.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32.png">
+<link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&amp;family=Poppins:wght@400;500;600&amp;display=swap">
+<link rel="preload" as="image" href="img/hero-auto.webp" type="image/webp">
+<link rel="stylesheet" href="css/styles.css">
+<script>
+  /* aplica tema e idioma guardados antes de pintar, para evitar parpadeo */
+  (function () {
+    var d = document.documentElement;
+    try {
+      d.dataset.theme = localStorage.getItem('gp-theme') || 'dark';
+      d.dataset.lang = localStorage.getItem('gp-lang') || 'es';
+      d.dataset.intro = sessionStorage.getItem('gp-intro') ? 'no' : 'si';
+    } catch (e) { d.dataset.theme = 'dark'; d.dataset.lang = 'es'; d.dataset.intro = 'si'; }
+  })();
+</script>
+</head>
+<body style="margin:0">
+<div id="gp" class="gp dark">
+
+<a class="skip" href="#inicio" data-i18n="skip">Saltar al contenido</a>
+
+<div class="intro" aria-hidden="true">
+  <img src="img/coyote-blanco.png" alt="" width="84" height="64">
+  <div class="bar"><span></span></div>
+</div>
+
+<header class="hdr">
+  <div class="topbar" style="border-bottom: 1px solid rgba(246,243,236,.12);">
+    <div class="wrap" style="display: flex; justify-content: space-between; align-items: center; gap: 13px; min-height: 40px; font-size: 13px; color: #F6F3EC;">
+      <span data-i18n="topbar">Trámites vehiculares en Quintana Roo</span>
+    </div>
+  </div>
+  <div class="wrap" style="display: flex; align-items: center; justify-content: space-between; gap: 13px; padding-top: 21px; padding-bottom: 21px;">
+    <a href="#inicio" data-i18n-aria="homeAria" aria-label="Gestoría Paredes, inicio" style="display: flex; align-items: center; gap: 13px; text-decoration: none; color: #F6F3EC;">
+      <img src="img/coyote-blanco.png" alt="" width="44" height="34" style="width: 44px; height: auto; display: block;">
+      <span style="display: flex; flex-direction: column; gap: 2px;">
+        <span style="font-weight: 600; font-size: 16px; letter-spacing: 0.32em; line-height: 26px;">PAREDES</span>
+        <span data-i18n="descriptor" style="font-size: 10px; letter-spacing: 0.24em; line-height: 16px; color: #A9B2B3;">GESTORÍA Y TRAMITOLOGÍA</span>
+      </span>
+    </a>
+    <div class="nav-desk" style="align-items: center; gap: 34px;">
+      <nav data-i18n-aria="navAria" aria-label="Principal" style="display: flex; align-items: center; gap: 34px; font-size: 13px;">
+        <a href="#requisitos" data-i18n="nav2">Requisitos</a>
+        <a href="#proceso" data-i18n="nav3">Cómo funciona</a>
+        <a href="#contacto" data-i18n="nav4">Contacto</a>
+      </nav>
+      <div class="seg" role="group" data-i18n-aria="langAria" aria-label="Idioma">
+        <button type="button" data-set-lang="es" aria-pressed="true">ES</button>
+        <button type="button" data-set-lang="en" aria-pressed="false">EN</button>
+      </div>
+      <button type="button" class="icon-btn" data-toggle-theme data-i18n-aria="themeAria" aria-label="Cambiar entre modo oscuro y claro" style="color: #F6F3EC;">
+        <svg class="ico-sun" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg>
+        <svg class="ico-moon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path></svg>
+      </button>
+    </div>
+    <button type="button" id="menu-open" class="icon-btn burger" data-i18n-aria="menuOpen" aria-label="Abrir menú" aria-expanded="false" aria-controls="menu" style="color: #F6F3EC;">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h10"></path></svg>
+    </button>
+  </div>
+</header>
+
+<div id="menu" class="menu" role="dialog" aria-modal="true" data-i18n-aria="menuLabel" aria-label="Menú" hidden>
+  <div style="display: flex; align-items: center; justify-content: space-between;">
+    <img src="img/coyote-blanco.png" alt="" width="40" height="30" style="width: 40px; height: auto;">
+    <button type="button" id="menu-close" class="icon-btn" data-i18n-aria="menuClose" aria-label="Cerrar" style="color: #F6F3EC;">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"></path></svg>
+    </button>
+  </div>
+  <nav data-i18n-aria="navAria" aria-label="Principal" class="disp" style="margin-top: 34px; font-size: 34px; line-height: 1.05; font-weight: 500; text-transform: uppercase;">
+    <a href="#requisitos" data-close-menu data-i18n="nav2">Requisitos</a>
+    <a href="#proceso" data-close-menu data-i18n="nav3">Cómo funciona</a>
+    <a href="#contacto" data-close-menu data-i18n="nav4">Contacto</a>
+  </nav>
+  <div style="margin-top: auto; display: flex; flex-direction: column; gap: 21px;">
+    <div style="display: flex; gap: 13px; align-items: center;">
+      <div class="seg" role="group" data-i18n-aria="langAria" aria-label="Idioma">
+        <button type="button" data-set-lang="es" aria-pressed="true">ES</button>
+        <button type="button" data-set-lang="en" aria-pressed="false">EN</button>
+      </div>
+      <button type="button" class="icon-btn" data-toggle-theme data-i18n-aria="themeAria" aria-label="Cambiar entre modo oscuro y claro" style="color: #F6F3EC; border-color: #7A8587;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path></svg>
+      </button>
+    </div>
+    <a class="btn btn-y" href="https://wa.me/529841156912" target="_blank" rel="noopener" style="width: 100%;" data-i18n="ctaWa">Iniciar trámite por WhatsApp</a>
+  </div>
+</div>
+
+<main>
+<section id="inicio" class="hero" aria-labelledby="titulo-inicio">
+  <div class="hero-top"></div>
+  <img class="hero-img" src="img/hero-auto.webp" data-i18n-alt="heroAlt" alt="Frente de un auto clásico amarillo con placa 595 AOK" width="1970" height="956" fetchpriority="high">
+  <div class="scrim" aria-hidden="true"></div>
+  <div class="wrap hero-inner">
+    <div style="max-width: 791px; display: flex; flex-direction: column; gap: 34px;">
+      <h1 id="titulo-inicio" class="h1 disp">
+        <span class="ln"><span data-i18n="h1a">Gestoría vehicular.</span></span>
+        <span class="ln"><span data-i18n="h1b">Trámites sin</span></span>
+        <span class="ln"><span data-i18n="h1c" style="color: #EBCB4F;">hacer filas.</span></span>
+      </h1>
+      <div class="hero-rest" style="display: flex; flex-direction: column; gap: 34px;">
+        <p data-i18n="lead" style="margin: 0; font-size: 21px; line-height: 34px; color: #F6F3EC; max-width: 30em;">Usted reúne sus documentos; nosotros nos encargamos de la cita, la gestión y el seguimiento.</p>
+        <div class="svc2" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr)); gap: 13px;">
+          <a class="svc-plate" href="#requisitos" data-go-tab="primera">
+            <span class="disp" data-i18n="s1" style="font-size: 21px; line-height: 26px; font-weight: 600; text-transform: uppercase;">Licencias de conducir</span>
+            <span data-i18n="s1sub" style="font-size: 13px; line-height: 21px; color: #A9B2B3;">Motociclista · Automovilista · Chofer · Servicio público o privado</span>
+            <span class="go"><span data-i18n="reqLink">Ver requisitos</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="m13 6 6 6-6 6"></path></svg></span>
+          </a>
+          <a class="svc-plate" href="#requisitos" data-go-tab="propietario">
+            <span class="disp" data-i18n="s2" style="font-size: 21px; line-height: 26px; font-weight: 600; text-transform: uppercase;">Cambio de propietario</span>
+            <span data-i18n="s2sub" style="font-size: 13px; line-height: 21px; color: #A9B2B3;">Autos particulares · Tarjeta de circulación a su nombre</span>
+            <span class="go"><span data-i18n="reqLink">Ver requisitos</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="m13 6 6 6-6 6"></path></svg></span>
+          </a>
+        </div>
+        <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 13px 21px;">
+          <a class="btn btn-y" href="https://wa.me/529841156912" target="_blank" rel="noopener"><span data-i18n="ctaWa">Iniciar trámite por WhatsApp</span><svg class="arr" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="m13 6 6 6-6 6"></path></svg></a>
+          <span data-i18n="ctaNote" style="font-size: 13px; color: #D3D8D8;">Atención personalizada de principio a fin.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="road" aria-hidden="true" style="position: absolute; left: 0; right: 0; bottom: 40px;"></div>
+</section>
+
+<section class="band" data-i18n-aria="band1Aria" aria-label="Asesoría" style="background: #EBCB4F; color: #141C1E;">
+  <div class="wrap rv" style="padding-top: 34px; padding-bottom: 34px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 21px 34px;">
+    <p class="disp" data-i18n="band1" style="margin: 0; font-size: clamp(21px, 3vw, 34px); line-height: 1.15; font-weight: 500; max-width: 24em;">¿No sabe qué tipo de licencia necesita? Le orientamos sin compromiso.</p>
+    <a class="btn" href="https://wa.me/529841156912" target="_blank" rel="noopener" style="background: #141C1E; color: #F6F3EC;"><span data-i18n="band1Cta">Consultar por WhatsApp</span><svg class="arr" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="m13 6 6 6-6 6"></path></svg></a>
+  </div>
+</section>
+
+<section id="requisitos" aria-labelledby="titulo-requisitos" style="background: var(--sunken); transition: background-color .4s ease;">
+  <div class="wrap" style="padding-top: 144px; padding-bottom: 144px; display: flex; flex-wrap: wrap; gap: 55px 89px; align-items: flex-start;">
+    <div class="rv" style="flex: 1 1 calc((100% - 90px) * 0.382); min-width: min(300px, 100%); display: flex; flex-direction: column; gap: 21px;">
+      <h2 id="titulo-requisitos" class="disp" data-i18n="reqTitle" style="margin: 0; font-weight: 700; font-size: clamp(34px, 5vw, 55px); line-height: 1; text-transform: uppercase;">Requisitos</h2>
+      <span aria-hidden="true" style="display: block; width: 55px; height: 2px; background: var(--oro);"></span>
+      <p data-i18n="reqLead" style="margin: 0; font-size: 16px; line-height: 26px; color: var(--muted); max-width: 24em;">Marque lo que ya tiene y envíenos su lista. Original y copia de cada documento.</p>
+      <div id="tabs" role="group" data-i18n-aria="tabsAria" aria-label="Elegir trámite" style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: 13px;"></div>
+    </div>
+
+    <div class="paper rv" style="flex: 1 1 calc((100% - 90px) * 0.618); min-width: min(520px, 100%); padding: clamp(21px, 4vw, 55px);">
+      <div style="display: flex; align-items: flex-end; justify-content: space-between; flex-wrap: wrap; gap: 13px 21px; padding-bottom: 21px; border-bottom: 2px solid #141C1E;">
+        <div style="display: flex; flex-direction: column; gap: 5px;">
+          <span data-i18n="expediente" style="font-size: 13px; letter-spacing: 0.18em; color: #4F5A5C;">SU EXPEDIENTE</span>
+          <h3 id="req-titulo" class="disp" style="margin: 0; font-weight: 600; font-size: 34px; line-height: 1.05; text-transform: uppercase;"></h3>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 8px; min-width: 180px;">
+          <span id="req-progreso" aria-live="polite" style="font-size: 13px; color: #4F5A5C;"></span>
+          <div style="height: 4px; background: #DCD5C6; border-radius: 5px; overflow: hidden;"><div id="req-barra" style="height: 100%; width: 0; background: #9A7B1E; transition: width .4s cubic-bezier(.2,.7,.2,1);"></div></div>
+        </div>
+      </div>
+      <div id="req-skeleton" aria-hidden="true" hidden style="display: flex; flex-direction: column; gap: 21px; padding: 21px 0 8px;">
+        <div class="sk" style="width: 80%;"></div><div class="sk" style="width: 62%;"></div><div class="sk" style="width: 74%;"></div><div class="sk" style="width: 55%;"></div><div class="sk" style="width: 68%;"></div>
+      </div>
+      <div id="req-lista" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr)); gap: 34px 55px; padding-top: 8px;"></div>
+      <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 21px 34px; margin-top: 34px;">
+        <p id="req-nota" style="margin: 0; font-size: 13px; line-height: 21px; color: #4F5A5C; flex: 1 1 280px;"></p>
+        <a id="req-wa" class="btn" href="https://wa.me/529841156912" target="_blank" rel="noopener" style="background: #141C1E; color: #F6F3EC;"><span data-i18n="sendList">Enviar mi lista por WhatsApp</span><svg class="arr" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="m13 6 6 6-6 6"></path></svg></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="proceso" aria-labelledby="titulo-proceso">
+  <div class="wrap" style="padding-top: 144px; padding-bottom: 144px; display: flex; flex-direction: column; gap: 55px;">
+    <div class="rv" style="display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 13px 55px;">
+      <h2 id="titulo-proceso" class="disp" data-i18n="procTitle" style="margin: 0; font-weight: 700; font-size: clamp(34px, 5vw, 55px); line-height: 1; text-transform: uppercase;">Cómo funciona</h2>
+      <p data-i18n="procLead" style="margin: 0; font-size: 16px; line-height: 26px; color: var(--muted); max-width: 26em;">Cuatro pasos. Usted solo participa en el primero y el último.</p>
+    </div>
+    <ol style="margin: 0; padding: 0; list-style: none; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(230px, 100%), 1fr)); gap: 55px 0;">
+      <li class="rv" style="display: flex; flex-direction: column; gap: 13px; padding-right: 34px;">
+        <div style="display: flex; align-items: center;"><span class="disp step-n">1</span><span class="step-line" aria-hidden="true"></span></div>
+        <h3 class="disp" data-i18n="p1t" style="margin: 0; font-weight: 500; font-size: 21px; line-height: 26px;">Contáctenos</h3>
+        <p data-i18n="p1d" style="margin: 0; font-size: 16px; line-height: 26px; color: var(--muted); max-width: 18em;">Indíquenos qué trámite necesita.</p>
+      </li>
+      <li class="rv" style="display: flex; flex-direction: column; gap: 13px; padding-right: 34px;">
+        <div style="display: flex; align-items: center;"><span class="disp step-n">2</span><span class="step-line" aria-hidden="true"></span></div>
+        <h3 class="disp" data-i18n="p2t" style="margin: 0; font-weight: 500; font-size: 21px; line-height: 26px;">Revisamos sus documentos</h3>
+        <p data-i18n="p2d" style="margin: 0; font-size: 16px; line-height: 26px; color: var(--muted); max-width: 18em;">Le confirmamos si falta alguno.</p>
+      </li>
+      <li class="rv" style="display: flex; flex-direction: column; gap: 13px; padding-right: 34px;">
+        <div style="display: flex; align-items: center;"><span class="disp step-n">3</span><span class="step-line" aria-hidden="true"></span></div>
+        <h3 class="disp" data-i18n="p3t" style="margin: 0; font-weight: 500; font-size: 21px; line-height: 26px;">Realizamos el trámite</h3>
+        <p data-i18n="p3d" style="margin: 0; font-size: 16px; line-height: 26px; color: var(--muted); max-width: 18em;">Agendamos la cita y damos seguimiento.</p>
+      </li>
+      <li class="rv" style="display: flex; flex-direction: column; gap: 13px; padding-right: 34px;">
+        <div style="display: flex; align-items: center;"><span class="disp step-n">4</span><span class="step-line" aria-hidden="true" style="opacity: 0;"></span></div>
+        <h3 class="disp" data-i18n="p4t" style="margin: 0; font-weight: 500; font-size: 21px; line-height: 26px;">Reciba su documento</h3>
+        <p data-i18n="p4d" style="margin: 0; font-size: 16px; line-height: 26px; color: var(--muted); max-width: 18em;">Le avisamos en cuanto esté listo.</p>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<section id="contacto" aria-labelledby="titulo-contacto" style="background: var(--sunken); position: relative; overflow: hidden; transition: background-color .4s ease;">
+  <img class="mark" src="img/coyote-blanco.png" alt="" aria-hidden="true" loading="lazy" style="position: absolute; left: -140px; bottom: -110px; width: 620px; height: auto; pointer-events: none;">
+  <div class="wrap" style="position: relative; padding-top: 144px; padding-bottom: 144px; display: flex; flex-wrap: wrap; gap: 55px 89px; align-items: flex-start;">
+
+    <div class="rv" style="flex: 1 1 calc((100% - 90px) * 0.382); min-width: min(340px, 100%); display: flex; flex-direction: column; gap: 34px;">
+      <h2 id="titulo-contacto" class="disp" data-i18n="contTitle" style="margin: 0; font-weight: 700; font-size: clamp(34px, 5vw, 55px); line-height: 1; text-transform: uppercase;">Contacto</h2>
+      <div style="border: 2px dashed var(--yl); border-radius: 13px; padding: 34px; display: flex; flex-direction: column; gap: 21px;">
+        <p style="margin: 0; font-size: 16px; color: var(--muted);"><span data-i18n="aSusOrdenes">A sus órdenes</span> <span aria-hidden="true" style="color: var(--yl);">|</span> <span data-i18n="telLabel">Llamadas y WhatsApp</span></p>
+        <p class="disp" data-i18n="contHook" style="margin: 0; font-weight: 600; font-size: clamp(21px, 3.2vw, 34px); line-height: 1.1;">Escríbanos o llámenos; con gusto le atendemos.</p>
+        <div style="display: flex; flex-wrap: wrap; gap: 13px;">
+          <a class="btn btn-y" href="https://wa.me/529841156912" target="_blank" rel="noopener"><span data-i18n="ctaWa">Iniciar trámite por WhatsApp</span><svg class="arr" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="m13 6 6 6-6 6"></path></svg></a>
+          <a class="btn btn-o" href="tel:+529841156912" data-i18n="ctaCall">Llamar ahora</a>
+        </div>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 13px;">
+        <span data-i18n="siganos" style="font-size: 13px; letter-spacing: 0.14em; color: var(--muted);">SÍGANOS</span>
+        <div class="rrss">
+          <a href="https://wa.me/529841156912" target="_blank" rel="noopener" aria-label="WhatsApp"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 20.5l1.3-4A8.5 8.5 0 1 1 8 19.6z"></path><path d="M9 9.5c0 3 2.5 5.5 5.5 5.5l1.3-1.3-2-1-1 .8a4 4 0 0 1-2.3-2.3l.8-1-1-2z"></path></svg></a>
+          <a href="404.html" aria-label="Facebook"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 8h3V4h-3a4 4 0 0 0-4 4v3H7v4h3v6h4v-6h3l1-4h-4V8z"></path></svg></a>
+          <a href="404.html" aria-label="Instagram"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="5"></rect><circle cx="12" cy="12" r="4"></circle><circle cx="17.3" cy="6.7" r="0.9" fill="currentColor" stroke="none"></circle></svg></a>
+          <a href="404.html" aria-label="TikTok"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3v11.5a3.5 3.5 0 1 1-3.5-3.5"></path><path d="M14 3c.4 2.6 2.2 4.4 5 4.6"></path></svg></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="rv" style="flex: 1 1 calc((100% - 90px) * 0.618); min-width: min(400px, 100%); background: var(--bg); border: 1px solid var(--line); border-radius: 8px; padding: clamp(21px, 4vw, 34px); transition: background-color .4s ease;">
+      <div id="form-ok" class="fadein" role="status" hidden style="display: flex; flex-direction: column; gap: 21px; padding: 21px 0;">
+        <span style="width: 55px; height: 55px; border-radius: 999px; background: #EBCB4F; color: #141C1E; display: flex; align-items: center; justify-content: center;"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5 9-10"></path></svg></span>
+        <h3 class="disp" data-i18n="okTitle" style="margin: 0; font-weight: 600; font-size: 34px; line-height: 1.05;">Su mensaje está listo</h3>
+        <p data-i18n="okText" style="margin: 0; font-size: 16px; line-height: 26px; color: var(--muted);">Abrimos WhatsApp con sus datos. Solo presione enviar para iniciar su trámite.</p>
+        <div style="display: flex; flex-wrap: wrap; gap: 13px;">
+          <a id="form-wa" class="btn btn-y" href="https://wa.me/529841156912" target="_blank" rel="noopener" data-i18n="okOpen">Abrir WhatsApp de nuevo</a>
+          <button type="button" id="form-reset" class="btn btn-o" data-i18n="okAgain">Enviar otro</button>
+        </div>
+      </div>
+      <form id="form" novalidate style="display: flex; flex-direction: column; gap: 21px;">
+        <div style="display: flex; flex-direction: column; gap: 5px;">
+          <h3 class="disp" data-i18n="formTitle" style="margin: 0; font-weight: 600; font-size: 34px; line-height: 1.05;">Déjenos sus datos</h3>
+          <p data-i18n="formLead" style="margin: 0; font-size: 16px; line-height: 26px; color: var(--muted);">Al continuar se abrirá WhatsApp con su mensaje listo.</p>
+        </div>
+        <div class="fld">
+          <label for="f-nombre" data-i18n="fNombre">Nombre completo</label>
+          <input id="f-nombre" name="nombre" class="inp" type="text" autocomplete="name" aria-invalid="false" aria-describedby="e-nombre">
+          <span id="e-nombre" class="err" hidden></span>
+        </div>
+        <div class="fld">
+          <label for="f-tel" data-i18n="fTel">Teléfono (10 dígitos)</label>
+          <input id="f-tel" name="telefono" class="inp" type="tel" inputmode="numeric" autocomplete="tel" placeholder="984 000 0000" aria-invalid="false" aria-describedby="e-tel">
+          <span id="e-tel" class="err" hidden></span>
+        </div>
+        <div class="fld">
+          <label for="f-tramite" data-i18n="fTramite">Trámite</label>
+          <select id="f-tramite" name="tramite" class="inp" aria-invalid="false" aria-describedby="e-tramite"></select>
+          <span id="e-tramite" class="err" hidden></span>
+        </div>
+        <div class="fld">
+          <label for="f-msg"><span data-i18n="fMsg">Mensaje</span> <span data-i18n="opcional" style="font-weight: 400; color: var(--muted);">(opcional)</span></label>
+          <textarea id="f-msg" name="mensaje" class="inp" rows="3" maxlength="500" style="resize: vertical;"></textarea>
+        </div>
+        <button type="submit" class="btn btn-y" style="width: 100%;" data-i18n="send">Continuar en WhatsApp</button>
+        <p style="margin: 0; font-size: 13px; line-height: 21px; color: var(--muted);"><span data-i18n="privacy">Sus datos no se guardan en este sitio; solo se envían por WhatsApp.</span> <a href="aviso-de-privacidad.html" data-i18n="privacyLink">Aviso de privacidad</a></p>
+      </form>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer style="background: #0E1415; color: #F6F3EC;">
+  <div class="wrap" style="padding-top: 55px; padding-bottom: 89px; display: flex; flex-direction: column; gap: 34px;">
+    <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 21px 55px;">
+      <a href="#inicio" data-i18n-aria="homeAria" aria-label="Gestoría Paredes, inicio" style="display: flex; align-items: center; gap: 13px; text-decoration: none; color: #F6F3EC;">
+        <img src="img/coyote-blanco.png" alt="" loading="lazy" width="34" height="26" style="width: 34px; height: auto; display: block;">
+        <span style="font-size: 13px; letter-spacing: 0.3em; font-weight: 600;">PAREDES</span>
+      </a>
+      <nav data-i18n-aria="footNavAria" aria-label="Pie de página" style="display: flex; flex-wrap: wrap; gap: 8px 34px; font-size: 13px;">
+        <a class="ul" href="#requisitos" data-i18n="nav2" style="color: #C9D0D0;">Requisitos</a>
+        <a class="ul" href="#proceso" data-i18n="nav3" style="color: #C9D0D0;">Cómo funciona</a>
+        <a class="ul" href="#contacto" data-i18n="nav4" style="color: #C9D0D0;">Contacto</a>
+        <a class="ul" href="aviso-de-privacidad.html" data-i18n="privacyLink" style="color: #C9D0D0;">Aviso de privacidad</a>
+      </nav>
+    </div>
+    <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 21px 55px; padding-top: 21px; border-top: 1px solid #2C3739;">
+      <p data-i18n="legal" style="margin: 0; font-size: 13px; line-height: 21px; color: #A9B2B3; max-width: 46em;">Gestoría privada e independiente; no somos una dependencia de gobierno. Realizamos los trámites en su representación ante IMOVEQROO y SEFIPLAN. Los requisitos pueden cambiar: los confirmamos con usted antes de iniciar.</p>
+      <p style="margin: 0; font-size: 13px; color: #A9B2B3;">© <span id="year">2026</span> Gestoría Paredes</p>
+    </div>
+  </div>
+</footer>
+
+<a class="wa" href="https://wa.me/529841156912" target="_blank" rel="noopener" data-i18n-aria="waBubble" aria-label="Escríbanos por WhatsApp">
+  <span class="wa-tip" aria-hidden="true" data-i18n="waTip">¿Dudas? Escríbanos</span>
+  <span class="wa-dot">
+    <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 20.5l1.3-4A8.5 8.5 0 1 1 8 19.6z"></path><path d="M9 9.5c0 3 2.5 5.5 5.5 5.5l1.3-1.3-2-1-1 .8a4 4 0 0 1-2.3-2.3l.8-1-1-2z"></path></svg>
+  </span>
+</a>
+
+<button type="button" id="totop" class="totop" data-i18n-aria="toTop" aria-label="Volver arriba" hidden>
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5"></path><path d="m6 11 6-6 6 6"></path></svg>
+</button>
+
+<aside id="exit" class="exitcard" role="dialog" aria-labelledby="exit-t" hidden>
+  <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 13px;">
+    <h2 id="exit-t" class="disp" data-i18n="exitTitle" style="margin: 0; font-size: 21px; line-height: 26px; font-weight: 600;">¿Le quedó alguna duda?</h2>
+    <button type="button" id="exit-close" class="icon-btn" data-i18n-aria="menuClose" aria-label="Cerrar" style="width: 34px; height: 34px; margin: -8px -8px 0 0;">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"></path></svg>
+    </button>
+  </div>
+  <p data-i18n="exitText" style="margin: 8px 0 21px; font-size: 13px; line-height: 21px; color: var(--muted);">Consulte por WhatsApp qué documentos requiere su caso, sin compromiso.</p>
+  <a class="btn btn-y" href="https://wa.me/529841156912" target="_blank" rel="noopener" style="width: 100%;" data-i18n="ctaWa">Iniciar trámite por WhatsApp</a>
+</aside>
+
+</div>
+<script src="js/main.js" defer></script>
+</body>
+</html>
