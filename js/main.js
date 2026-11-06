@@ -25,6 +25,28 @@ var REQ = {
       ['Licencia anterior en original', 'Your previous license (original)']
     ] }]
   },
+  emplacamiento: {
+    es: { label: 'Emplacamiento', titulo: 'Emplacamiento', nota: 'Requisitos de referencia. Cada caso (auto nuevo, de otro estado o extranjero) puede requerir documentos adicionales; se los confirmamos al iniciar. Un auto con permiso de importación temporal no puede emplacarse: primero debe importarse en definitiva o regularizarse, y le orientamos.' },
+    en: { label: 'License plates', titulo: 'License plates', nota: 'Reference list. Each case (new car, from another state or foreign) may need extra documents; we confirm them when we start. A car with a temporary import permit cannot get plates: it must first be permanently imported or regularized, and we will guide you.' },
+    grupos: [
+      { es: 'EN TODOS LOS CASOS', en: 'ALL CASES', items: [
+        ['Factura original, carta factura o título de propiedad (endosado si es usado)', 'Original invoice, invoice letter or title (endorsed if used)'],
+        ['INE o pasaporte vigente', 'Valid INE voter ID or passport'],
+        ['CURP', 'CURP'],
+        ['Comprobante de domicilio en Quintana Roo, reciente', 'Recent proof of address in Quintana Roo'],
+        ['Inscripción en el Registro Estatal de Contribuyentes (REC)', 'Registration in the State Taxpayer Registry (REC)']
+      ] },
+      { es: 'SI VIENE DE OTRO ESTADO', en: 'FROM ANOTHER STATE', items: [
+        ['Tarjeta de circulación y placas del estado de origen', 'Registration card and plates from the original state'],
+        ['Baja vehicular del estado de origen, si se requiere', 'Deregistration from the original state, if required']
+      ] },
+      { es: 'AUTO EXTRANJERO', en: 'FOREIGN CAR', items: [
+        ['Título de propiedad original', 'Original title'],
+        ['Pedimento de importación definitiva con sello de caja, o documento que acredite su legal estancia en México', 'Permanent import declaration (pedimento) with customs stamp, or proof of legal stay in Mexico'],
+        ['El vehículo presente para su revisión', 'The vehicle present for inspection']
+      ] }
+    ]
+  },
   propietario: {
     es: { label: 'Cambio de propietario', titulo: 'Cambio de propietario', nota: 'Los vehículos importados, las placas extraviadas o las compras a nombre de una empresa requieren documentos adicionales; se los indicamos al iniciar.' },
     en: { label: 'Change of owner', titulo: 'Change of ownership', nota: 'Imported vehicles, lost plates or purchases by a company need extra documents: we tell you when we start.' },
@@ -49,7 +71,7 @@ var REQ = {
     ]
   }
 };
-var ORDER = ['primera', 'renovacion', 'propietario'];
+var ORDER = ['primera', 'renovacion', 'propietario', 'emplacamiento'];
 var TXT = {
   es: {
     homeAria: 'Gestoría Paredes, inicio', descriptor: 'GESTORÍA Y TRAMITOLOGÍA', navAria: 'Principal', footNavAria: 'Pie de página',
@@ -58,7 +80,7 @@ var TXT = {
     heroAlt: 'Frente de un auto clásico amarillo con placa 595 AOK',
     h1a: 'Gestoría vehicular.', h1b: 'Trámites sin', h1c: 'hacer filas.',
     lead: 'Usted reúne sus documentos; nosotros nos encargamos de la cita, la gestión y el seguimiento.',
-    topbar: 'Trámites vehiculares en Quintana Roo', s1: 'Licencias de conducir', s1sub: 'Motociclista · Automovilista · Chofer · Servicio público o privado', s2: 'Cambio de propietario', s2sub: 'Autos particulares · Tarjeta de circulación a su nombre', ctaNote: 'Atención personalizada de principio a fin.',
+    topbar: 'Trámites vehiculares en Quintana Roo', s1: 'Licencias de conducir', s1sub: 'Motociclista · Automovilista · Chofer · Servicio público o privado', s2: 'Cambio de propietario', s2sub: 'Autos particulares · Tarjeta de circulación a su nombre', s3: 'Emplacamiento', s3sub: 'Autos nuevos · De otro estado · Autos extranjeros', ctaNote: 'Atención personalizada de principio a fin.',
     pickLabel: '¿QUÉ NECESITA HOY?', tabPrimera: 'Licencia nueva', tabRenovacion: 'Renovar licencia', tabPropietario: 'Cambio de propietario',
     ctaWa: 'Iniciar trámite por WhatsApp', ctaCall: 'Llamar ahora', callShort: 'Llamar',
     svcTitle: 'Servicios', svcLead: 'Dos trámites, hechos con cuidado. Elija el suyo y vea al instante qué documentos necesita.',
@@ -83,7 +105,7 @@ var TXT = {
     lic: [['Motociclista', 'Para conducir motocicleta, primera vez o renovación.'], ['Automovilista', 'Para su auto particular, primera vez o renovación.'], ['Chofer', 'Para quien conduce de manera profesional.'], ['Servicio público o privado', 'Para operar transporte de pasajeros o de carga.']],
     pasos: [['Contáctenos', 'Indíquenos qué trámite necesita.'], ['Revisamos sus documentos', 'Le confirmamos si falta alguno.'], ['Realizamos el trámite', 'Agendamos la cita y damos seguimiento.'], ['Reciba su documento', 'Le avisamos en cuanto esté listo.']],
     test: [['[Testimonio real de un cliente: qué trámite hizo y cómo le fue.]', '[Nombre del cliente]', '[Trámite realizado]'], ['[Testimonio real de un cliente.]', '[Nombre del cliente]', '[Trámite realizado]'], ['[Testimonio real de un cliente.]', '[Nombre del cliente]', '[Trámite realizado]']],
-    ops: [['moto', 'Licencia de motociclista'], ['auto', 'Licencia de automovilista'], ['chofer', 'Licencia de chofer'], ['servicio', 'Licencia de servicio público o privado'], ['propietario', 'Cambio de propietario'], ['otro', 'Otro trámite o no estoy seguro']]
+    ops: [['moto', 'Licencia de motociclista'], ['auto', 'Licencia de automovilista'], ['chofer', 'Licencia de chofer'], ['servicio', 'Licencia de servicio público o privado'], ['propietario', 'Cambio de propietario'], ['emplacamiento', 'Emplacamiento'], ['extranjero', 'Emplacamiento de auto extranjero'], ['otro', 'Otro trámite o no estoy seguro']]
   },
   en: {
     homeAria: 'Gestoría Paredes, home', descriptor: 'VEHICLE PAPERWORK AGENCY', navAria: 'Main', footNavAria: 'Footer',
@@ -92,7 +114,7 @@ var TXT = {
     heroAlt: 'Front of a yellow classic car with plate 595 AOK',
     h1a: 'Vehicle paperwork.', h1b: 'Done without', h1c: 'the lines.',
     lead: 'You gather your documents; we take care of the appointment, the filing and the follow-up.',
-    topbar: 'Vehicle paperwork in Quintana Roo', s1: 'Driver licenses', s1sub: 'Motorcycle · Driver · Chauffeur · Public or private service', s2: 'Change of ownership', s2sub: 'Private cars · Registration card in your name', ctaNote: 'Personal service from start to finish.',
+    topbar: 'Vehicle paperwork in Quintana Roo', s1: 'Driver licenses', s1sub: 'Motorcycle · Driver · Chauffeur · Public or private service', s2: 'Change of ownership', s2sub: 'Private cars · Registration card in your name', s3: 'License plates', s3sub: 'New cars · From another state · Foreign cars', ctaNote: 'Personal service from start to finish.',
     pickLabel: 'WHAT DO YOU NEED TODAY?', tabPrimera: 'New license', tabRenovacion: 'Renew license', tabPropietario: 'Change of owner',
     ctaWa: 'Start on WhatsApp', ctaCall: 'Call now', callShort: 'Call',
     svcTitle: 'Services', svcLead: 'Two procedures, done with care. Pick yours and see right away which documents you need.',
@@ -117,7 +139,7 @@ var TXT = {
     lic: [['Motorcycle', 'To ride a motorcycle, first time or renewal.'], ['Driver', 'For your private car, first time or renewal.'], ['Chauffeur', 'For people who drive for a living.'], ['Public or private service', 'To operate passenger or cargo transport.']],
     pasos: [['Contact us', 'Tell us which procedure you need.'], ['We review your documents', 'We confirm if anything is missing.'], ['We handle the procedure', 'We book the appointment and follow up.'], ['Receive your document', 'We let you know as soon as it is ready.']],
     test: [['[A real client testimonial: what they did and how it went.]', '[Client name]', '[Procedure]'], ['[A real client testimonial.]', '[Client name]', '[Procedure]'], ['[A real client testimonial.]', '[Client name]', '[Procedure]']],
-    ops: [['moto', 'Motorcycle license'], ['auto', 'Driver license'], ['chofer', 'Chauffeur license'], ['servicio', 'Public or private service license'], ['propietario', 'Change of ownership'], ['otro', 'Other / not sure']]
+    ops: [['moto', 'Motorcycle license'], ['auto', 'Driver license'], ['chofer', 'Chauffeur license'], ['servicio', 'Public or private service license'], ['propietario', 'Change of ownership'], ['emplacamiento', 'License plates'], ['extranjero', 'Plates for a foreign car'], ['otro', 'Other / not sure']]
   }
 };
 
@@ -339,8 +361,8 @@ function applyPalette(key) {
   html.dataset.pal = key; store.set('gp-pal', key);
   var base = 'img/paletas/' + key + '/';
   document.querySelectorAll('img[src$="coyote-blanco.png"]').forEach(function (im) { im.src = base + 'coyote-blanco.png'; });
-  var hero = document.querySelector('.hero-img'); if (hero) hero.src = base + 'hero-auto.webp';
-  var src = document.querySelector('.hero-pic source'); if (src) src.srcset = base + 'hero-auto-movil.webp';
+  document.querySelectorAll('source[data-car="desk"]').forEach(function (s) { s.srcset = base + 'hero-auto.webp'; });
+  document.querySelectorAll('source[data-car="mob"]').forEach(function (s) { s.srcset = base + 'hero-auto-movil.webp'; });
   document.querySelectorAll('.pal-opt').forEach(function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-pal') === key ? 'true' : 'false'); });
 }
 function setPalPanel(open) { palPanel.hidden = !open; palFab.setAttribute('aria-expanded', open ? 'true' : 'false'); }

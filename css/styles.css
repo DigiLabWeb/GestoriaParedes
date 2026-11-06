@@ -59,9 +59,16 @@ html{scroll-behavior:smooth}
 /* hero */
 .hero{position:relative;background:var(--c-dark);color:var(--c-marfil);min-height:780px;overflow:hidden}
 .hero-pic{display:contents}
-.hero-img{position:absolute;right:0;bottom:0;width:min(1700px,118%);height:auto;max-width:none;display:block}
+.hero-img{position:absolute;right:0;top:calc(127px + (100% - 127px) * .04);height:calc((100% - 127px) * .92);width:auto;max-width:none;display:block}
 .hero-inner{position:relative;padding-top:233px;padding-bottom:144px}
-@media (max-width:1100px){.hero{min-height:0}.hero-img{position:relative;right:auto;bottom:auto;width:100%;height:auto}.hero-inner{padding-top:21px;padding-bottom:89px}.hero-top{padding-top:127px}}
+.hero-pic-mob{display:none}
+@media (max-width:1100px){
+.hero{min-height:0}
+.hero-pic-mob{display:none}
+.hero-inner{padding-top:89px;padding-bottom:89px}
+.hero-top{padding-top:127px}
+.hero-img{top:127px;height:calc((100% - 127px) * .5)}
+}
 .h1{font-weight:700;font-size:clamp(55px,6.4vw,89px);line-height:1.1;margin:0;text-transform:uppercase;letter-spacing:.004em}
 .ln{display:block}
 .ln>span{display:block}
@@ -242,3 +249,7 @@ body.menu-open{overflow:hidden}
 .pal-sw i{width:21px;height:21px;border-radius:999px;border:2px solid var(--raised);margin-left:-5px}
 .pal-sw i:first-child{margin-left:0}
 @media (max-width:900px){.pal-fab{left:16px;bottom:68px;width:44px;height:44px}.pal-panel{left:16px;bottom:121px}}
+
+/* celular y tableta: el carro funciona como fondo, igual que en escritorio */
+@media (max-width:1100px){.scrim{display:block;background:linear-gradient(180deg,rgba(var(--rgb-dark),.1) 0%,rgba(var(--rgb-dark),.35) 32%,rgba(var(--rgb-dark),.8) 55%,rgba(var(--rgb-dark),1) 72%),linear-gradient(90deg,rgba(var(--rgb-dark),.55) 0%,rgba(var(--rgb-dark),0) 75%)}}
+@media (min-width:600px) and (max-width:1100px){.hero-img{height:calc((100% - 127px) * .66)}}
