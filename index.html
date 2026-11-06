@@ -25,6 +25,7 @@
   (function () {
     var d = document.documentElement;
     try {
+      d.dataset.theme = localStorage.getItem('gp-theme') || 'light';
       d.dataset.lang = localStorage.getItem('gp-lang') || 'es';
       d.dataset.intro = sessionStorage.getItem('gp-intro') ? 'no' : 'si';
     } catch (e) { d.dataset.lang = 'es'; d.dataset.intro = 'si'; }
@@ -170,32 +171,50 @@
   </div>
 </section>
 
-<section id="proceso" aria-labelledby="titulo-proceso">
-  <div class="wrap" style="padding-top: 144px; padding-bottom: 144px; display: flex; flex-direction: column; gap: 55px;">
-    <div class="rv" style="display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 13px 55px;">
-      <h2 id="titulo-proceso" class="disp" data-i18n="procTitle" style="margin: 0; font-weight: 700; font-size: clamp(34px, 5vw, 55px); line-height: 1; text-transform: uppercase;">Cómo funciona</h2>
-      <p data-i18n="procLead" style="margin: 0; font-size: 16px; line-height: 26px; color: var(--muted); max-width: 26em;">Cuatro pasos. Usted solo participa en el primero y el último.</p>
+<section id="proceso" class="proc" aria-labelledby="titulo-proceso">
+  <div class="wrap" style="padding-top: 144px; padding-bottom: 144px; display: flex; flex-wrap: wrap; gap: 55px 89px; align-items: flex-start;">
+    <div class="rv proc-intro" style="flex: 1 1 calc((100% - 90px) * 0.382); min-width: min(300px, 100%); display: flex; flex-direction: column; gap: 21px;">
+      <h2 id="titulo-proceso" class="disp" data-i18n="procTitle" style="margin: 0; font-weight: 700; font-size: clamp(34px, 5vw, 55px); line-height: 1.1; text-transform: uppercase; color: #F6F3EC;">Cómo funciona</h2>
+      <span aria-hidden="true" style="display: block; width: 55px; height: 2px; background: #DDCC97;"></span>
+      <p data-i18n="procLead" style="margin: 0; font-size: 16px; line-height: 26px; color: #C9D0D0; max-width: 24em;">Usted solo participa al inicio y al final. Todo lo de en medio corre por nuestra cuenta.</p>
+      <ul class="proc-legend" aria-hidden="true">
+        <li><span class="sw sw-you"></span><span data-i18n="legendYou">Lo hace usted</span></li>
+        <li><span class="sw sw-us"></span><span data-i18n="legendUs">Lo hacemos nosotros</span></li>
+      </ul>
+      <div style="margin-top: 13px;"><a class="btn btn-y" href="https://wa.me/529841156912" target="_blank" rel="noopener"><span data-i18n="ctaWa">Iniciar trámite por WhatsApp</span><svg class="arr" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="m13 6 6 6-6 6"></path></svg></a></div>
     </div>
-    <ol style="margin: 0; padding: 0; list-style: none; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(230px, 100%), 1fr)); gap: 55px 0;">
-      <li class="rv" style="display: flex; flex-direction: column; gap: 13px; padding-right: 34px;">
-        <div style="display: flex; align-items: center;"><span class="disp step-n">1</span><span class="step-line" aria-hidden="true"></span></div>
-        <h3 class="disp" data-i18n="p1t" style="margin: 0; font-weight: 500; font-size: 21px; line-height: 26px;">Contáctenos</h3>
-        <p data-i18n="p1d" style="margin: 0; font-size: 16px; line-height: 26px; color: var(--muted); max-width: 18em;">Indíquenos qué trámite necesita.</p>
+    <ol class="track" style="flex: 1 1 calc((100% - 90px) * 0.618); min-width: min(400px, 100%);">
+      <li class="step rv">
+        <span class="step-plate plate-you" aria-hidden="true">01</span>
+        <div class="step-body">
+          <span class="step-who who-you" data-i18n="whoYou">USTED</span>
+          <h3 class="disp step-title" data-i18n="p1t">Contáctenos</h3>
+          <p class="step-text" data-i18n="p1d">Escríbanos por WhatsApp o llámenos y díganos qué trámite necesita.</p>
+        </div>
       </li>
-      <li class="rv" style="display: flex; flex-direction: column; gap: 13px; padding-right: 34px;">
-        <div style="display: flex; align-items: center;"><span class="disp step-n">2</span><span class="step-line" aria-hidden="true"></span></div>
-        <h3 class="disp" data-i18n="p2t" style="margin: 0; font-weight: 500; font-size: 21px; line-height: 26px;">Revisamos sus documentos</h3>
-        <p data-i18n="p2d" style="margin: 0; font-size: 16px; line-height: 26px; color: var(--muted); max-width: 18em;">Le confirmamos si falta alguno.</p>
+      <li class="step rv">
+        <span class="step-plate plate-us" aria-hidden="true">02</span>
+        <div class="step-body">
+          <span class="step-who who-us" data-i18n="whoUs">NOSOTROS</span>
+          <h3 class="disp step-title" data-i18n="p2t">Revisamos sus documentos</h3>
+          <p class="step-text" data-i18n="p2d">Le confirmamos qué tiene completo y qué falta, antes de ir a cualquier oficina.</p>
+        </div>
       </li>
-      <li class="rv" style="display: flex; flex-direction: column; gap: 13px; padding-right: 34px;">
-        <div style="display: flex; align-items: center;"><span class="disp step-n">3</span><span class="step-line" aria-hidden="true"></span></div>
-        <h3 class="disp" data-i18n="p3t" style="margin: 0; font-weight: 500; font-size: 21px; line-height: 26px;">Realizamos el trámite</h3>
-        <p data-i18n="p3d" style="margin: 0; font-size: 16px; line-height: 26px; color: var(--muted); max-width: 18em;">Agendamos la cita y damos seguimiento.</p>
+      <li class="step rv">
+        <span class="step-plate plate-us" aria-hidden="true">03</span>
+        <div class="step-body">
+          <span class="step-who who-us" data-i18n="whoUs">NOSOTROS</span>
+          <h3 class="disp step-title" data-i18n="p3t">Realizamos el trámite</h3>
+          <p class="step-text" data-i18n="p3d">Agendamos la cita, hacemos la gestión y damos seguimiento ante la dependencia.</p>
+        </div>
       </li>
-      <li class="rv" style="display: flex; flex-direction: column; gap: 13px; padding-right: 34px;">
-        <div style="display: flex; align-items: center;"><span class="disp step-n">4</span><span class="step-line" aria-hidden="true" style="opacity: 0;"></span></div>
-        <h3 class="disp" data-i18n="p4t" style="margin: 0; font-weight: 500; font-size: 21px; line-height: 26px;">Reciba su documento</h3>
-        <p data-i18n="p4d" style="margin: 0; font-size: 16px; line-height: 26px; color: var(--muted); max-width: 18em;">Le avisamos en cuanto esté listo.</p>
+      <li class="step rv">
+        <span class="step-plate plate-you" aria-hidden="true">04</span>
+        <div class="step-body">
+          <span class="step-who who-you" data-i18n="whoYou">USTED</span>
+          <h3 class="disp step-title" data-i18n="p4t">Reciba su documento</h3>
+          <p class="step-text" data-i18n="p4d">Le avisamos en cuanto su licencia o tarjeta de circulación esté lista.</p>
+        </div>
       </li>
     </ol>
   </div>
@@ -295,6 +314,11 @@
     <svg width="30" height="30" viewBox="0 0 24 24" fill="#FFFFFF" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"></path></svg>
   </span>
 </a>
+
+<button type="button" id="theme-fab" class="theme-fab" aria-label="Cambiar a modo oscuro">
+  <svg class="ico-sun" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg>
+  <svg class="ico-moon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path></svg>
+</button>
 
 <button type="button" id="totop" class="totop" data-i18n-aria="toTop" aria-label="Volver arriba" hidden>
   <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5"></path><path d="m6 11 6-6 6 6"></path></svg>

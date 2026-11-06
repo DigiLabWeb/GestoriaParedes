@@ -128,8 +128,10 @@ Object.assign(TXT.es, {
   formLead: 'Al continuar se abrirá WhatsApp con su mensaje listo.', send: 'Continuar en WhatsApp',
   privacy: 'Sus datos no se guardan en este sitio; solo se envían por WhatsApp.',
   okTitle: 'Su mensaje está listo', okText: 'Abrimos WhatsApp con sus datos. Solo presione enviar para iniciar su trámite.', okOpen: 'Abrir WhatsApp de nuevo',
-  p1t: 'Contáctenos', p1d: 'Indíquenos qué trámite necesita.', p2t: 'Revisamos sus documentos', p2d: 'Le confirmamos si falta alguno.',
-  p3t: 'Realizamos el trámite', p3d: 'Agendamos la cita y damos seguimiento.', p4t: 'Reciba su documento', p4d: 'Le avisamos en cuanto esté listo.',
+  procLead: 'Usted solo participa al inicio y al final. Todo lo de en medio corre por nuestra cuenta.', legendYou: 'Lo hace usted', legendUs: 'Lo hacemos nosotros', whoYou: 'USTED', whoUs: 'NOSOTROS',
+  toDark: 'Cambiar a modo oscuro', toLight: 'Cambiar a modo claro',
+  p1t: 'Contáctenos', p1d: 'Escríbanos por WhatsApp o llámenos y díganos qué trámite necesita.', p2t: 'Revisamos sus documentos', p2d: 'Le confirmamos qué tiene completo y qué falta, antes de ir a cualquier oficina.',
+  p3t: 'Realizamos el trámite', p3d: 'Agendamos la cita, hacemos la gestión y damos seguimiento ante la dependencia.', p4t: 'Reciba su documento', p4d: 'Le avisamos en cuanto su licencia o tarjeta de circulación esté lista.',
   waForm: 'Hola, quiero iniciar un trámite.', waNombre: 'Nombre: ', waTel: 'Teléfono: ', waTram: 'Trámite: ', waMsg: 'Mensaje: '
 });
 Object.assign(TXT.en, {
@@ -137,8 +139,10 @@ Object.assign(TXT.en, {
   formLead: 'When you continue, WhatsApp opens with your message ready.', send: 'Continue on WhatsApp',
   privacy: 'Your details are not stored on this site; they are only sent through WhatsApp.',
   okTitle: 'Your message is ready', okText: 'We opened WhatsApp with your details. Just press send to start your procedure.', okOpen: 'Open WhatsApp again',
-  p1t: 'Contact us', p1d: 'Tell us which procedure you need.', p2t: 'We review your documents', p2d: 'We confirm if anything is missing.',
-  p3t: 'We handle the procedure', p3d: 'We book the appointment and follow up.', p4t: 'Receive your document', p4d: 'We let you know as soon as it is ready.',
+  procLead: 'You only take part at the start and at the end. Everything in between is on us.', legendYou: 'You do it', legendUs: 'We do it', whoYou: 'YOU', whoUs: 'US',
+  toDark: 'Switch to dark mode', toLight: 'Switch to light mode',
+  p1t: 'Contact us', p1d: 'Message us on WhatsApp or call us and tell us which procedure you need.', p2t: 'We review your documents', p2d: 'We confirm what is complete and what is missing before going to any office.',
+  p3t: 'We handle the procedure', p3d: 'We book the appointment, file the paperwork and follow up with the office.', p4t: 'Receive your document', p4d: 'We let you know as soon as your license or registration card is ready.',
   waForm: 'Hi, I want to start a procedure.', waNombre: 'Name: ', waTel: 'Phone: ', waTram: 'Procedure: ', waMsg: 'Message: '
 });
 
@@ -148,7 +152,7 @@ var store = {
   get: function (k, d) { try { return localStorage.getItem(k) || d; } catch (e) { return d; } },
   set: function (k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
 };
-var state = { lang: html.dataset.lang === 'en' ? 'en' : 'es', theme: 'light', tab: 'primera', checks: {} };
+var state = { lang: html.dataset.lang === 'en' ? 'en' : 'es', theme: html.dataset.theme === 'dark' ? 'dark' : 'light', tab: 'primera', checks: {} };
 function T() { return TXT[state.lang]; }
 function $(id) { return document.getElementById(id); }
 function waUrl(text) { return 'https://wa.me/' + WA + (text ? '?text=' + encodeURIComponent(text) : ''); }
@@ -162,7 +166,9 @@ function applyTheme() {
   root.classList.toggle('dark', state.theme === 'dark');
   root.classList.toggle('light', state.theme === 'light');
   html.dataset.theme = state.theme;
+  var fab = $('theme-fab'); if (fab) fab.setAttribute('aria-label', state.theme === 'dark' ? T().toLight : T().toDark);
 }
+$('theme-fab').addEventListener('click', function () { state.theme = state.theme === 'dark' ? 'light' : 'dark'; store.set('gp-theme', state.theme); applyTheme(); });
 document.querySelectorAll('[data-toggle-theme]').forEach(function (b) {
   b.addEventListener('click', function () { state.theme = state.theme === 'dark' ? 'light' : 'dark'; store.set('gp-theme', state.theme); applyTheme(); });
 });
@@ -175,7 +181,7 @@ function applyLang() {
   document.querySelectorAll('[data-i18n-aria]').forEach(function (el) { var k = el.getAttribute('data-i18n-aria'); if (t[k] != null) el.setAttribute('aria-label', t[k]); });
   document.querySelectorAll('[data-i18n-alt]').forEach(function (el) { var k = el.getAttribute('data-i18n-alt'); if (t[k] != null) el.setAttribute('alt', t[k]); });
   document.querySelectorAll('[data-set-lang]').forEach(function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-set-lang') === state.lang ? 'true' : 'false'); });
-  fillOptions(); renderTabs(); renderReq(); refreshErrors();
+  fillOptions(); renderTabs(); renderReq(); refreshErrors(); applyTheme();
 }
 document.querySelectorAll('[data-set-lang]').forEach(function (b) {
   b.addEventListener('click', function () { state.lang = b.getAttribute('data-set-lang'); store.set('gp-lang', state.lang); applyLang(); });

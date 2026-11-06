@@ -182,3 +182,41 @@ body.menu-open{overflow:hidden}
 .req-grupo{margin:0;padding:0;border:0;min-width:0}
 .req-grupo legend{padding:21px 0 5px;font-size:13px;font-weight:600;letter-spacing:.16em;color:#7A6213}
 .chk .n{font-family:"Oswald",sans-serif;font-size:13px;line-height:21px;color:#4F5A5C}
+
+/* placas de servicio del inicio: texto siempre claro */
+.gp .svc-plate{color:#F6F3EC}
+.gp .svc-plate .go{color:#EBCB4F}
+
+/* botón flotante claro/oscuro */
+.theme-fab{position:fixed;left:24px;bottom:24px;z-index:45;width:55px;height:55px;border-radius:999px;border:1px solid var(--line);background:var(--raised);color:var(--ink);display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 14px 30px -12px rgba(0,0,0,.45);transition:transform .2s cubic-bezier(.2,.7,.2,1),background-color .3s ease,color .3s ease;animation:pop .5s cubic-bezier(.2,.7,.2,1) 2s both}
+.theme-fab:hover{transform:translateY(-3px)}
+.theme-fab:active{transform:scale(.95)}
+.gp.light .theme-fab{background:#141C1E;color:#F6F3EC;border-color:#141C1E}
+.gp.dark .theme-fab{background:#F6F3EC;color:#141C1E;border-color:#F6F3EC}
+.gp.light .theme-fab .ico-sun,.gp.dark .theme-fab .ico-moon{display:none}
+.gp.light .theme-fab .ico-moon,.gp.dark .theme-fab .ico-sun{display:block}
+.exitcard{bottom:100px}
+@media (max-width:900px){.theme-fab{left:16px;bottom:16px;width:44px;height:44px}}
+
+/* cómo funciona: ruta de pasos */
+.proc{background:#141C1E;color:#F6F3EC}
+.gp.dark .proc{background:#0E1415}
+.proc-legend{list-style:none;margin:8px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:13px 21px;font-size:13px;color:#C9D0D0}
+.proc-legend li{display:flex;align-items:center;gap:8px}
+.sw{width:21px;height:13px;border-radius:3px}
+.sw-you{background:#EBCB4F}
+.sw-us{background:#0B0F10;box-shadow:inset 0 0 0 1px #57625F}
+.track{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+.step{position:relative;display:grid;grid-template-columns:89px minmax(0,1fr);gap:0 34px;padding-bottom:55px}
+.step:last-child{padding-bottom:0}
+.step:not(:last-child)::before{content:"";position:absolute;left:43px;top:63px;bottom:8px;width:2px;background:repeating-linear-gradient(180deg,#EBCB4F 0 13px,transparent 13px 26px);opacity:.7}
+.step-plate{width:89px;height:55px;display:flex;align-items:center;justify-content:center;border-radius:5px;font:600 26px/1 "Oswald",sans-serif;letter-spacing:.06em}
+.plate-us{background:#0B0F10;color:#F6F3EC;border:2px solid #3B4648;box-shadow:inset 0 0 0 3px #0B0F10,inset 0 0 0 4px #57625F}
+.plate-you{background:#EBCB4F;color:#141C1E;border:2px solid #EBCB4F;box-shadow:inset 0 0 0 3px #EBCB4F,inset 0 0 0 4px #141C1E}
+.step-body{display:flex;flex-direction:column;gap:5px;padding-top:2px}
+.step-who{font-size:13px;font-weight:600;letter-spacing:.16em}
+.who-you{color:#EBCB4F}
+.who-us{color:#A9B2B3}
+.step-title{margin:0;font-weight:500;font-size:34px;line-height:1.1;color:#F6F3EC}
+.step-text{margin:8px 0 0;font-size:16px;line-height:26px;color:#C9D0D0;max-width:32em}
+@media (max-width:640px){.step{grid-template-columns:55px minmax(0,1fr);gap:0 21px}.step-plate{width:55px;height:55px;font-size:21px}.step:not(:last-child)::before{left:26px}.step-title{font-size:21px;line-height:26px}}
