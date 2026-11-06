@@ -148,7 +148,7 @@ var store = {
   get: function (k, d) { try { return localStorage.getItem(k) || d; } catch (e) { return d; } },
   set: function (k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
 };
-var state = { lang: html.dataset.lang === 'en' ? 'en' : 'es', theme: html.dataset.theme === 'light' ? 'light' : 'dark', tab: 'primera', checks: {} };
+var state = { lang: html.dataset.lang === 'en' ? 'en' : 'es', theme: 'light', tab: 'primera', checks: {} };
 function T() { return TXT[state.lang]; }
 function $(id) { return document.getElementById(id); }
 function waUrl(text) { return 'https://wa.me/' + WA + (text ? '?text=' + encodeURIComponent(text) : ''); }
