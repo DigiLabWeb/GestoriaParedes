@@ -18,7 +18,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&amp;family=Poppins:wght@400;500;600&amp;display=swap">
-<link rel="preload" as="image" href="img/hero-auto.webp" type="image/webp">
+<link rel="preload" as="image" href="img/hero-auto.webp" type="image/webp" media="(min-width: 1101px)">
+<link rel="preload" as="image" href="img/hero-auto-movil.webp" type="image/webp" media="(max-width: 1100px)">
 <link rel="stylesheet" href="css/styles.css">
 <script>
   /* aplica tema e idioma guardados antes de pintar, para evitar parpadeo */
@@ -27,6 +28,7 @@
     try {
       d.dataset.theme = localStorage.getItem('gp-theme') || 'light';
       d.dataset.lang = localStorage.getItem('gp-lang') || 'es';
+      d.dataset.pal = localStorage.getItem('gp-pal') || '1';
       d.dataset.intro = sessionStorage.getItem('gp-intro') ? 'no' : 'si';
     } catch (e) { d.dataset.lang = 'es'; d.dataset.intro = 'si'; }
   })();
@@ -43,17 +45,17 @@
 </div>
 
 <header class="hdr">
-  <div class="topbar" style="border-bottom: 1px solid rgba(246,243,236,.12);">
-    <div class="wrap" style="display: flex; justify-content: space-between; align-items: center; gap: 13px; min-height: 40px; font-size: 13px; color: #F6F3EC;">
+  <div class="topbar" style="border-bottom: 1px solid rgba(var(--rgb-marfil),.12);">
+    <div class="wrap" style="display: flex; justify-content: space-between; align-items: center; gap: 13px; min-height: 40px; font-size: 13px; color: var(--c-marfil);">
       <span data-i18n="topbar">Trámites vehiculares en Quintana Roo</span>
     </div>
   </div>
   <div class="wrap" style="display: flex; align-items: center; justify-content: space-between; gap: 13px; padding-top: 21px; padding-bottom: 21px;">
-    <a href="#inicio" data-i18n-aria="homeAria" aria-label="Gestoría Paredes, inicio" style="display: flex; align-items: center; gap: 13px; text-decoration: none; color: #F6F3EC;">
+    <a href="#inicio" data-i18n-aria="homeAria" aria-label="Gestoría Paredes, inicio" style="display: flex; align-items: center; gap: 13px; text-decoration: none; color: var(--c-marfil);">
       <img src="img/coyote-blanco.png" alt="" width="44" height="34" style="width: 44px; height: auto; display: block;">
       <span style="display: flex; flex-direction: column; gap: 2px;">
         <span style="font-weight: 600; font-size: 16px; letter-spacing: 0.32em; line-height: 26px;">PAREDES</span>
-        <span data-i18n="descriptor" style="font-size: 10px; letter-spacing: 0.24em; line-height: 16px; color: #A9B2B3;">GESTORÍA Y TRAMITOLOGÍA</span>
+        <span data-i18n="descriptor" style="font-size: 10px; letter-spacing: 0.24em; line-height: 16px; color: var(--c-gris_c);">GESTORÍA Y TRAMITOLOGÍA</span>
       </span>
     </a>
     <div class="nav-desk" style="align-items: center; gap: 34px;">
@@ -67,7 +69,7 @@
         <button type="button" data-set-lang="en" aria-pressed="false">EN</button>
       </div>
     </div>
-    <button type="button" id="menu-open" class="icon-btn burger" data-i18n-aria="menuOpen" aria-label="Abrir menú" aria-expanded="false" aria-controls="menu" style="color: #F6F3EC;">
+    <button type="button" id="menu-open" class="icon-btn burger" data-i18n-aria="menuOpen" aria-label="Abrir menú" aria-expanded="false" aria-controls="menu" style="color: var(--c-marfil);">
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h10"></path></svg>
     </button>
   </div>
@@ -76,7 +78,7 @@
 <div id="menu" class="menu" role="dialog" aria-modal="true" data-i18n-aria="menuLabel" aria-label="Menú" hidden>
   <div style="display: flex; align-items: center; justify-content: space-between;">
     <img src="img/coyote-blanco.png" alt="" width="40" height="30" style="width: 40px; height: auto;">
-    <button type="button" id="menu-close" class="icon-btn" data-i18n-aria="menuClose" aria-label="Cerrar" style="color: #F6F3EC;">
+    <button type="button" id="menu-close" class="icon-btn" data-i18n-aria="menuClose" aria-label="Cerrar" style="color: var(--c-marfil);">
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"></path></svg>
     </button>
   </div>
@@ -99,32 +101,35 @@
 <main>
 <section id="inicio" class="hero" aria-labelledby="titulo-inicio">
   <div class="hero-top"></div>
-  <img class="hero-img" src="img/hero-auto.webp" data-i18n-alt="heroAlt" alt="Frente de un auto clásico amarillo con placa 595 AOK" width="1970" height="956" fetchpriority="high">
+  <picture class="hero-pic">
+    <source media="(max-width: 1100px)" srcset="img/hero-auto-movil.webp" width="2300" height="900">
+    <img class="hero-img" src="img/hero-auto.webp" data-i18n-alt="heroAlt" alt="Frente de un auto clásico amarillo con placa 595 AOK" width="2127" height="956" fetchpriority="high">
+  </picture>
   <div class="scrim" aria-hidden="true"></div>
   <div class="wrap hero-inner">
     <div style="max-width: 791px; display: flex; flex-direction: column; gap: 34px;">
       <h1 id="titulo-inicio" class="h1 disp">
         <span class="ln"><span data-i18n="h1a">Gestoría vehicular.</span></span>
         <span class="ln"><span data-i18n="h1b">Trámites sin</span></span>
-        <span class="ln"><span data-i18n="h1c" style="color: #EBCB4F;">hacer filas.</span></span>
+        <span class="ln"><span data-i18n="h1c" style="color: var(--c-acc);">hacer filas.</span></span>
       </h1>
       <div class="hero-rest" style="display: flex; flex-direction: column; gap: 34px;">
-        <p data-i18n="lead" style="margin: 0; font-size: 21px; line-height: 34px; color: #F6F3EC; max-width: 30em;">Usted reúne sus documentos; nosotros nos encargamos de la cita, la gestión y el seguimiento.</p>
+        <p data-i18n="lead" style="margin: 0; font-size: 21px; line-height: 34px; color: var(--c-marfil); max-width: 30em;">Usted reúne sus documentos; nosotros nos encargamos de la cita, la gestión y el seguimiento.</p>
         <div class="svc2" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr)); gap: 13px;">
           <a class="svc-plate" href="#requisitos" data-go-tab="primera">
             <span class="disp" data-i18n="s1" style="font-size: 21px; line-height: 26px; font-weight: 600; text-transform: uppercase;">Licencias de conducir</span>
-            <span data-i18n="s1sub" style="font-size: 13px; line-height: 21px; color: #A9B2B3;">Motociclista · Automovilista · Chofer · Servicio público o privado</span>
+            <span data-i18n="s1sub" style="font-size: 13px; line-height: 21px; color: var(--c-gris_c);">Motociclista · Automovilista · Chofer · Servicio público o privado</span>
             <span class="go"><span data-i18n="reqLink">Ver requisitos</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="m13 6 6 6-6 6"></path></svg></span>
           </a>
           <a class="svc-plate" href="#requisitos" data-go-tab="propietario">
             <span class="disp" data-i18n="s2" style="font-size: 21px; line-height: 26px; font-weight: 600; text-transform: uppercase;">Cambio de propietario</span>
-            <span data-i18n="s2sub" style="font-size: 13px; line-height: 21px; color: #A9B2B3;">Autos particulares · Tarjeta de circulación a su nombre</span>
+            <span data-i18n="s2sub" style="font-size: 13px; line-height: 21px; color: var(--c-gris_c);">Autos particulares · Tarjeta de circulación a su nombre</span>
             <span class="go"><span data-i18n="reqLink">Ver requisitos</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="m13 6 6 6-6 6"></path></svg></span>
           </a>
         </div>
         <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 13px 21px;">
           <a class="btn btn-y" href="https://wa.me/529841156912" target="_blank" rel="noopener"><span data-i18n="ctaWa">Iniciar trámite por WhatsApp</span><svg class="arr" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="m13 6 6 6-6 6"></path></svg></a>
-          <span data-i18n="ctaNote" style="font-size: 13px; color: #D3D8D8;">Atención personalizada de principio a fin.</span>
+          <span data-i18n="ctaNote" style="font-size: 13px; color: var(--c-niebla2);">Atención personalizada de principio a fin.</span>
         </div>
       </div>
     </div>
@@ -132,10 +137,10 @@
   <div class="road" aria-hidden="true" style="position: absolute; left: 0; right: 0; bottom: 40px;"></div>
 </section>
 
-<section class="band" data-i18n-aria="band1Aria" aria-label="Asesoría" style="background: #EBCB4F; color: #141C1E;">
+<section class="band" data-i18n-aria="band1Aria" aria-label="Asesoría" style="background: var(--c-acc); color: var(--c-dark);">
   <div class="wrap rv" style="padding-top: 34px; padding-bottom: 34px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 21px 34px;">
     <p class="disp" data-i18n="band1" style="margin: 0; font-size: clamp(21px, 3vw, 34px); line-height: 1.15; font-weight: 500; max-width: 24em;">¿No sabe qué tipo de licencia necesita? Le orientamos sin compromiso.</p>
-    <a class="btn" href="https://wa.me/529841156912" target="_blank" rel="noopener" style="background: #141C1E; color: #F6F3EC;"><span data-i18n="band1Cta">Consultar por WhatsApp</span><svg class="arr" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="m13 6 6 6-6 6"></path></svg></a>
+    <a class="btn" href="https://wa.me/529841156912" target="_blank" rel="noopener" style="background: var(--c-dark); color: var(--c-marfil);"><span data-i18n="band1Cta">Consultar por WhatsApp</span><svg class="arr" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="m13 6 6 6-6 6"></path></svg></a>
   </div>
 </section>
 
@@ -149,14 +154,14 @@
     </div>
 
     <div class="paper rv" style="flex: 1 1 calc((100% - 90px) * 0.618); min-width: min(520px, 100%); padding: clamp(21px, 4vw, 55px);">
-      <div style="display: flex; align-items: flex-end; justify-content: space-between; flex-wrap: wrap; gap: 13px 21px; padding-bottom: 21px; border-bottom: 2px solid #141C1E;">
+      <div style="display: flex; align-items: flex-end; justify-content: space-between; flex-wrap: wrap; gap: 13px 21px; padding-bottom: 21px; border-bottom: 2px solid var(--c-dark);">
         <div style="display: flex; flex-direction: column; gap: 5px;">
-          <span data-i18n="expediente" style="font-size: 13px; letter-spacing: 0.18em; color: #4F5A5C;">SU EXPEDIENTE</span>
+          <span data-i18n="expediente" style="font-size: 13px; letter-spacing: 0.18em; color: var(--c-gris);">SU EXPEDIENTE</span>
           <h3 id="req-titulo" class="disp" style="margin: 0; font-weight: 600; font-size: 34px; line-height: 1.05; text-transform: uppercase;"></h3>
         </div>
         <div style="display: flex; flex-direction: column; gap: 8px; min-width: 180px;">
-          <span id="req-progreso" aria-live="polite" style="font-size: 13px; color: #4F5A5C;"></span>
-          <div style="height: 4px; background: #DCD5C6; border-radius: 5px; overflow: hidden;"><div id="req-barra" style="height: 100%; width: 0; background: #9A7B1E; transition: width .4s cubic-bezier(.2,.7,.2,1);"></div></div>
+          <span id="req-progreso" aria-live="polite" style="font-size: 13px; color: var(--c-gris);"></span>
+          <div style="height: 4px; background: var(--c-line_l); border-radius: 5px; overflow: hidden;"><div id="req-barra" style="height: 100%; width: 0; background: var(--c-oro_d); transition: width .4s cubic-bezier(.2,.7,.2,1);"></div></div>
         </div>
       </div>
       <div id="req-skeleton" aria-hidden="true" hidden style="display: flex; flex-direction: column; gap: 21px; padding: 21px 0 8px;">
@@ -164,8 +169,8 @@
       </div>
       <div id="req-lista" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr)); gap: 34px 55px; padding-top: 8px;"></div>
       <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 21px 34px; margin-top: 34px;">
-        <p id="req-nota" style="margin: 0; font-size: 13px; line-height: 21px; color: #4F5A5C; flex: 1 1 280px;"></p>
-        <a id="req-wa" class="btn" href="https://wa.me/529841156912" target="_blank" rel="noopener" style="background: #141C1E; color: #F6F3EC;"><span data-i18n="sendList">Enviar mi lista por WhatsApp</span><svg class="arr" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="m13 6 6 6-6 6"></path></svg></a>
+        <p id="req-nota" style="margin: 0; font-size: 13px; line-height: 21px; color: var(--c-gris); flex: 1 1 280px;"></p>
+        <a id="req-wa" class="btn" href="https://wa.me/529841156912" target="_blank" rel="noopener" style="background: var(--c-dark); color: var(--c-marfil);"><span data-i18n="sendList">Enviar mi lista por WhatsApp</span><svg class="arr" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="m13 6 6 6-6 6"></path></svg></a>
       </div>
     </div>
   </div>
@@ -174,9 +179,9 @@
 <section id="proceso" class="proc" aria-labelledby="titulo-proceso">
   <div class="wrap" style="padding-top: 144px; padding-bottom: 144px; display: flex; flex-wrap: wrap; gap: 55px 89px; align-items: flex-start;">
     <div class="rv proc-intro" style="flex: 1 1 calc((100% - 90px) * 0.382); min-width: min(300px, 100%); display: flex; flex-direction: column; gap: 21px;">
-      <h2 id="titulo-proceso" class="disp" data-i18n="procTitle" style="margin: 0; font-weight: 700; font-size: clamp(34px, 5vw, 55px); line-height: 1.1; text-transform: uppercase; color: #F6F3EC;">Cómo funciona</h2>
-      <span aria-hidden="true" style="display: block; width: 55px; height: 2px; background: #DDCC97;"></span>
-      <p data-i18n="procLead" style="margin: 0; font-size: 16px; line-height: 26px; color: #C9D0D0; max-width: 24em;">Usted solo participa al inicio y al final. Todo lo de en medio corre por nuestra cuenta.</p>
+      <h2 id="titulo-proceso" class="disp" data-i18n="procTitle" style="margin: 0; font-weight: 700; font-size: clamp(34px, 5vw, 55px); line-height: 1.1; text-transform: uppercase; color: var(--c-marfil);">Cómo funciona</h2>
+      <span aria-hidden="true" style="display: block; width: 55px; height: 2px; background: var(--c-oro);"></span>
+      <p data-i18n="procLead" style="margin: 0; font-size: 16px; line-height: 26px; color: var(--c-niebla); max-width: 24em;">Usted solo participa al inicio y al final. Todo lo de en medio corre por nuestra cuenta.</p>
       <ul class="proc-legend" aria-hidden="true">
         <li><span class="sw sw-you"></span><span data-i18n="legendYou">Lo hace usted</span></li>
         <li><span class="sw sw-us"></span><span data-i18n="legendUs">Lo hacemos nosotros</span></li>
@@ -247,7 +252,7 @@
 
     <div class="rv" style="flex: 1 1 calc((100% - 90px) * 0.618); min-width: min(400px, 100%); background: var(--bg); border: 1px solid var(--line); border-radius: 8px; padding: clamp(21px, 4vw, 34px); transition: background-color .4s ease;">
       <div id="form-ok" class="fadein" role="status" hidden style="display: flex; flex-direction: column; gap: 21px; padding: 21px 0;">
-        <span style="width: 55px; height: 55px; border-radius: 999px; background: #EBCB4F; color: #141C1E; display: flex; align-items: center; justify-content: center;"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5 9-10"></path></svg></span>
+        <span style="width: 55px; height: 55px; border-radius: 999px; background: var(--c-acc); color: var(--c-dark); display: flex; align-items: center; justify-content: center;"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5 9-10"></path></svg></span>
         <h3 class="disp" data-i18n="okTitle" style="margin: 0; font-weight: 600; font-size: 34px; line-height: 1.05;">Su mensaje está listo</h3>
         <p data-i18n="okText" style="margin: 0; font-size: 16px; line-height: 26px; color: var(--muted);">Abrimos WhatsApp con sus datos. Solo presione enviar para iniciar su trámite.</p>
         <div style="display: flex; flex-wrap: wrap; gap: 13px;">
@@ -287,23 +292,23 @@
 </section>
 </main>
 
-<footer style="background: #0E1415; color: #F6F3EC;">
+<footer style="background: var(--c-deep); color: var(--c-marfil);">
   <div class="wrap" style="padding-top: 55px; padding-bottom: 89px; display: flex; flex-direction: column; gap: 34px;">
     <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 21px 55px;">
-      <a href="#inicio" data-i18n-aria="homeAria" aria-label="Gestoría Paredes, inicio" style="display: flex; align-items: center; gap: 13px; text-decoration: none; color: #F6F3EC;">
+      <a href="#inicio" data-i18n-aria="homeAria" aria-label="Gestoría Paredes, inicio" style="display: flex; align-items: center; gap: 13px; text-decoration: none; color: var(--c-marfil);">
         <img src="img/coyote-blanco.png" alt="" loading="lazy" width="34" height="26" style="width: 34px; height: auto; display: block;">
         <span style="font-size: 13px; letter-spacing: 0.3em; font-weight: 600;">PAREDES</span>
       </a>
       <nav data-i18n-aria="footNavAria" aria-label="Pie de página" style="display: flex; flex-wrap: wrap; gap: 8px 34px; font-size: 13px;">
-        <a class="ul" href="#requisitos" data-i18n="nav2" style="color: #C9D0D0;">Requisitos</a>
-        <a class="ul" href="#proceso" data-i18n="nav3" style="color: #C9D0D0;">Cómo funciona</a>
-        <a class="ul" href="#contacto" data-i18n="nav4" style="color: #C9D0D0;">Contacto</a>
-        <a class="ul" href="aviso-de-privacidad.html" data-i18n="privacyLink" style="color: #C9D0D0;">Aviso de privacidad</a>
+        <a class="ul" href="#requisitos" data-i18n="nav2" style="color: var(--c-niebla);">Requisitos</a>
+        <a class="ul" href="#proceso" data-i18n="nav3" style="color: var(--c-niebla);">Cómo funciona</a>
+        <a class="ul" href="#contacto" data-i18n="nav4" style="color: var(--c-niebla);">Contacto</a>
+        <a class="ul" href="aviso-de-privacidad.html" data-i18n="privacyLink" style="color: var(--c-niebla);">Aviso de privacidad</a>
       </nav>
     </div>
-    <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 21px 55px; padding-top: 21px; border-top: 1px solid #2C3739;">
-      <p data-i18n="legal" style="margin: 0; font-size: 13px; line-height: 21px; color: #A9B2B3; max-width: 46em;">Gestoría privada e independiente; no somos una dependencia de gobierno. Realizamos los trámites en su representación ante IMOVEQROO y SEFIPLAN. Los requisitos pueden cambiar: los confirmamos con usted antes de iniciar.</p>
-      <p style="margin: 0; font-size: 13px; color: #A9B2B3;">© <span id="year">2026</span> Gestoría Paredes</p>
+    <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 21px 55px; padding-top: 21px; border-top: 1px solid var(--c-line_d);">
+      <p data-i18n="legal" style="margin: 0; font-size: 13px; line-height: 21px; color: var(--c-gris_c); max-width: 46em;">Gestoría privada e independiente; no somos una dependencia de gobierno. Realizamos los trámites en su representación ante IMOVEQROO y SEFIPLAN. Los requisitos pueden cambiar: los confirmamos con usted antes de iniciar.</p>
+      <p style="margin: 0; font-size: 13px; color: var(--c-gris_c);">© <span id="year">2026</span> Gestoría Paredes</p>
     </div>
   </div>
 </footer>
@@ -314,6 +319,31 @@
     <svg width="30" height="30" viewBox="0 0 24 24" fill="#FFFFFF" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"></path></svg>
   </span>
 </a>
+
+<button type="button" id="pal-fab" class="pal-fab" aria-label="Cambiar paleta de colores (provisional)" aria-expanded="false" aria-controls="pal-panel">
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a9 9 0 1 0 0 18c1.1 0 1.7-.9 1.4-1.9l-.3-.9c-.4-1.2.5-2.2 1.7-2.2H17a4 4 0 0 0 4-4c0-4.9-4-9-9-9z"></path><circle cx="7.5" cy="11" r="1.2" fill="currentColor"></circle><circle cx="10" cy="7" r="1.2" fill="currentColor"></circle><circle cx="14.5" cy="7" r="1.2" fill="currentColor"></circle></svg>
+</button>
+<div id="pal-panel" class="pal-panel" role="dialog" aria-label="Paletas de color" hidden>
+  <p class="pal-title">Paletas <span>· provisional</span></p>
+  <div class="pal-list">
+      <button type="button" class="pal-opt" data-pal="1" aria-pressed="true">
+        <span class="pal-sw" aria-hidden="true"><i style="background:#141C1E"></i><i style="background:#EBCB4F"></i><i style="background:#ECE7DC"></i></span>
+        <span class="pal-name">1 · Carbón y amarillo</span>
+      </button>
+      <button type="button" class="pal-opt" data-pal="2" aria-pressed="false">
+        <span class="pal-sw" aria-hidden="true"><i style="background:#283321"></i><i style="background:#C9A961"></i><i style="background:#DEE2CD"></i></span>
+        <span class="pal-name">2 · Verde militar y latón</span>
+      </button>
+      <button type="button" class="pal-opt" data-pal="3" aria-pressed="false">
+        <span class="pal-sw" aria-hidden="true"><i style="background:#0F2A33"></i><i style="background:#D9925B"></i><i style="background:#F0E0D2"></i></span>
+        <span class="pal-name">3 · Azul petróleo y cobre</span>
+      </button>
+      <button type="button" class="pal-opt" data-pal="4" aria-pressed="false">
+        <span class="pal-sw" aria-hidden="true"><i style="background:#13294B"></i><i style="background:#6CC6EA"></i><i style="background:#E8F0F9"></i></span>
+        <span class="pal-name">4 · Azul marino y cielo</span>
+      </button>
+  </div>
+</div>
 
 <button type="button" id="theme-fab" class="theme-fab" aria-label="Cambiar a modo oscuro">
   <svg class="ico-sun" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg>

@@ -13,12 +13,18 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&amp;family=Poppins:wght@400;500;600&amp;display=swap">
 <link rel="stylesheet" href="css/styles.css">
+<script>
+  (function () { var k = '1'; try { k = localStorage.getItem('gp-pal') || '1'; } catch (e) {} if (!/^[1-4]$/.test(k)) k = '1';
+    document.documentElement.dataset.pal = k;
+    document.addEventListener('DOMContentLoaded', function () { document.querySelectorAll('img[src$="coyote-blanco.png"]').forEach(function (im) { im.src = 'img/paletas/' + k + '/coyote-blanco.png'; }); });
+  })();
+</script>
 </head>
 <body style="margin:0">
 <div class="gp light" style="min-height: 100vh;">
-  <header style="background: #141C1E; border-bottom: 1px solid #2C3739;">
+  <header style="background: var(--c-dark); border-bottom: 1px solid var(--c-line_d);">
     <div class="wrap" style="padding-top: 21px; padding-bottom: 21px;">
-      <a href="./" aria-label="Gestoría Paredes, inicio" style="display: inline-flex; align-items: center; gap: 13px; text-decoration: none; color: #F6F3EC;">
+      <a href="./" aria-label="Gestoría Paredes, inicio" style="display: inline-flex; align-items: center; gap: 13px; text-decoration: none; color: var(--c-marfil);">
         <img src="img/coyote-blanco.png" alt="" width="40" height="30" style="width: 40px; height: auto; display: block;">
         <span style="font-weight: 600; font-size: 16px; letter-spacing: 0.32em;">PAREDES</span>
       </a>
@@ -66,7 +72,7 @@
     <p style="margin-top: 55px;"><a class="btn btn-y" href="./">Volver al inicio</a></p>
   </main>
 
-  <footer style="background: #0E1415; color: #A9B2B3;">
+  <footer style="background: var(--c-deep); color: var(--c-gris_c);">
     <div class="wrap" style="padding-top: 34px; padding-bottom: 34px; font-size: 13px;">© 2026 Gestoría Paredes</div>
   </footer>
 </div>

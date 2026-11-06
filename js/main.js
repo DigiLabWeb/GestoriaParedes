@@ -157,6 +157,28 @@ function T() { return TXT[state.lang]; }
 function $(id) { return document.getElementById(id); }
 function waUrl(text) { return 'https://wa.me/' + WA + (text ? '?text=' + encodeURIComponent(text) : ''); }
 
+/* ---------- WhatsApp: app en celular, WhatsApp Web en computadora ---------- */
+var IS_MOBILE = /Android|iPhone|iPad|iPod|Mobile|Opera Mini|IEMobile/i.test(navigator.userAgent) ||
+  (navigator.maxTouchPoints > 1 && /Macintosh/.test(navigator.userAgent));
+function waText(href) { var m = /[?&]text=([^&]*)/.exec(href || ''); return m ? m[1] : ''; }
+function waWeb(href) { var t = waText(href); return 'https://web.whatsapp.com/send?phone=' + WA + (t ? '&text=' + t : ''); }
+function waApp(href) { var t = waText(href); return 'whatsapp://send?phone=' + WA + (t ? '&text=' + t : ''); }
+function openWhatsApp(href) {
+  if (IS_MOBILE) {
+    var fallback = setTimeout(function () { if (!document.hidden) window.location.href = href; }, 1600);
+    document.addEventListener('visibilitychange', function onHide() { if (document.hidden) { clearTimeout(fallback); document.removeEventListener('visibilitychange', onHide); } });
+    window.location.href = waApp(href);
+  } else {
+    var w = null; try { w = window.open(waWeb(href), '_blank'); if (w) w.opener = null; } catch (e) {}
+    if (!w) window.location.href = waWeb(href);
+  }
+}
+document.addEventListener('click', function (e) {
+  var a = e.target.closest && e.target.closest('a[href^="https://wa.me/"]');
+  if (!a || e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey) return;
+  e.preventDefault(); openWhatsApp(a.getAttribute('href'));
+});
+
 /* ---------- intro (solo la primera vez por sesión) ---------- */
 if (html.dataset.intro === 'no') root.classList.add('nointro');
 try { sessionStorage.setItem('gp-intro', '1'); } catch (e) {}
@@ -286,7 +308,7 @@ form.addEventListener('submit', function (ev) {
   if (F.msg.value.trim()) lines.push(t.waMsg + F.msg.value.trim());
   var url = waUrl(lines.join('\n'));
   $('form-wa').href = url;
-  window.open(url, '_blank', 'noopener');
+  openWhatsApp(url);
   form.hidden = true; $('form-ok').hidden = false; $('form-ok').focus && $('form-ok').setAttribute('tabindex', '-1'); $('form-ok').focus();
   $('exit').hidden = true; exitDone = true;
 });
@@ -309,6 +331,24 @@ document.addEventListener('mouseleave', function (e) {
   $('exit').hidden = false;
 });
 $('exit-close').addEventListener('click', function () { $('exit').hidden = true; });
+
+/* ---------- paletas de color (provisional) ---------- */
+var palFab = $('pal-fab'), palPanel = $('pal-panel');
+function applyPalette(key) {
+  if (!/^[1-4]$/.test(key)) key = '1';
+  html.dataset.pal = key; store.set('gp-pal', key);
+  var base = 'img/paletas/' + key + '/';
+  document.querySelectorAll('img[src$="coyote-blanco.png"]').forEach(function (im) { im.src = base + 'coyote-blanco.png'; });
+  var hero = document.querySelector('.hero-img'); if (hero) hero.src = base + 'hero-auto.webp';
+  var src = document.querySelector('.hero-pic source'); if (src) src.srcset = base + 'hero-auto-movil.webp';
+  document.querySelectorAll('.pal-opt').forEach(function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-pal') === key ? 'true' : 'false'); });
+}
+function setPalPanel(open) { palPanel.hidden = !open; palFab.setAttribute('aria-expanded', open ? 'true' : 'false'); }
+palFab.addEventListener('click', function () { setPalPanel(palPanel.hidden); });
+document.querySelectorAll('.pal-opt').forEach(function (b) { b.addEventListener('click', function () { applyPalette(b.getAttribute('data-pal')); }); });
+document.addEventListener('click', function (e) { if (!palPanel.hidden && !palPanel.contains(e.target) && !palFab.contains(e.target)) setPalPanel(false); });
+document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !palPanel.hidden) { setPalPanel(false); palFab.focus(); } });
+applyPalette(html.dataset.pal || '1');
 
 /* ---------- inicio ---------- */
 var y = $('year'); if (y) y.textContent = new Date().getFullYear();
