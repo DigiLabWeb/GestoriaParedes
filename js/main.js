@@ -26,8 +26,8 @@ var REQ = {
     ] }]
   },
   emplacamiento: {
-    es: { label: 'Emplacamiento', titulo: 'Emplacamiento', nota: 'Requisitos de referencia. Cada caso (auto nuevo, de otro estado o extranjero) puede requerir documentos adicionales; se los confirmamos al iniciar. Un auto con permiso de importación temporal no puede emplacarse: primero debe importarse en definitiva o regularizarse, y le orientamos.' },
-    en: { label: 'License plates', titulo: 'License plates', nota: 'Reference list. Each case (new car, from another state or foreign) may need extra documents; we confirm them when we start. A car with a temporary import permit cannot get plates: it must first be permanently imported or regularized, and we will guide you.' },
+    es: { label: 'Emplacamiento', titulo: 'Emplacamiento', nota: 'Requisitos de referencia. Cada caso (auto nuevo, de otro estado o extranjero) puede requerir documentos adicionales; se los confirmamos al iniciar.' },
+    en: { label: 'License plates', titulo: 'License plates', nota: 'Reference list. Each case (new car, from another state or foreign) may need extra documents; we confirm them when we start.' },
     grupos: [
       { es: 'EN TODOS LOS CASOS', en: 'ALL CASES', items: [
         ['Factura original, carta factura o título de propiedad (endosado si es usado)', 'Original invoice, invoice letter or title (endorsed if used)'],
@@ -179,27 +179,8 @@ function T() { return TXT[state.lang]; }
 function $(id) { return document.getElementById(id); }
 function waUrl(text) { return 'https://wa.me/' + WA + (text ? '?text=' + encodeURIComponent(text) : ''); }
 
-/* ---------- WhatsApp: app en celular, WhatsApp Web en computadora ---------- */
-var IS_MOBILE = /Android|iPhone|iPad|iPod|Mobile|Opera Mini|IEMobile/i.test(navigator.userAgent) ||
-  (navigator.maxTouchPoints > 1 && /Macintosh/.test(navigator.userAgent));
-function waText(href) { var m = /[?&]text=([^&]*)/.exec(href || ''); return m ? m[1] : ''; }
-function waWeb(href) { var t = waText(href); return 'https://web.whatsapp.com/send?phone=' + WA + (t ? '&text=' + t : ''); }
-function waApp(href) { var t = waText(href); return 'whatsapp://send?phone=' + WA + (t ? '&text=' + t : ''); }
-function openWhatsApp(href) {
-  if (IS_MOBILE) {
-    var fallback = setTimeout(function () { if (!document.hidden) window.location.href = href; }, 1600);
-    document.addEventListener('visibilitychange', function onHide() { if (document.hidden) { clearTimeout(fallback); document.removeEventListener('visibilitychange', onHide); } });
-    window.location.href = waApp(href);
-  } else {
-    var w = null; try { w = window.open(waWeb(href), '_blank'); if (w) w.opener = null; } catch (e) {}
-    if (!w) window.location.href = waWeb(href);
-  }
-}
-document.addEventListener('click', function (e) {
-  var a = e.target.closest && e.target.closest('a[href^="https://wa.me/"]');
-  if (!a || e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey) return;
-  e.preventDefault(); openWhatsApp(a.getAttribute('href'));
-});
+/* ---------- WhatsApp: el envío y los turnos están en js/whatsapp.js ---------- */
+function openWhatsApp(href, datos) { if (window.GPWA) return window.GPWA.abrir(href, datos); window.location.href = href; }
 
 /* ---------- intro (solo la primera vez por sesión) ---------- */
 if (html.dataset.intro === 'no') root.classList.add('nointro');
@@ -321,6 +302,7 @@ function refreshErrors() {
   F[p[0]].addEventListener(p[1], function () { touched[p[0]] = true; refreshErrors(); });
 });
 ['nombre', 'tel'].forEach(function (k) { F[k].addEventListener('input', function () { if (touched[k] || submitted) refreshErrors(); }); });
+F.tel.addEventListener('input', function () { if (window.GPWA) window.GPWA.consultarTelefono(F.tel.value); });
 form.addEventListener('submit', function (ev) {
   ev.preventDefault(); submitted = true;
   var e = refreshErrors();
@@ -330,7 +312,7 @@ form.addEventListener('submit', function (ev) {
   if (F.msg.value.trim()) lines.push(t.waMsg + F.msg.value.trim());
   var url = waUrl(lines.join('\n'));
   $('form-wa').href = url;
-  openWhatsApp(url);
+  openWhatsApp(url, { telefono: F.tel.value, nombre: F.nombre.value.trim(), tramite: tramTxt, origen: 'formulario' });
   form.hidden = true; $('form-ok').hidden = false; $('form-ok').focus && $('form-ok').setAttribute('tabindex', '-1'); $('form-ok').focus();
   $('exit').hidden = true; exitDone = true;
 });
