@@ -27,7 +27,7 @@
     try {
       d.dataset.theme = localStorage.getItem('gp-theme') || 'light';
       d.dataset.lang = localStorage.getItem('gp-lang') || 'es';
-      d.dataset.pal = localStorage.getItem('gp-pal') || '1';
+      d.dataset.pal = '1';
       d.dataset.intro = sessionStorage.getItem('gp-intro') ? 'no' : 'si';
     } catch (e) { d.dataset.lang = 'es'; d.dataset.intro = 'si'; }
   })();

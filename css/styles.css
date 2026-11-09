@@ -1,8 +1,5 @@
 /* Paletas de color (provisional): cambian con el selector */
-:root,html[data-pal="1"]{--c-dark:#141C1E;--c-deep:#0E1415;--c-raised_d:#1E282B;--c-line_d:#2C3739;--c-plate:#0B0F10;--c-plateb1:#3B4648;--c-plateb2:#57625F;--c-seg:#7A8587;--c-acc:#EBCB4F;--c-acc_h:#F3D96E;--c-oro:#DDCC97;--c-oro_d:#9A7B1E;--c-ocre:#7A6213;--c-marfil:#F6F3EC;--c-arena:#ECE7DC;--c-line_l:#DCD5C6;--c-gris:#4F5A5C;--c-gris_c:#A9B2B3;--c-niebla:#C9D0D0;--c-niebla2:#D3D8D8;--c-tachado:#5F696B;--c-coy:#1A2224;--c-sk1:#E6E0D3;--c-sk2:#F1ECE2;--rgb-dark:20,28,30;--rgb-marfil:246,243,236}
-html[data-pal="2"]{--c-dark:#283321;--c-deep:#1C2417;--c-raised_d:#33402A;--c-line_d:#46553A;--c-plate:#151B10;--c-plateb1:#45523A;--c-plateb2:#66755A;--c-seg:#8E9A80;--c-acc:#C9A961;--c-acc_h:#D6BB7B;--c-oro:#DCCDA4;--c-oro_d:#76602A;--c-ocre:#5A461B;--c-marfil:#F1F2E8;--c-arena:#DEE2CD;--c-line_l:#C9CEB6;--c-gris:#465040;--c-gris_c:#B4BBA6;--c-niebla:#CDD3C2;--c-niebla2:#D9DECF;--c-tachado:#545C4A;--c-coy:#2F3B27;--c-sk1:#D4D8C2;--c-sk2:#E6E9DA;--rgb-dark:40,51,33;--rgb-marfil:241,242,232}
-html[data-pal="3"]{--c-dark:#0F2A33;--c-deep:#0A1F26;--c-raised_d:#173A45;--c-line_d:#24505D;--c-plate:#08181E;--c-plateb1:#2B4A55;--c-plateb2:#4C6C77;--c-seg:#7D98A1;--c-acc:#D9925B;--c-acc_h:#E3A676;--c-oro:#E2C4A6;--c-oro_d:#8E5229;--c-ocre:#7E421A;--c-marfil:#FAF4EE;--c-arena:#F0E0D2;--c-line_l:#E2CDBB;--c-gris:#445459;--c-gris_c:#A7B8BE;--c-niebla:#C7D4D8;--c-niebla2:#D2DEE1;--c-tachado:#56656A;--c-coy:#16353F;--c-sk1:#EAD7C7;--c-sk2:#F5EBE1;--rgb-dark:15,42,51;--rgb-marfil:250,244,238}
-html[data-pal="4"]{--c-dark:#13294B;--c-deep:#0C1D38;--c-raised_d:#1C3762;--c-line_d:#2B4A7A;--c-plate:#0A1830;--c-plateb1:#2E4A72;--c-plateb2:#4F6A92;--c-seg:#8297BA;--c-acc:#6CC6EA;--c-acc_h:#8DD4F0;--c-oro:#A9D8EC;--c-oro_d:#2C79A0;--c-ocre:#1D5D80;--c-marfil:#FFFFFE;--c-arena:#E8F0F9;--c-line_l:#D3DFEC;--c-gris:#475870;--c-gris_c:#AEBBD0;--c-niebla:#C9D3E2;--c-niebla2:#D6DEEA;--c-tachado:#57667A;--c-coy:#1E3A66;--c-sk1:#DCE6F2;--c-sk2:#EDF3FA;--rgb-dark:19,41,75;--rgb-marfil:255,255,254}
+:root{--c-dark:#141C1E;--c-deep:#0E1415;--c-raised_d:#1E282B;--c-line_d:#2C3739;--c-plate:#0B0F10;--c-plateb1:#3B4648;--c-plateb2:#57625F;--c-seg:#7A8587;--c-acc:#EBCB4F;--c-acc_h:#F3D96E;--c-oro:#DDCC97;--c-oro_d:#9A7B1E;--c-ocre:#7A6213;--c-marfil:#F6F3EC;--c-arena:#ECE7DC;--c-line_l:#DCD5C6;--c-gris:#4F5A5C;--c-gris_c:#A9B2B3;--c-niebla:#C9D0D0;--c-niebla2:#D3D8D8;--c-tachado:#5F696B;--c-coy:#1A2224;--c-sk1:#E6E0D3;--c-sk2:#F1ECE2;--rgb-dark:20,28,30;--rgb-marfil:246,243,236}
 /* Gestoría Paredes — estilos */
 body{margin:0}
 html{scroll-behavior:smooth}
@@ -234,21 +231,6 @@ body.menu-open{overflow:hidden}
 .step-text{margin:8px 0 0;font-size:16px;line-height:26px;color:var(--c-niebla);max-width:32em}
 @media (max-width:640px){.step{grid-template-columns:55px minmax(0,1fr);gap:0 21px}.step-plate{width:55px;height:55px;font-size:21px}.step:not(:last-child)::before{left:26px}.step-title{font-size:21px;line-height:26px}}
 
-/* selector de paletas (provisional) */
-.pal-fab{position:fixed;left:24px;bottom:89px;z-index:46;width:55px;height:55px;border-radius:999px;border:1px solid var(--c-acc);background:var(--c-acc);color:var(--c-dark);display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 14px 30px -12px rgba(0,0,0,.45);transition:transform .2s cubic-bezier(.2,.7,.2,1);animation:pop .5s cubic-bezier(.2,.7,.2,1) 2.1s both}
-.pal-fab:hover{transform:translateY(-3px)}
-.pal-fab:active{transform:scale(.95)}
-.pal-panel{position:fixed;left:24px;bottom:155px;z-index:47;width:min(300px,calc(100% - 48px));background:var(--raised);color:var(--ink);border:1px solid var(--line);border-radius:8px;padding:13px;box-shadow:0 24px 48px -20px rgba(0,0,0,.55);animation:pop .3s cubic-bezier(.2,.7,.2,1) both}
-.pal-title{margin:0 0 8px;padding:0 8px;font:600 13px/21px "Poppins",sans-serif;letter-spacing:.06em}
-.pal-title span{font-weight:400;color:var(--muted)}
-.pal-list{display:flex;flex-direction:column;gap:5px}
-.pal-opt{display:flex;align-items:center;gap:13px;width:100%;min-height:44px;padding:8px;border-radius:5px;border:1px solid transparent;background:transparent;color:var(--ink);font:500 13px/1.3 "Poppins",sans-serif;text-align:left;cursor:pointer;transition:background-color .2s ease,border-color .2s ease}
-.pal-opt:hover{background:var(--sunken)}
-.pal-opt[aria-pressed="true"]{border-color:var(--ink)}
-.pal-sw{display:flex;flex:none}
-.pal-sw i{width:21px;height:21px;border-radius:999px;border:2px solid var(--raised);margin-left:-5px}
-.pal-sw i:first-child{margin-left:0}
-@media (max-width:900px){.pal-fab{left:16px;bottom:68px;width:44px;height:44px}.pal-panel{left:16px;bottom:121px}}
 
 /* celular y tableta: el carro funciona como fondo, igual que en escritorio */
 @media (max-width:1100px){.scrim{display:block;background:linear-gradient(180deg,rgba(var(--rgb-dark),.1) 0%,rgba(var(--rgb-dark),.35) 32%,rgba(var(--rgb-dark),.8) 55%,rgba(var(--rgb-dark),1) 72%),linear-gradient(90deg,rgba(var(--rgb-dark),.55) 0%,rgba(var(--rgb-dark),0) 75%)}}

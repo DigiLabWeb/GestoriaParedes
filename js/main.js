@@ -336,23 +336,6 @@ document.addEventListener('mouseleave', function (e) {
 });
 $('exit-close').addEventListener('click', function () { $('exit').hidden = true; });
 
-/* ---------- paletas de color (provisional) ---------- */
-var palFab = $('pal-fab'), palPanel = $('pal-panel');
-function applyPalette(key) {
-  if (!/^[1-4]$/.test(key)) key = '1';
-  html.dataset.pal = key; store.set('gp-pal', key);
-  var base = 'img/paletas/' + key + '/';
-  document.querySelectorAll('img[src$="coyote-blanco.png"]').forEach(function (im) { im.src = base + 'coyote-blanco.png'; });
-  document.querySelectorAll('source[data-car="desk"]').forEach(function (s) { s.srcset = base + 'hero-auto.webp'; });
-  document.querySelectorAll('source[data-car="mob"]').forEach(function (s) { s.srcset = base + 'hero-auto-movil.webp'; });
-  document.querySelectorAll('.pal-opt').forEach(function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-pal') === key ? 'true' : 'false'); });
-}
-function setPalPanel(open) { palPanel.hidden = !open; palFab.setAttribute('aria-expanded', open ? 'true' : 'false'); }
-palFab.addEventListener('click', function () { setPalPanel(palPanel.hidden); });
-document.querySelectorAll('.pal-opt').forEach(function (b) { b.addEventListener('click', function () { applyPalette(b.getAttribute('data-pal')); }); });
-document.addEventListener('click', function (e) { if (!palPanel.hidden && !palPanel.contains(e.target) && !palFab.contains(e.target)) setPalPanel(false); });
-document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !palPanel.hidden) { setPalPanel(false); palFab.focus(); } });
-applyPalette(html.dataset.pal || '1');
 
 /* ---------- inicio ---------- */
 var y = $('year'); if (y) y.textContent = new Date().getFullYear();
