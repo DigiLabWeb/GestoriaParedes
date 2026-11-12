@@ -16,8 +16,11 @@ var ETIQUETAS = ['984 115 6912', '984 202 1770'];
 var MAX_MB = 25;
 
 var USUARIOS = [
-  { usuario: 'tomas paredes', nombre: 'Tomás Paredes', sal: '8be6b209d55f46af', huella: '04b1d9f6f225937eb3c8ee9ab5ba57a1d8cc369455e736fe9f9297567b52f2e6' },
-  { usuario: 'justino tapia', nombre: 'Justino Tapia', sal: '19e23e32e4006f5b', huella: 'ac8798a1954dccce89a1661b1ce27eb511334256c94cf7c03c7b2f2a7a722037' }
+  { usuario: 'tapia', nombre: 'Justino Tapia', sal: 'af88f632973f3fac', huella: 'bb68ec86acb865554ed39e08fc80d3670dea98fab3fd92410f4029b0c9cf83ed' },
+  { usuario: 'justino tapia', nombre: 'Justino Tapia', sal: 'af88f632973f3fac', huella: 'bb68ec86acb865554ed39e08fc80d3670dea98fab3fd92410f4029b0c9cf83ed' },
+  { usuario: 'tomas', nombre: 'Tomás Paredes', sal: '295021d04519d534', huella: '151908fed74120a3641c91baafb4ea6c7c879ca7e688b3ea213f391a07aa58af' },
+  { usuario: 'tomas paredes', nombre: 'Tomás Paredes', sal: '295021d04519d534', huella: '151908fed74120a3641c91baafb4ea6c7c879ca7e688b3ea213f391a07aa58af' },
+  { usuario: 'gael', nombre: 'Gael', sal: '5352212634773397', huella: '2628705ffb1ae215c404b37eea72893c216ca23853b36de430da62cf4927487b' }
 ];
 var HORAS_SESION = 12;
 
