@@ -7,7 +7,7 @@
  */
 (function () {
   var CFG = window.GP_CONFIG || {};
-  var NUMEROS = CFG.numeros || ['529841156912', '529842021770'];
+  var NUMEROS = CFG.numeros || ['529841297165', '529842021770'];
   var ENDPOINT = CFG.endpoint || '';
 
   var K_AG = 'gp-wa-numero', K_DEV = 'gp-wa-dispositivo';

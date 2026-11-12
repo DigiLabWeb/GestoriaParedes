@@ -1,7 +1,7 @@
 /* Gestoría Paredes — interacción del sitio (sin dependencias) */
 (function () {
 'use strict';
-var WA = (window.GP_CONFIG && window.GP_CONFIG.numeros[0]) || '529841156912';
+var WA = (window.GP_CONFIG && window.GP_CONFIG.numeros[0]) || '529841297165';
 var REQ = window.GP_REQ;
 var ORDER = window.GP_REQ_ORDER;
 var TXT = {

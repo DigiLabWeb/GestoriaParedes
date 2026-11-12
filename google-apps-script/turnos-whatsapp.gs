@@ -11,8 +11,8 @@
 var HOJA = 'Clientes';
 var HOJA_EXP = 'Expedientes';
 var CARPETA = 'Gestoría Paredes — Expedientes';
-var NUMEROS = ['529841156912', '529842021770'];
-var ETIQUETAS = ['984 115 6912', '984 202 1770'];
+var NUMEROS = ['529841297165', '529842021770'];
+var ETIQUETAS = ['984 129 7165', '984 202 1770'];
 var MAX_MB = 25;
 
 var USUARIOS = [
