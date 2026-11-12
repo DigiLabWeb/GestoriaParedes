@@ -29,7 +29,6 @@ window.GP_REQ = {
       { es: 'EN TODOS LOS CASOS', en: 'ALL CASES', items: [
         ['Factura original, carta factura o título de propiedad (endosado si es usado)', 'Original invoice, invoice letter or title (endorsed if used)'],
         ['INE o pasaporte vigente', 'Valid INE voter ID or passport'],
-        ['CURP', 'CURP'],
         ['Comprobante de domicilio en Quintana Roo, reciente', 'Recent proof of address in Quintana Roo'],
         ['Inscripción en el Registro Estatal de Contribuyentes (REC)', 'Registration in the State Taxpayer Registry (REC)']
       ] },
@@ -61,7 +60,8 @@ window.GP_REQ = {
       { es: 'DEL COMPRADOR', en: 'BUYER', items: [
         ['INE o pasaporte vigente', 'Valid INE voter ID or passport'],
         ['Licencia de conducir vigente', 'Valid driver license'],
-        ['CURP y RFC', 'CURP and RFC'],
+        ['RFC', 'RFC'],
+        ['Inscripción en el Registro Estatal de Contribuyentes (REC)', 'Registration in the State Taxpayer Registry (REC)'],
         ['Comprobante de domicilio a su nombre, no mayor a 60 días', 'Proof of address in your name, under 60 days old'],
         ['Teléfono y correo electrónico', 'Phone number and email']
       ] }
