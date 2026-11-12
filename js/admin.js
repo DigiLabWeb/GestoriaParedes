@@ -17,6 +17,7 @@
   function api(body) {
     if (!CFG.endpoint) return Promise.reject(new Error('Falta la dirección del servidor en js/config.js.'));
     return fetch(CFG.endpoint, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(body), redirect: 'follow' })
+      .catch(function () { throw new Error('No hubo respuesta del servidor de Google. Revise que el script esté publicado en su versión más reciente (Implementar → Gestionar implementaciones → Versión nueva) y con acceso para "Cualquier usuario".'); })
       .then(function (r) { return r.text(); })
       .then(function (t) { try { return JSON.parse(t); } catch (e) { throw new Error('El servidor de Google no respondió como se esperaba. Revise que la implementación tenga acceso para "Cualquier usuario".'); } });
   }

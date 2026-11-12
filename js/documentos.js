@@ -49,7 +49,7 @@
     return new Promise(function (ok, no) { var im = new Image(); im.onload = function () { ok(im); }; im.onerror = no; im.src = url; });
   }
 
-  function agregar(files) {
+  function agregar(files, opciones) {
     var lista = Array.prototype.slice.call(files || []);
     lista.forEach(function (f) {
       if (items.length >= MAX_ARCHIVOS) { aviso('Puede subir hasta ' + MAX_ARCHIVOS + ' archivos.'); return; }
@@ -57,9 +57,13 @@
       var it = { id: ++seq, file: f, name: f.name || 'foto.jpg', kind: esPdf(f) ? 'pdf' : 'img', rot: 0, pages: 0, estado: 'cargando' };
       items.push(it);
       if (it.kind === 'img') {
-        it.url = URL.createObjectURL(f);
-        cargarImagen(it.url).then(function (im) { it.w = im.naturalWidth; it.h = im.naturalHeight; it.pages = 1; it.estado = 'ok'; pintar(); })
-          .catch(function () { it.estado = 'error'; it.msg = 'Este formato de imagen no se puede leer. Tómele foto desde aquí o súbalo en JPG o PDF.'; pintar(); });
+        it.orig = URL.createObjectURL(f);
+        cargarImagen(it.orig).then(function (im) {
+          it.img = im; it.pages = 1; it.modo = 'gris';
+          it.quad = window.GPScan ? window.GPScan.detectar(im) : [[0, 0], [im.naturalWidth, 0], [im.naturalWidth, im.naturalHeight], [0, im.naturalHeight]];
+          if (opciones && opciones.editar && lista.length === 1) return ajustar(it, true);
+          return escanear(it);
+        }).catch(function () { it.estado = 'error'; it.msg = 'Este formato de imagen no se puede leer. Tómele foto desde aquí o súbalo en JPG o PDF.'; pintar(); validar(false); });
       } else {
         f.arrayBuffer().then(function (buf) { it.buf = buf; return PDFLib.PDFDocument.load(buf, { ignoreEncryption: true }); })
           .then(function (doc) { it.pages = doc.getPageCount(); it.estado = 'ok'; pintar(); })
@@ -69,8 +73,30 @@
     pintar(); validar(false);
   }
 
+  // Convierte la foto en escaneo (enderezada, recortada y limpia).
+  function escanear(it) {
+    it.estado = 'cargando'; it.msg = 'Escaneando…'; pintar();
+    return new Promise(function (ok) { setTimeout(ok, 30); }).then(function () {
+      if (!window.GPScan) return null;
+      var cv = window.GPScan.procesar(it.img, it.quad, it.modo);
+      return new Promise(function (ok) { cv.toBlob(ok, 'image/jpeg', 0.88); });
+    }).then(function (blob) {
+      if (it.url && it.url !== it.orig) URL.revokeObjectURL(it.url);
+      it.url = blob ? URL.createObjectURL(blob) : it.orig;
+      it.estado = 'ok'; it.msg = ''; pintar(); validar(false);
+    }).catch(function () { it.url = it.orig; it.estado = 'ok'; pintar(); validar(false); });
+  }
+  function ajustar(it, nuevo) {
+    if (!window.GPScan || !it.img) return Promise.resolve();
+    return window.GPScan.editor(it.img, { quad: it.quad, modo: it.modo }).then(function (r) {
+      if (r) { it.quad = r.quad; it.modo = r.modo; return escanear(it); }
+      if (nuevo) return escanear(it);
+      var b = document.querySelector('[data-id="' + it.id + '"] [data-ajustar]'); if (b) b.focus();
+    });
+  }
+
   function quitar(id) {
-    items = items.filter(function (it) { if (it.id === id && it.url) URL.revokeObjectURL(it.url); return it.id !== id; });
+    items = items.filter(function (it) { if (it.id === id) { if (it.url) URL.revokeObjectURL(it.url); if (it.orig) URL.revokeObjectURL(it.orig); } return it.id !== id; });
     pintar(); validar(false);
   }
   function mover(id, d) {
@@ -88,6 +114,7 @@
   var ICO = {
     up: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m18 15-6-6-6 6"/></svg>',
     down: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>',
+    crop: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2v14a2 2 0 0 0 2 2h14"/><path d="M18 22V8a2 2 0 0 0-2-2H2"/></svg>',
     rot: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-3-6.7L21 8"/><path d="M21 3v5h-5"/></svg>',
     del: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M8 6V4h8v2"/><path d="M6 6l1 14h10l1-14"/></svg>'
   };
@@ -98,18 +125,22 @@
       var li = document.createElement('li'); li.className = 'doc-it' + (it.estado === 'error' ? ' bad' : ''); li.setAttribute('data-id', it.id);
       var n = document.createElement('span'); n.className = 'it-n'; n.textContent = (i < 9 ? '0' : '') + (i + 1);
       var th = document.createElement('div'); th.className = 'it-th';
-      if (it.kind === 'img' && it.url && it.estado !== 'error') {
+      if (it.kind === 'img' && it.estado === 'cargando') { th.innerHTML = '<span class="mini-spin" aria-hidden="true"></span>'; }
+      else if (it.kind === 'img' && it.url && it.estado !== 'error') {
         var im = document.createElement('img'); im.src = it.url; im.alt = ''; im.style.transform = 'rotate(' + it.rot + 'deg)'; th.appendChild(im);
+        if (it.img) { th.classList.add('clic'); th.title = 'Ajustar escaneo'; th.addEventListener('click', function () { ajustar(it); }); }
       } else { th.innerHTML = '<span class="pdf-tag">' + (it.kind === 'pdf' ? 'PDF' : 'IMG') + '</span>'; }
       var tx = document.createElement('div'); tx.className = 'it-tx';
       var nm = document.createElement('p'); nm.className = 'it-nm'; nm.textContent = it.name;
       var mt = document.createElement('p'); mt.className = 'it-mt';
-      mt.textContent = it.estado === 'cargando' ? 'Revisando…' : it.estado === 'error' ? it.msg : (it.pages + (it.pages === 1 ? ' página' : ' páginas') + ' · ' + kb(it.file.size));
+      var MODO_TXT = { gris: 'Escaneada', color: 'Escaneada a color', bn: 'Escaneada en blanco y negro' };
+      mt.textContent = it.estado === 'cargando' ? (it.msg || 'Revisando…') : it.estado === 'error' ? it.msg : it.kind === 'img' ? (MODO_TXT[it.modo] || 'Imagen') + ' · 1 página' : (it.pages + (it.pages === 1 ? ' página' : ' páginas') + ' · ' + kb(it.file.size));
       tx.appendChild(nm); tx.appendChild(mt);
       var ac = document.createElement('div'); ac.className = 'it-ac';
       var up = boton(ICO.up, 'Subir «' + it.name + '»', function () { mover(it.id, -1); }, { 'data-mv': '-1' }); up.disabled = i === 0;
       var dn = boton(ICO.down, 'Bajar «' + it.name + '»', function () { mover(it.id, 1); }, { 'data-mv': '1' }); dn.disabled = i === items.length - 1;
       ac.appendChild(up); ac.appendChild(dn);
+      if (it.kind === 'img' && it.estado === 'ok' && it.img) ac.appendChild(boton(ICO.crop, 'Ajustar escaneo de «' + it.name + '»', function () { ajustar(it); }, { 'data-ajustar': '' }));
       if (it.kind === 'img' && it.estado === 'ok') ac.appendChild(boton(ICO.rot, 'Girar «' + it.name + '»', function () { it.rot = (it.rot + 90) % 360; pintar(); }));
       ac.appendChild(boton(ICO.del, 'Quitar «' + it.name + '»', function () { quitar(it.id); }));
       li.appendChild(n); li.appendChild(th); li.appendChild(tx); li.appendChild(ac); ol.appendChild(li);
@@ -124,7 +155,7 @@
   function aviso(msg) { var e = $('e-d-docs'); e.textContent = msg; e.hidden = false; clearTimeout(aviso.t); aviso.t = setTimeout(function () { validar(false); }, 5000); }
 
   $('in-files').addEventListener('change', function () { agregar(this.files); this.value = ''; });
-  $('in-cam').addEventListener('change', function () { agregar(this.files); this.value = ''; });
+  $('in-cam').addEventListener('change', function () { agregar(this.files, { editar: true }); this.value = ''; });
   var dz = $('drop');
   ['dragenter', 'dragover'].forEach(function (ev) { dz.addEventListener(ev, function (e) { e.preventDefault(); dz.classList.add('on'); }); });
   ['dragleave', 'drop'].forEach(function (ev) { dz.addEventListener(ev, function (e) { e.preventDefault(); dz.classList.remove('on'); }); });
@@ -280,7 +311,7 @@
 
   Array.prototype.forEach.call(document.querySelectorAll('[data-reiniciar]'), function (b) {
     b.addEventListener('click', function () {
-      items.forEach(function (it) { if (it.url) URL.revokeObjectURL(it.url); });
+      items.forEach(function (it) { if (it.url) URL.revokeObjectURL(it.url); if (it.orig) URL.revokeObjectURL(it.orig); });
       items = []; ultimo = null; intento = false; $('doc-form').reset(); pintar(); pintarNecesita(); validar(false); ver('doc-pasos'); F.nombre.focus();
     });
   });

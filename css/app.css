@@ -208,3 +208,39 @@
   .adm-acts{justify-content:flex-start;margin-top:8px}
   .adm-frame{margin:0}
 }
+
+/* ================= Escáner de fotos ================= */
+.it-th.clic{cursor:pointer;outline:1px solid transparent;transition:outline-color .2s ease}
+.it-th.clic:hover{outline-color:var(--c-oro_d)}
+.mini-spin{width:21px;height:21px;border-radius:999px;border:2px solid var(--line);border-top-color:var(--c-oro_d);animation:gp-spin .9s linear infinite}
+.scn{position:fixed;inset:0;z-index:90;display:flex;flex-direction:column;background:var(--c-deep);color:var(--c-marfil);font-family:"Poppins",system-ui,sans-serif}
+.scn-top{display:flex;align-items:flex-start;justify-content:space-between;gap:13px;padding:13px 21px}
+.scn-t{margin:0;font:600 21px/1.2 "Oswald",sans-serif;text-transform:uppercase;letter-spacing:.02em}
+.scn-s{margin:3px 0 0;font-size:13px;line-height:19px;color:var(--c-niebla)}
+.scn-s.bad{color:#FF9A8F}
+.scn .ib{color:var(--c-marfil)}
+.scn .ib:hover{background:var(--c-raised_d)}
+.scn-stage{flex:1;min-height:0;display:grid;place-items:center;padding:17px;touch-action:none}
+.scn-box{position:relative}
+.scn-img{display:block;border-radius:3px}
+.scn-svg{position:absolute;inset:0;overflow:visible;touch-action:none;cursor:crosshair}
+.scn-sombra{fill:rgba(14,20,21,.55)}
+.scn-borde{fill:none;stroke:#EBCB4F;stroke-width:2}
+.scn-hit{fill:transparent;cursor:grab}
+.scn-dot{fill:rgba(235,203,79,.25);stroke:#EBCB4F;stroke-width:3;pointer-events:none}
+.scn-h:focus{outline:none}
+.scn-h:focus .scn-dot{stroke:#fff;stroke-width:4}
+.scn-lupa{position:absolute;width:120px;height:120px;border-radius:999px;border:3px solid #EBCB4F;box-shadow:0 8px 21px rgba(0,0,0,.5);pointer-events:none;background:#000}
+.scn-bar{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:13px;padding:13px 21px 21px;border-top:1px solid var(--c-line_d)}
+.scn-modos{display:inline-flex;padding:3px;border-radius:5px;background:var(--c-raised_d)}
+.scn-modos button{min-height:40px;padding:0 13px;border:0;border-radius:3px;background:transparent;color:var(--c-niebla);font:500 13px/1 "Poppins",sans-serif;cursor:pointer}
+.scn-modos button[aria-checked="true"]{background:var(--c-marfil);color:var(--c-dark)}
+.scn-acts{display:flex;gap:8px}
+.gp .scn .btn-o,.scn .btn-o{background:transparent;color:var(--c-marfil);border:1px solid var(--c-gris_c)}
+.scn .btn{min-height:44px;font-size:14px}
+.scn .btn-y{background:#EBCB4F;color:#141C1E;border:1px solid #EBCB4F}
+@media (max-width:600px){
+  .scn-bar{flex-direction:column;align-items:stretch}
+  .scn-modos{display:flex}.scn-modos button{flex:1}
+  .scn-acts .btn{flex:1}
+}
