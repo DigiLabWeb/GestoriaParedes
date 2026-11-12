@@ -84,6 +84,9 @@
       var o = document.createElement('option'); o.value = p[0]; o.textContent = p[1]; sel.appendChild(o);
     });
     sel.value = cur;
+    var se = $('f-est'), ce = se.value; se.textContent = '';
+    [''].concat(datos.estados || []).forEach(function (x) { var o = document.createElement('option'); o.value = x; o.textContent = x || 'Todos los estados'; se.appendChild(o); });
+    se.value = ce;
   }
 
   function fecha(ms) {
@@ -114,33 +117,40 @@
     var q = norm($('f-q').value.trim()), at = $('f-at').value, qd = q.replace(/\D/g, '');
     var vis = ex.filter(function (e) {
       if (at && e.atiende !== at) return false;
+      var fe = $('f-est').value; if (fe && (e.estado || 'Nuevo') !== fe) return false;
       if (!q) return true;
-      return norm(e.folio).indexOf(q) >= 0 || norm(e.nombre).indexOf(q) >= 0 || (qd.length >= 3 && String(e.tel).indexOf(qd) >= 0) || norm(e.tramite).indexOf(q) >= 0;
+      return norm(e.folio).indexOf(q) >= 0 || norm(e.nombre).indexOf(q) >= 0 || norm(e.doc).indexOf(q) >= 0 || (qd.length >= 3 && String(e.tel).indexOf(qd) >= 0) || norm(e.tramite).indexOf(q) >= 0;
     });
     var tb = $('t-body'); tb.textContent = '';
     vis.forEach(function (e) {
       var tr = document.createElement('tr');
-      var nuevo = !e.estado || e.estado === 'Nuevo';
+      var est = e.estado || 'Nuevo';
       tr.innerHTML =
-        '<td><span class="adm-folio"></span>' + (nuevo ? '<span class="adm-nuevo">NUEVO</span>' : '') + '</td>' +
+        '<td><span class="adm-folio"></span><span class="adm-est"></span></td>' +
         '<td><span class="adm-nombre"></span><span class="adm-sub tel"></span></td>' +
-        '<td><span class="tram"></span><span class="adm-sub pags"></span></td>' +
+        '<td class="adm-doc-c"><span class="adm-doc"></span><span class="adm-sub pags"></span></td>' +
         '<td><span class="adm-chip"><b></b><span class="at"></span></span></td>' +
-        '<td><span class="fe"></span><span class="adm-sub est"></span></td>' +
-        '<td><div class="adm-acts"><button type="button" class="btn btn-o" data-ver>Ver</button><button type="button" class="btn btn-y" data-desc>Descargar</button></div></td>';
+        '<td><span class="fe"></span></td>' +
+        '<td><div class="adm-acts">' +
+          '<button type="button" class="btn btn-o" data-ver>Ver</button>' +
+          '<button type="button" class="btn btn-y" data-desc>Descargar</button>' +
+          '<button type="button" class="ib" data-edit>' + ICO_EDIT + '</button>' +
+          '<button type="button" class="ib ib-del" data-del>' + ICO_DEL + '</button>' +
+        '</div></td>';
       tr.querySelector('.adm-folio').textContent = e.folio;
+      var ce = tr.querySelector('.adm-est'); ce.textContent = est; ce.className = 'adm-est est-' + slug(est);
       tr.querySelector('.adm-nombre').textContent = e.nombre;
       tr.querySelector('.tel').textContent = telFmt(e.tel);
-      tr.querySelector('.tram').textContent = e.tramite;
-      tr.querySelector('.pags').textContent = (e.paginas ? e.paginas + ' págs. · ' : '') + (e.kb ? (e.kb > 1024 ? (e.kb / 1024).toFixed(1) + ' MB' : e.kb + ' KB') : '');
+      tr.querySelector('.adm-doc').textContent = e.doc || (e.folio + '.pdf');
+      tr.querySelector('.pags').textContent = e.tramite + (e.paginas ? ' · ' + e.paginas + ' págs.' : '') + (e.kb ? ' · ' + (e.kb > 1024 ? (e.kb / 1024).toFixed(1) + ' MB' : e.kb + ' KB') : '');
       tr.querySelector('.adm-chip b').style.background = colorDe(e.atiende);
       tr.querySelector('.at').textContent = e.atiende;
       tr.querySelector('.fe').textContent = fecha(e.fecha);
-      tr.querySelector('.est').textContent = nuevo ? '' : e.estado;
-      tr.querySelector('[data-ver]').setAttribute('aria-label', 'Ver ' + e.folio);
-      tr.querySelector('[data-desc]').setAttribute('aria-label', 'Descargar ' + e.folio);
+      [['[data-ver]', 'Ver '], ['[data-desc]', 'Descargar '], ['[data-edit]', 'Editar '], ['[data-del]', 'Eliminar ']].forEach(function (p) { var b = tr.querySelector(p[0]); b.setAttribute('aria-label', p[1] + e.folio); b.title = p[1].trim(); });
       tr.querySelector('[data-ver]').addEventListener('click', function () { abrir(e.folio); });
       tr.querySelector('[data-desc]').addEventListener('click', function () { descargar(e.folio, this); });
+      tr.querySelector('[data-edit]').addEventListener('click', function () { editar(e, this); });
+      tr.querySelector('[data-del]').addEventListener('click', function () { eliminar(e, this); });
       tb.appendChild(tr);
     });
     var vacio = $('t-empty');
@@ -149,6 +159,79 @@
   }
   $('f-q').addEventListener('input', pintar);
   $('f-at').addEventListener('change', pintar);
+  $('f-est').addEventListener('change', pintar);
+  var ICO_EDIT = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>';
+  var ICO_DEL = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18"/><path d="M8 6V4h8v2"/><path d="M6 6l1 14h10l1-14"/></svg>';
+  function slug(s) { return norm(s).replace(/[^a-z]+/g, '-'); }
+  var MESES = ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'];
+  function fechaCorta(ms) { var d = new Date(ms); return ('0' + d.getDate()).slice(-2) + '-' + MESES[d.getMonth()] + '-' + String(d.getFullYear()).slice(-2); }
+  function docAuto(nombre, tramite, ms) { return (nombre.trim() + ' - ' + tramite.trim() + ' - ' + fechaCorta(ms)).replace(/[\\\/:*?"<>|#%{}~]+/g, ' ').replace(/\s+/g, ' ').trim(); }
+
+  /* ---------- diálogos: editar y eliminar ---------- */
+  var dlg = $('dlg'), dlgVolver = null;
+  function abrirDlg(html, foco) {
+    dlgVolver = document.activeElement; $('dlg-body').innerHTML = html; dlg.hidden = false; document.body.style.overflow = 'hidden';
+    setTimeout(function () { var f = $('dlg-body').querySelector(foco || 'input,select,button'); if (f) f.focus(); }, 30);
+  }
+  function cerrarDlg() { dlg.hidden = true; document.body.style.overflow = ''; $('dlg-body').innerHTML = ''; if (dlgVolver && dlgVolver.focus) dlgVolver.focus(); }
+  dlg.addEventListener('click', function (e) { if (e.target === dlg || e.target.closest('[data-cerrar]')) cerrarDlg(); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !dlg.hidden) cerrarDlg(); });
+  function esc(s) { var d = document.createElement('div'); d.textContent = s == null ? '' : String(s); return d.innerHTML; }
+
+  function editar(e) {
+    var ests = datos.estados || ['Nuevo', 'En revisión', 'Falta documentación', 'En trámite', 'Terminado'];
+    var docActual = (e.doc || '').replace(/\.pdf$/i, ''), manual = docActual && docActual !== docAuto(e.nombre, e.tramite, e.fecha);
+    abrirDlg(
+      '<p class="kicker">Expediente ' + esc(e.folio) + '</p><h2 id="dlg-t">Editar expediente</h2>' +
+      '<form id="ed-f" novalidate>' +
+      '<div class="fld"><label for="ed-doc">Nombre del documento</label><div class="adm-docfld"><input id="ed-doc" class="inp" value="' + esc(docActual) + '"><span>.pdf</span></div>' +
+      '<p class="adm-help" id="ed-help">' + (manual ? 'Nombre personalizado.' : 'Se arma solo con el nombre, el trámite y la fecha.') + '</p></div>' +
+      '<div class="doc-grid2"><div class="fld"><label for="ed-nom">Nombre del cliente</label><input id="ed-nom" class="inp" value="' + esc(e.nombre) + '"></div>' +
+      '<div class="fld"><label for="ed-tel">Teléfono</label><input id="ed-tel" class="inp" inputmode="numeric" value="' + esc(telFmt(e.tel)) + '"></div></div>' +
+      '<div class="fld"><label for="ed-tra">Trámite</label><input id="ed-tra" class="inp" value="' + esc(e.tramite) + '"></div>' +
+      '<div class="fld"><label for="ed-est">Estado</label><select id="ed-est" class="inp">' + ests.map(function (x) { return '<option' + (x === (e.estado || 'Nuevo') ? ' selected' : '') + '>' + esc(x) + '</option>'; }).join('') + '</select></div>' +
+      '<p class="adm-alert" id="ed-err" hidden></p>' +
+      '<div class="adm-dlg-acts"><button type="button" class="btn btn-o" data-cerrar>Cancelar</button><button type="submit" class="btn btn-y" id="ed-ok">Guardar cambios</button></div></form>', '#ed-doc');
+    var fDoc = $('ed-doc'), tocado = manual;
+    function auto() { if (!tocado) fDoc.value = docAuto($('ed-nom').value, $('ed-tra').value, e.fecha); }
+    fDoc.addEventListener('input', function () { tocado = true; $('ed-help').textContent = 'Nombre personalizado. Bórrelo para que se arme solo.'; if (!fDoc.value.trim()) { tocado = false; auto(); $('ed-help').textContent = 'Se arma solo con el nombre, el trámite y la fecha.'; } });
+    $('ed-nom').addEventListener('input', auto); $('ed-tra').addEventListener('input', auto);
+    $('ed-f').addEventListener('submit', function (ev) {
+      ev.preventDefault();
+      var b = $('ed-ok'), err = $('ed-err');
+      var body = { a: 'editar', token: ses.token, folio: e.folio, nombre: $('ed-nom').value, tel: $('ed-tel').value, tramite: $('ed-tra').value, estado: $('ed-est').value };
+      if (tocado) body.doc = fDoc.value;
+      b.disabled = true; b.textContent = 'Guardando…'; err.hidden = true;
+      api(body).then(function (j) {
+        if (sesionVencida(j)) { cerrarDlg(); return; }
+        if (!j.ok) throw new Error(j.error || 'No se pudo guardar.');
+        e.nombre = j.nombre; e.tel = j.tel; e.tramite = j.tramite; e.estado = j.estado; e.doc = j.doc;
+        if (cache[e.folio]) cache[e.folio].nombre = j.doc;
+        cerrarDlg(); pintar(); aviso('Cambios guardados en ' + e.folio + '.');
+      }).catch(function (x) { err.textContent = x.message; err.hidden = false; b.disabled = false; b.textContent = 'Guardar cambios'; });
+    });
+  }
+
+  function eliminar(e) {
+    abrirDlg(
+      '<p class="kicker" style="color:var(--err)">Eliminar</p><h2 id="dlg-t">¿Eliminar ' + esc(e.folio) + '?</h2>' +
+      '<p class="adm-dlg-p">Se quita de la lista el expediente de <b>' + esc(e.nombre) + '</b> (' + esc(e.tramite) + '). El PDF se manda a la papelera de Google Drive, donde se puede recuperar durante 30 días.</p>' +
+      '<p class="adm-alert" id="del-err" hidden></p>' +
+      '<div class="adm-dlg-acts"><button type="button" class="btn btn-o" data-cerrar>Cancelar</button><button type="button" class="btn adm-btn-del" id="del-ok">Eliminar</button></div>', '[data-cerrar]');
+    $('del-ok').addEventListener('click', function () {
+      var b = this; b.disabled = true; b.textContent = 'Eliminando…';
+      api({ a: 'borrar', token: ses.token, folio: e.folio }).then(function (j) {
+        if (sesionVencida(j)) { cerrarDlg(); return; }
+        if (!j.ok) throw new Error(j.error || 'No se pudo eliminar.');
+        datos.expedientes = datos.expedientes.filter(function (x) { return x.folio !== e.folio; });
+        if (cache[e.folio]) { URL.revokeObjectURL(cache[e.folio].url); delete cache[e.folio]; }
+        cerrarDlg(); pintar(); aviso(e.folio + ' eliminado.');
+      }).catch(function (x) { var er = $('del-err'); er.textContent = x.message; er.hidden = false; b.disabled = false; b.textContent = 'Eliminar'; });
+    });
+  }
+
+  var avisoT;
+  function aviso(t) { var a = $('toast'); a.textContent = t; a.hidden = false; clearTimeout(avisoT); avisoT = setTimeout(function () { a.hidden = true; }, 3500); }
 
   /* ---------- PDF ---------- */
   function obtener(folio) {
@@ -161,7 +244,7 @@
       var blob = new Blob([u8], { type: 'application/pdf' });
       cache[folio] = { url: URL.createObjectURL(blob), nombre: j.archivo || (folio + '.pdf') };
       var e = (datos.expedientes || []).filter(function (x) { return x.folio === folio; })[0];
-      if (e && (!e.estado || e.estado === 'Nuevo')) { e.estado = 'Visto por ' + ses.nombre; pintar(); }
+      if (e && (!e.estado || e.estado === 'Nuevo')) { e.estado = 'En revisión'; pintar(); }
       return cache[folio];
     });
   }

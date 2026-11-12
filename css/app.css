@@ -218,6 +218,7 @@
 .scn-t{margin:0;font:600 21px/1.2 "Oswald",sans-serif;text-transform:uppercase;letter-spacing:.02em}
 .scn-s{margin:3px 0 0;font-size:13px;line-height:19px;color:var(--c-niebla)}
 .scn-s.bad{color:#FF9A8F}
+.scn-n{margin:3px 0 0;font-size:12px;color:var(--c-acc);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:70vw}
 .scn .ib{color:var(--c-marfil)}
 .scn .ib:hover{background:var(--c-raised_d)}
 .scn-stage{flex:1;min-height:0;display:grid;place-items:center;padding:17px;touch-action:none}
@@ -244,3 +245,31 @@
   .scn-modos{display:flex}.scn-modos button{flex:1}
   .scn-acts .btn{flex:1}
 }
+
+/* ================= Panel: administrar expedientes ================= */
+.adm-est{display:block;width:max-content;margin-top:5px;padding:2px 8px;border-radius:999px;font-size:11px;font-weight:600;letter-spacing:.02em;background:var(--sunken);color:var(--ink)}
+.adm-est.est-nuevo{background:var(--c-acc);color:var(--c-dark)}
+.adm-est.est-en-revision{background:#E3ECF7;color:#1F3B63}
+.adm-est.est-falta-documentacion{background:#FCEDEC;color:var(--err)}
+.adm-est.est-en-tramite{background:#F3EAD3;color:#6B4E0E}
+.adm-est.est-terminado{background:#E3F2E8;color:var(--ok)}
+.adm-doc-c{max-width:340px}
+.adm-doc{display:block;font-weight:500;word-break:break-word}
+.adm-acts .ib{width:40px;height:40px;border:1px solid var(--line)}
+.adm-acts .ib-del:hover{color:var(--err);border-color:var(--err);background:#FCEDEC}
+.adm-dlg{position:fixed;inset:0;z-index:85;display:grid;place-items:center;padding:21px;background:rgba(var(--rgb-dark),.6)}
+.adm-dlg[hidden]{display:none}
+.adm-dlg-card{width:100%;max-width:560px;max-height:calc(100vh - 42px);overflow:auto;padding:34px}
+.adm-dlg-card h2{margin:0 0 21px;font:700 28px/1.1 "Oswald",sans-serif;text-transform:uppercase}
+.adm-dlg-p{margin:0 0 21px;font-size:15px;line-height:24px}
+.adm-dlg-acts{display:flex;justify-content:flex-end;gap:13px;margin-top:21px}
+.adm-dlg-acts .btn{min-height:48px;font-size:15px}
+.gp .adm-btn-del{background:var(--err);color:#fff;border:1px solid var(--err)}
+.gp .adm-btn-del:hover{background:#8F1E18}
+.adm-docfld{display:flex;align-items:center;gap:8px}
+.adm-docfld span{color:var(--muted);font-size:14px}
+.adm-help{margin:5px 0 0;font-size:12px;color:var(--muted)}
+.adm-toast{position:fixed;left:50%;bottom:34px;z-index:95;transform:translateX(-50%);padding:13px 21px;border-radius:5px;background:var(--c-dark);color:var(--c-marfil);font-size:14px;box-shadow:0 13px 34px rgba(0,0,0,.3)}
+.adm-toast[hidden]{display:none}
+@media (max-width:860px){.adm-acts{flex-wrap:wrap}.adm-doc-c{max-width:none}}
+@media (max-width:600px){.adm-dlg{padding:0;align-items:end}.adm-dlg-card{max-width:none;border-radius:13px 13px 0 0;padding:21px}.adm-dlg-acts .btn{flex:1}}

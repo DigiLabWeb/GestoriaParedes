@@ -59,10 +59,10 @@
       if (it.kind === 'img') {
         it.orig = URL.createObjectURL(f);
         cargarImagen(it.orig).then(function (im) {
-          it.img = im; it.pages = 1; it.modo = 'gris';
+          it.img = im; it.pages = 1; it.modo = 'color';
           it.quad = window.GPScan ? window.GPScan.detectar(im) : [[0, 0], [im.naturalWidth, 0], [im.naturalWidth, im.naturalHeight], [0, im.naturalHeight]];
-          if (opciones && opciones.editar && lista.length === 1) return ajustar(it, true);
-          return escanear(it);
+          it.msg = 'Esperando recorte…'; pintar();
+          return enCola(function () { return items.indexOf(it) >= 0 ? ajustar(it, true) : null; });
         }).catch(function () { it.estado = 'error'; it.msg = 'Este formato de imagen no se puede leer. Tómele foto desde aquí o súbalo en JPG o PDF.'; pintar(); validar(false); });
       } else {
         f.arrayBuffer().then(function (buf) { it.buf = buf; return PDFLib.PDFDocument.load(buf, { ignoreEncryption: true }); })
@@ -72,6 +72,11 @@
     });
     pintar(); validar(false);
   }
+
+  // Las fotos se recortan una por una, en el orden en que se agregaron.
+  var cola = Promise.resolve();
+  function enCola(fn) { cola = cola.then(fn).catch(function () {}); return cola; }
+  function pendientes() { return items.filter(function (x) { return x.kind === 'img' && x.estado === 'cargando' && x.msg === 'Esperando recorte…'; }).length; }
 
   // Convierte la foto en escaneo (enderezada, recortada y limpia).
   function escanear(it) {
@@ -88,9 +93,11 @@
   }
   function ajustar(it, nuevo) {
     if (!window.GPScan || !it.img) return Promise.resolve();
-    return window.GPScan.editor(it.img, { quad: it.quad, modo: it.modo }).then(function (r) {
+    var resto = nuevo ? pendientes() - 1 : 0;
+    var nota = '«' + it.name + '»' + (resto > 0 ? ' · faltan ' + resto + (resto === 1 ? ' foto' : ' fotos') + ' después de esta' : '');
+    return window.GPScan.editor(it.img, { quad: it.quad, modo: it.modo, nota: nota }).then(function (r) {
       if (r) { it.quad = r.quad; it.modo = r.modo; return escanear(it); }
-      if (nuevo) return escanear(it);
+      if (nuevo) { quitar(it.id); return; }
       var b = document.querySelector('[data-id="' + it.id + '"] [data-ajustar]'); if (b) b.focus();
     });
   }
@@ -133,7 +140,7 @@
       var tx = document.createElement('div'); tx.className = 'it-tx';
       var nm = document.createElement('p'); nm.className = 'it-nm'; nm.textContent = it.name;
       var mt = document.createElement('p'); mt.className = 'it-mt';
-      var MODO_TXT = { gris: 'Escaneada', color: 'Escaneada a color', bn: 'Escaneada en blanco y negro' };
+      var MODO_TXT = { color: 'Escaneada a color', gris: 'Escaneada en blanco y negro' };
       mt.textContent = it.estado === 'cargando' ? (it.msg || 'Revisando…') : it.estado === 'error' ? it.msg : it.kind === 'img' ? (MODO_TXT[it.modo] || 'Imagen') + ' · 1 página' : (it.pages + (it.pages === 1 ? ' página' : ' páginas') + ' · ' + kb(it.file.size));
       tx.appendChild(nm); tx.appendChild(mt);
       var ac = document.createElement('div'); ac.className = 'it-ac';
@@ -155,7 +162,7 @@
   function aviso(msg) { var e = $('e-d-docs'); e.textContent = msg; e.hidden = false; clearTimeout(aviso.t); aviso.t = setTimeout(function () { validar(false); }, 5000); }
 
   $('in-files').addEventListener('change', function () { agregar(this.files); this.value = ''; });
-  $('in-cam').addEventListener('change', function () { agregar(this.files, { editar: true }); this.value = ''; });
+  $('in-cam').addEventListener('change', function () { agregar(this.files); this.value = ''; });
   var dz = $('drop');
   ['dragenter', 'dragover'].forEach(function (ev) { dz.addEventListener(ev, function (e) { e.preventDefault(); dz.classList.add('on'); }); });
   ['dragleave', 'drop'].forEach(function (ev) { dz.addEventListener(ev, function (e) { e.preventDefault(); dz.classList.remove('on'); }); });
@@ -233,9 +240,10 @@
     return btoa(s);
   }
 
-  function nombreArchivo(folio) {
-    var limpio = F.nombre.value.trim().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^A-Za-z0-9]+/g, '-').replace(/^-|-$/g, '');
-    return (folio ? folio + '-' : '') + 'Expediente-' + (limpio || 'cliente') + '.pdf';
+  function nombreArchivo() {
+    var M = ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'], h = new Date();
+    var fecha = ('0' + h.getDate()).slice(-2) + '-' + M[h.getMonth()] + '-' + String(h.getFullYear()).slice(-2);
+    return (F.nombre.value.trim() + ' - ' + tramiteTexto() + ' - ' + fecha).replace(/[\\\/:*?"<>|#%{}~]+/g, ' ').replace(/\s+/g, ' ').trim() + '.pdf';
   }
 
   /* ---------- pantallas ---------- */
@@ -300,7 +308,7 @@
   function descargar() {
     if (!ultimo) return;
     var url = URL.createObjectURL(new Blob([ultimo.bytes], { type: 'application/pdf' }));
-    var a = document.createElement('a'); a.href = url; a.download = nombreArchivo(ultimo.folio);
+    var a = document.createElement('a'); a.href = url; a.download = nombreArchivo();
     document.body.appendChild(a); a.click(); a.remove(); setTimeout(function () { URL.revokeObjectURL(url); }, 60000);
   }
   $('ok-pdf').addEventListener('click', descargar);

@@ -84,11 +84,13 @@
       <input id="f-q" class="inp" type="search" placeholder="Buscar por folio, nombre o teléfono">
       <label class="vh" for="f-at">Atiende</label>
       <select id="f-at" class="inp"></select>
+      <label class="vh" for="f-est">Estado</label>
+      <select id="f-est" class="inp"></select>
     </div>
 
     <div class="doc-card adm-table-w">
       <table class="adm-table">
-        <thead><tr><th>Folio</th><th>Cliente</th><th>Trámite</th><th>Atiende</th><th>Recibido</th><th style="text-align:right">Documento</th></tr></thead>
+        <thead><tr><th>Folio</th><th>Cliente</th><th>Documento</th><th>Atiende</th><th>Recibido</th><th style="text-align:right">Acciones</th></tr></thead>
         <tbody id="t-body"></tbody>
       </table>
       <p id="t-empty" class="adm-empty" hidden></p>
@@ -97,6 +99,10 @@
 
   <!-- Cargando -->
   <div id="v-cargando" class="adm-login" hidden><div class="doc-state"><div class="spin" aria-hidden="true"></div><p class="st-s" role="status">Cargando…</p></div></div>
+
+  <!-- Diálogo editar / eliminar -->
+  <div id="dlg" class="adm-dlg" role="dialog" aria-modal="true" aria-labelledby="dlg-t" hidden><div class="doc-card adm-dlg-card" id="dlg-body"></div></div>
+  <div id="toast" class="adm-toast" role="status" hidden></div>
 
   <!-- Visor de PDF -->
   <div id="visor" class="adm-modal" role="dialog" aria-modal="true" aria-labelledby="v-folio" hidden>

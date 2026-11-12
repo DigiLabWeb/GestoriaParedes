@@ -3,7 +3,7 @@
  *
  * 1. Turnos de WhatsApp entre los dos números (hoja "Clientes").
  * 2. Recepción de expedientes en PDF (carpeta de Drive + hoja "Expedientes").
- * 3. Panel de administrador: inicio de sesión, lista de expedientes, ver y descargar PDF.
+ * 3. Panel de administrador: inicio de sesión, lista, ver, descargar, editar y borrar expedientes.
  *
  * Las contraseñas no se guardan en texto: solo su huella (SHA-256 con sal).
  */
@@ -46,6 +46,8 @@ function doPost(e) {
     else if (b.a === 'login') res = login_(b);
     else if (b.a === 'lista') res = lista_(b);
     else if (b.a === 'pdf') res = pdf_(b);
+    else if (b.a === 'editar') res = editar_(b);
+    else if (b.a === 'borrar') res = borrar_(b);
     else res = { ok: false, error: 'Acción no válida' };
   } catch (err) {
     res = { ok: false, error: String(err && err.message || err) };
@@ -141,11 +143,12 @@ function subir_(b) {
   try {
     var ag = buscar_(tel, b.d), nuevo = false;
     if (ag < 0) { ag = siguiente_(); nuevo = true; pasarTurno_(ag); }
-    var folio = nuevoFolio_();
-    var archivo = carpeta_().createFile(Utilities.newBlob(bytes, 'application/pdf', folio + ' - ' + nombre.slice(0, 60) + ' - ' + tramite.slice(0, 40) + '.pdf'));
+    var folio = nuevoFolio_(), ahora = new Date();
+    var doc = docNombre_(nombre, tramite, ahora);
+    var archivo = carpeta_().createFile(Utilities.newBlob(bytes, 'application/pdf', doc));
     hojaExp_().appendRow([
-      new Date(), folio, limpio_(nombre), "'" + tel, limpio_(tramite), ETIQUETAS[ag],
-      parseInt(b.paginas, 10) || '', Math.round(bytes.length / 1024), archivo.getId(), 'Nuevo'
+      ahora, folio, limpio_(nombre), "'" + tel, limpio_(tramite), ETIQUETAS[ag],
+      parseInt(b.paginas, 10) || '', Math.round(bytes.length / 1024), archivo.getId(), 'Nuevo', limpio_(doc)
     ]);
     anotarCliente_(ag, nombre, tel, tramite, nuevo, 'documentos', b.d);
     return { ok: true, folio: folio, n: ag, numero: NUMEROS[ag] };
@@ -186,17 +189,17 @@ function lista_(b) {
   if (!usr) return { ok: false, sesion: false, error: 'Su sesión terminó. Entre de nuevo.' };
   var h = hojaExp_(), filas = h.getLastRow() - 1, exp = [];
   if (filas > 0) {
-    var v = h.getRange(2, 1, filas, 10).getValues();
+    var v = h.getRange(2, 1, filas, 11).getValues();
     for (var i = v.length - 1; i >= 0; i--) {
       var r = v[i];
       exp.push({
         fecha: r[0] instanceof Date ? r[0].getTime() : String(r[0]),
         folio: String(r[1]), nombre: String(r[2]), tel: String(r[3]).replace(/\D/g, ''),
-        tramite: String(r[4]), atiende: String(r[5]), paginas: r[6], kb: r[7], estado: String(r[9] || '')
+        tramite: String(r[4]), atiende: String(r[5]), paginas: r[6], kb: r[7], estado: String(r[9] || ''), doc: String(r[10] || '')
       });
     }
   }
-  return { ok: true, usuario: usr.nombre, expedientes: exp, reparto: reparto_() };
+  return { ok: true, usuario: usr.nombre, expedientes: exp, reparto: reparto_(), estados: ESTADOS };
 }
 
 /** Cuántos clientes nuevos le tocaron a cada número, y los últimos asignados. */
@@ -222,14 +225,79 @@ function pdf_(b) {
   var folio = String(b.folio || '');
   var h = hojaExp_(), filas = h.getLastRow() - 1;
   if (filas < 1) return { ok: false, error: 'No existe ese folio.' };
-  var v = h.getRange(2, 1, filas, 10).getValues();
+  var v = h.getRange(2, 1, filas, 11).getValues();
   for (var i = v.length - 1; i >= 0; i--) {
     if (String(v[i][1]) !== folio) continue;
-    var archivo = DriveApp.getFileById(String(v[i][8]));
-    if (String(v[i][9]) === 'Nuevo') h.getRange(i + 2, 10).setValue('Visto por ' + usr.nombre);
-    return { ok: true, folio: folio, archivo: archivo.getName(), b64: Utilities.base64Encode(archivo.getBlob().getBytes()) };
+    var archivo;
+    try { archivo = DriveApp.getFileById(String(v[i][8])); } catch (e) { return { ok: false, error: 'El archivo ya no está en Drive.' }; }
+    if (String(v[i][9]) === 'Nuevo') h.getRange(i + 2, 10).setValue('En revisión');
+    return { ok: true, folio: folio, archivo: String(v[i][10] || '') || archivo.getName(), b64: Utilities.base64Encode(archivo.getBlob().getBytes()) };
   }
   return { ok: false, error: 'No existe ese folio.' };
+}
+
+var ESTADOS = ['Nuevo', 'En revisión', 'Falta documentación', 'En trámite', 'Terminado'];
+
+/** Busca la fila (número de fila en la hoja) de un folio. */
+function filaFolio_(h, folio) {
+  var filas = h.getLastRow() - 1;
+  if (filas < 1) return -1;
+  var v = h.getRange(2, 2, filas, 1).getValues();
+  for (var i = v.length - 1; i >= 0; i--) if (String(v[i][0]) === folio) return i + 2;
+  return -1;
+}
+
+/** Cambia nombre del cliente, teléfono, trámite, estado o nombre del documento; el archivo en Drive se renombra igual. */
+function editar_(b) {
+  var usr = verificar_(b.token);
+  if (!usr) return { ok: false, sesion: false, error: 'Su sesión terminó. Entre de nuevo.' };
+  var folio = String(b.folio || '');
+  var lock = LockService.getScriptLock();
+  lock.waitLock(10000);
+  try {
+    var h = hojaExp_(), fila = filaFolio_(h, folio);
+    if (fila < 0) return { ok: false, error: 'No existe ese folio.' };
+    var r = h.getRange(fila, 1, 1, 11).getValues()[0];
+    var nombre = b.nombre != null ? String(b.nombre).trim() : String(r[2]);
+    var tramite = b.tramite != null ? String(b.tramite).trim() : String(r[4]);
+    var tel = b.tel != null ? tel10_(b.tel) : String(r[3]).replace(/\D/g, '');
+    var estado = b.estado != null ? String(b.estado) : String(r[9]);
+    if (nombre.length < 2) return { ok: false, error: 'El nombre es muy corto.' };
+    if (!tramite) return { ok: false, error: 'Falta el trámite.' };
+    if (tel && tel.length !== 10) return { ok: false, error: 'El teléfono debe tener 10 dígitos.' };
+    if (b.estado != null && ESTADOS.indexOf(estado) < 0) return { ok: false, error: 'Estado no válido.' };
+    h.getRange(fila, 3).setValue(limpio_(nombre));
+    h.getRange(fila, 4).setValue(tel ? "'" + tel : '');
+    h.getRange(fila, 5).setValue(limpio_(tramite));
+    h.getRange(fila, 10).setValue(estado);
+    // Nombre del documento: el que escriba el administrador, o Nombre - Trámite - fecha
+    var doc = b.doc != null && String(b.doc).trim() ? nombreArchivo_(b.doc) : docNombre_(nombre, tramite, r[0] instanceof Date ? r[0] : new Date());
+    if (!doc) return { ok: false, error: 'Escriba un nombre para el documento.' };
+    h.getRange(fila, 11).setValue(limpio_(doc));
+    try { DriveApp.getFileById(String(r[8])).setName(doc); } catch (e) {}
+    return { ok: true, folio: folio, nombre: nombre, tel: tel, tramite: tramite, estado: estado, doc: doc };
+  } finally {
+    lock.releaseLock();
+  }
+}
+
+/** Manda el PDF a la papelera de Drive (se puede recuperar 30 días) y quita el expediente de la lista. */
+function borrar_(b) {
+  var usr = verificar_(b.token);
+  if (!usr) return { ok: false, sesion: false, error: 'Su sesión terminó. Entre de nuevo.' };
+  var folio = String(b.folio || '');
+  var lock = LockService.getScriptLock();
+  lock.waitLock(10000);
+  try {
+    var h = hojaExp_(), fila = filaFolio_(h, folio);
+    if (fila < 0) return { ok: false, error: 'No existe ese folio.' };
+    var id = String(h.getRange(fila, 9).getValue());
+    try { DriveApp.getFileById(id).setTrashed(true); } catch (e) {}
+    h.deleteRow(fila);
+    return { ok: true, folio: folio };
+  } finally {
+    lock.releaseLock();
+  }
 }
 
 /* ===================== Sesión ===================== */
@@ -278,9 +346,11 @@ function hojaExp_() {
   var h = ss.getSheetByName(HOJA_EXP);
   if (!h) {
     h = ss.insertSheet(HOJA_EXP);
-    h.appendRow(['Fecha', 'Folio', 'Nombre', 'Teléfono', 'Trámite', 'Atiende', 'Páginas', 'Tamaño (KB)', 'Archivo (Drive)', 'Estado']);
+    h.appendRow(['Fecha', 'Folio', 'Nombre', 'Teléfono', 'Trámite', 'Atiende', 'Páginas', 'Tamaño (KB)', 'Archivo (Drive)', 'Estado', 'Documento']);
     h.setFrozenRows(1);
-    h.getRange('A1:J1').setFontWeight('bold');
+    h.getRange('A1:K1').setFontWeight('bold');
+  } else if (!h.getRange(1, 11).getValue()) {
+    h.getRange(1, 11).setValue('Documento').setFontWeight('bold');
   }
   return h;
 }
@@ -302,6 +372,23 @@ function sha256_(s) {
 
 function normUsuario_(u) {
   return String(u || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z ]/g, '').replace(/\s+/g, ' ').trim();
+}
+
+/** Nombre del PDF: Nombre - Trámite - 12-nov-26.pdf */
+function docNombre_(nombre, tramite, fecha) {
+  return nombreArchivo_(String(nombre).slice(0, 60) + ' - ' + String(tramite).slice(0, 50) + ' - ' + fechaCorta_(fecha));
+}
+
+/** Quita caracteres no válidos para un archivo y asegura la terminación .pdf */
+function nombreArchivo_(s) {
+  s = String(s || '').replace(/\.pdf$/i, '').replace(/[\\\/:*?"<>|#%{}~]+/g, ' ').replace(/\s+/g, ' ').trim().slice(0, 150);
+  return s ? s + '.pdf' : '';
+}
+
+/** Fecha abreviada: 12-nov-26 */
+function fechaCorta_(d) {
+  var m = ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'], z = 'America/Cancun';
+  return Utilities.formatDate(d, z, 'dd') + '-' + m[parseInt(Utilities.formatDate(d, z, 'M'), 10) - 1] + '-' + Utilities.formatDate(d, z, 'yy');
 }
 
 function tel10_(t) { return String(t || '').replace(/\D/g, '').slice(-10); }

@@ -184,19 +184,20 @@
   }
 
   /* ---------- 3. Editor de esquinas ---------- */
-  var MODOS = [['gris', 'Escaneo'], ['color', 'Color'], ['bn', 'Blanco y negro']];
+  var MODOS = [['color', 'Color'], ['gris', 'Blanco y negro']];
   function editor(img, inicial) {
     return new Promise(function (resolver) {
-      var q = inicial.quad.map(function (p) { return p.slice(); }), modo = inicial.modo || 'gris';
+      var q = inicial.quad.map(function (p) { return p.slice(); }), modo = inicial.modo || 'color';
       var W = img.naturalWidth, H = img.naturalHeight;
       var raiz = document.createElement('div'); raiz.className = 'scn'; raiz.setAttribute('role', 'dialog'); raiz.setAttribute('aria-modal', 'true'); raiz.setAttribute('aria-labelledby', 'scn-t');
       raiz.innerHTML =
-        '<div class="scn-top"><div><p class="scn-t" id="scn-t">Ajuste la hoja</p><p class="scn-s">Arrastre los cuatro puntos a las esquinas del documento.</p></div>' +
+        '<div class="scn-top"><div><p class="scn-t" id="scn-t">Recorte el documento</p><p class="scn-s">Arrastre los cuatro puntos a las esquinas de la hoja.</p><p class="scn-n"></p></div>' +
         '<button type="button" class="ib scn-x" aria-label="Cancelar"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg></button></div>' +
         '<div class="scn-stage"><div class="scn-box"><canvas class="scn-img"></canvas><svg class="scn-svg"></svg><canvas class="scn-lupa" width="120" height="120" hidden></canvas></div></div>' +
         '<div class="scn-bar"><div class="scn-modos" role="radiogroup" aria-label="Tipo de escaneo"></div>' +
         '<div class="scn-acts"><button type="button" class="btn btn-o scn-todo">Toda la foto</button><button type="button" class="btn btn-y scn-ok">Listo</button></div></div>';
       document.body.appendChild(raiz); document.body.style.overflow = 'hidden';
+      if (inicial.nota) raiz.querySelector('.scn-n').textContent = inicial.nota;
       var box = raiz.querySelector('.scn-box'), cv = raiz.querySelector('.scn-img'), svg = raiz.querySelector('.scn-svg'), lupa = raiz.querySelector('.scn-lupa');
       var modosEl = raiz.querySelector('.scn-modos');
       MODOS.forEach(function (m) {
