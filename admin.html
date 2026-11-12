@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Panel — Gestoría Paredes</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#141C1E">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32.png">
+<link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&amp;family=Poppins:wght@400;500;600&amp;display=swap">
+<link rel="stylesheet" href="css/styles.css">
+<link rel="stylesheet" href="css/app.css">
+</head>
+<body style="margin:0">
+<div class="gp light adm-body" id="gp">
+  <header class="app-top">
+    <div class="wrap app-top-in">
+      <a href="./" class="app-brand" aria-label="Gestoría Paredes, sitio público">
+        <img src="img/coyote-blanco.png" alt="" width="40" height="30">
+        <span>PAREDES</span>
+      </a>
+      <div class="adm-user" id="adm-user" hidden>
+        <span id="adm-nombre"></span>
+        <button type="button" class="linkbtn" id="adm-salir" style="margin:0; color: var(--c-niebla);">Salir</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Inicio de sesión -->
+  <main id="v-login" class="adm-login" hidden>
+    <form id="login" class="doc-card adm-login-card" novalidate>
+      <p class="kicker">Acceso restringido</p>
+      <h1>Panel de expedientes</h1>
+      <p class="st-s">Entre con su usuario para ver y descargar los documentos de los clientes.</p>
+      <p id="login-err" class="adm-alert" role="alert" hidden></p>
+      <div class="fld">
+        <label for="l-u">Usuario</label>
+        <input id="l-u" class="inp" type="text" autocomplete="username" autocapitalize="words" spellcheck="false" required>
+      </div>
+      <div class="fld">
+        <label for="l-p">Contraseña</label>
+        <div class="adm-pass">
+          <input id="l-p" class="inp" type="password" autocomplete="current-password" required>
+          <button type="button" class="ib" id="l-ver" aria-label="Mostrar contraseña" aria-pressed="false">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>
+          </button>
+        </div>
+      </div>
+      <button type="submit" id="l-btn" class="btn btn-y" style="width:100%; margin-top: 8px;">Entrar</button>
+    </form>
+  </main>
+
+  <!-- Panel -->
+  <main id="v-panel" class="wrap adm-wrap" hidden>
+    <div class="adm-head">
+      <div>
+        <p class="kicker">Panel de administrador</p>
+        <h1>Expedientes</h1>
+      </div>
+      <button type="button" class="btn btn-o" id="adm-recargar" style="min-height:44px; font-size:14px;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a9 9 0 1 1-3-6.7L21 8"/><path d="M21 3v5h-5"/></svg>
+        Actualizar
+      </button>
+    </div>
+
+    <div class="adm-stats">
+      <div class="doc-card adm-stat"><span class="v" id="s-total">0</span><span class="l">Expedientes recibidos</span></div>
+      <div class="doc-card adm-stat"><span class="v" id="s-hoy">0</span><span class="l">Recibidos hoy</span></div>
+      <div class="doc-card adm-stat adm-turnos">
+        <span class="l" style="margin-top:0">Reparto de clientes nuevos por WhatsApp</span>
+        <div class="adm-split" aria-hidden="true"><i id="t-a"></i><i id="t-b"></i></div>
+        <div class="adm-legend" id="t-legend"></div>
+        <div class="adm-seq" id="t-seq" aria-hidden="true"></div>
+        <span class="l" id="t-next"></span>
+      </div>
+    </div>
+
+    <div class="adm-tools">
+      <label class="vh" for="f-q">Buscar</label>
+      <input id="f-q" class="inp" type="search" placeholder="Buscar por folio, nombre o teléfono">
+      <label class="vh" for="f-at">Atiende</label>
+      <select id="f-at" class="inp"></select>
+    </div>
+
+    <div class="doc-card adm-table-w">
+      <table class="adm-table">
+        <thead><tr><th>Folio</th><th>Cliente</th><th>Trámite</th><th>Atiende</th><th>Recibido</th><th style="text-align:right">Documento</th></tr></thead>
+        <tbody id="t-body"></tbody>
+      </table>
+      <p id="t-empty" class="adm-empty" hidden></p>
+    </div>
+  </main>
+
+  <!-- Cargando -->
+  <div id="v-cargando" class="adm-login" hidden><div class="doc-state"><div class="spin" aria-hidden="true"></div><p class="st-s" role="status">Cargando…</p></div></div>
+
+  <!-- Visor de PDF -->
+  <div id="visor" class="adm-modal" role="dialog" aria-modal="true" aria-labelledby="v-folio" hidden>
+    <div class="adm-mbar">
+      <p><span class="adm-folio" id="v-folio"></span><span id="v-det"></span></p>
+      <div class="acts">
+        <button type="button" class="btn btn-y" id="v-desc">Descargar</button>
+        <button type="button" class="ib" id="v-cerrar" aria-label="Cerrar">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>
+        </button>
+      </div>
+    </div>
+    <div class="adm-mload" id="v-load"><div style="text-align:center"><div class="spin" aria-hidden="true"></div><p id="v-msg">Abriendo documento…</p></div></div>
+    <iframe class="adm-frame" id="v-frame" title="Documento PDF" hidden></iframe>
+  </div>
+</div>
+<script src="js/config.js" defer></script>
+<script src="js/admin.js" defer></script>
+</body>
+</html>

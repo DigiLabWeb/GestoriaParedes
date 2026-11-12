@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Envíe sus documentos — Gestoría Paredes</title>
+<meta name="description" content="Suba las fotos o escaneos de sus documentos y los unimos en un solo PDF para su trámite vehicular en Quintana Roo.">
+<meta name="theme-color" content="#141C1E">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32.png">
+<link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&amp;family=Poppins:wght@400;500;600&amp;display=swap">
+<link rel="stylesheet" href="css/styles.css">
+<link rel="stylesheet" href="css/app.css">
+</head>
+<body style="margin:0">
+<div class="gp light" id="gp">
+  <header class="app-top">
+    <div class="wrap app-top-in">
+      <a href="./" class="app-brand" aria-label="Gestoría Paredes, inicio">
+        <img src="img/coyote-blanco.png" alt="" width="40" height="30">
+        <span>PAREDES</span>
+      </a>
+      <a href="./" class="app-back">Volver al inicio</a>
+    </div>
+  </header>
+
+  <section class="doc-hero">
+    <div class="wrap">
+      <p class="kicker">Expediente digital</p>
+      <h1>Envíe sus documentos</h1>
+      <p class="doc-lead">Tómeles foto o súbalos escaneados. Los unimos en un solo PDF, como lo pide la dependencia, y su asesor los recibe al momento.</p>
+      <ol class="doc-steps" aria-label="Pasos">
+        <li><b>1</b> Sus datos</li>
+        <li><b>2</b> Sus documentos</li>
+        <li><b>3</b> Enviar</li>
+      </ol>
+    </div>
+  </section>
+
+  <main class="wrap doc-main">
+    <form id="doc-form" class="doc-card" novalidate>
+      <div id="doc-pasos">
+        <fieldset class="doc-block">
+          <legend><span class="num">1</span> Sus datos</legend>
+          <div class="doc-grid2">
+            <div class="fld">
+              <label for="d-nombre">Nombre completo</label>
+              <input id="d-nombre" class="inp" type="text" autocomplete="name" aria-describedby="e-d-nombre">
+              <p class="err" id="e-d-nombre" hidden></p>
+            </div>
+            <div class="fld">
+              <label for="d-tel">Teléfono (WhatsApp)</label>
+              <input id="d-tel" class="inp" type="tel" inputmode="numeric" autocomplete="tel" placeholder="984 000 0000" aria-describedby="e-d-tel">
+              <p class="err" id="e-d-tel" hidden></p>
+            </div>
+          </div>
+          <div class="fld">
+            <label for="d-tramite">Trámite</label>
+            <select id="d-tramite" class="inp" aria-describedby="e-d-tramite"></select>
+            <p class="err" id="e-d-tramite" hidden></p>
+          </div>
+          <input type="text" id="d-web" name="web" tabindex="-1" autocomplete="off" class="hp" aria-hidden="true">
+        </fieldset>
+
+        <fieldset class="doc-block">
+          <legend><span class="num">2</span> Sus documentos</legend>
+          <div id="drop" class="dz">
+            <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M12 17v-6"/><path d="m9 14 3-3 3 3"/></svg>
+            <p class="dz-t">Agregue fotos o PDF de cada documento</p>
+            <p class="dz-s">Puede elegir varios a la vez. En computadora también puede arrastrarlos aquí.</p>
+            <div class="dz-btns">
+              <label class="btn btn-y dz-btn" for="in-cam">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3z"/><circle cx="12" cy="13" r="3"/></svg>
+                Tomar foto
+              </label>
+              <label class="btn btn-o dz-btn" for="in-files">Elegir archivos</label>
+            </div>
+            <input id="in-cam" class="vh" type="file" accept="image/*" capture="environment">
+            <input id="in-files" class="vh" type="file" accept="image/*,application/pdf,.pdf" multiple>
+          </div>
+          <p class="err" id="e-d-docs" hidden></p>
+          <ol id="lista" class="doc-list" aria-live="polite"></ol>
+          <p id="resumen" class="doc-sum" hidden></p>
+        </fieldset>
+
+        <fieldset class="doc-block">
+          <legend><span class="num">3</span> Enviar</legend>
+          <label class="chk-line">
+            <input type="checkbox" id="d-acepto" aria-describedby="e-d-acepto">
+            <span>Acepto el <a href="aviso-de-privacidad.html" target="_blank" rel="noopener">aviso de privacidad</a>. Mis documentos se usarán solo para realizar mi trámite.</span>
+          </label>
+          <p class="err" id="e-d-acepto" hidden></p>
+          <button type="submit" id="btn-enviar" class="btn btn-y doc-send">
+            Unir y enviar mis documentos
+            <svg class="arr" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="m13 6 6 6-6 6"></path></svg>
+          </button>
+        </fieldset>
+      </div>
+
+      <div id="doc-proceso" class="doc-state" hidden role="status" aria-live="polite">
+        <div class="spin" aria-hidden="true"></div>
+        <p class="st-t" id="proc-t">Preparando sus documentos…</p>
+        <div class="bar"><i id="proc-bar"></i></div>
+        <p class="st-s" id="proc-s">No cierre esta página.</p>
+      </div>
+
+      <div id="doc-ok" class="doc-state" hidden tabindex="-1">
+        <p class="kicker">Recibimos su expediente</p>
+        <div class="folio-plate"><span class="fp-top">FOLIO</span><span id="ok-folio" class="fp-num">GP-0000</span><span class="fp-bot">QUINTANA ROO · GESTORÍA PAREDES</span></div>
+        <p class="st-s" id="ok-det"></p>
+        <p class="st-t">Listo. Su asesor ya tiene sus documentos y le escribirá por WhatsApp si falta algo.</p>
+        <p class="st-s">Guarde su folio para cualquier aclaración.</p>
+        <div class="st-btns">
+          <button type="button" id="ok-pdf" class="btn btn-o">Descargar mi copia</button>
+        </div>
+        <button type="button" class="linkbtn" data-reiniciar>Enviar otro expediente</button>
+      </div>
+
+      <div id="doc-falla" class="doc-state" hidden tabindex="-1">
+        <p class="kicker err-k">No se pudo enviar en línea</p>
+        <p class="st-t">Revise su conexión a internet e intente de nuevo. Sus documentos siguen aquí.</p>
+        <p class="st-s" id="falla-det"></p>
+        <div class="st-btns">
+          <button type="button" id="falla-retry" class="btn btn-y">Intentar de nuevo</button>
+        </div>
+        <button type="button" class="linkbtn" data-reiniciar>Empezar de nuevo</button>
+      </div>
+    </form>
+
+    <aside class="doc-side" aria-labelledby="need-t">
+      <div class="doc-card doc-need">
+        <details class="need-det" id="need-det" open>
+        <summary><span><span class="kicker" style="display:block">Lo que necesita</span><span class="vh">: </span><h2 id="need-t">Elija su trámite</h2></span><svg class="need-sum-i" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></summary>
+        <ul id="need-list" class="need-list"><li class="muted">Al elegir el trámite verá aquí la lista de documentos.</li></ul>
+        <p id="need-nota" class="need-nota"></p>
+        </details>
+      </div>
+      <div class="doc-card doc-tips">
+        <p class="kicker">Para que se lea bien</p>
+        <ul>
+          <li>Con buena luz y sin flash; que no haya reflejos.</li>
+          <li>La hoja completa, derecha y sin dedos encima.</li>
+          <li>Identificaciones por los dos lados.</li>
+          <li>Si un documento tiene varias hojas, agréguelas en orden.</li>
+        </ul>
+      </div>
+    </aside>
+  </main>
+
+  <footer class="app-foot">
+    <div class="wrap">© <span id="year">2026</span> Gestoría Paredes · <a href="aviso-de-privacidad.html">Aviso de privacidad</a></div>
+  </footer>
+</div>
+<script src="js/config.js" defer></script>
+<script src="js/requisitos.js" defer></script>
+<script src="js/whatsapp.js" defer></script>
+<script src="js/vendor/pdf-lib.min.js" defer></script>
+<script src="js/documentos.js" defer></script>
+</body>
+</html>

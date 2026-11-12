@@ -1,81 +1,13 @@
 /* Gestoría Paredes — interacción del sitio (sin dependencias) */
 (function () {
 'use strict';
-var WA = '529841156912';
-var REQ = {
-  primera: {
-    es: { label: 'Licencia nueva', titulo: 'Licencia por primera vez', nota: 'Requisitos para licencia de automovilista. Las licencias de motociclista, chofer y servicio público pueden requerir documentos adicionales; se los indicamos al iniciar.' },
-    en: { label: 'New license', titulo: 'First-time license', nota: 'List for a standard driver license. Motorcycle, chauffeur and public-service licenses may need extra documents: we tell you when we start.' },
-    grupos: [{ es: '', en: '', items: [
-      ['Solicitud de licencia de IMOVEQROO', 'IMOVEQROO license application'],
-      ['CURP actualizada', 'Updated CURP'],
-      ['INE o pasaporte vigente', 'Valid INE voter ID or passport'],
-      ['Comprobante de domicilio (luz o agua) no mayor a 3 meses', 'Proof of address (power or water bill) under 3 months old'],
-      ['Certificado de manejo de IMOVEQROO, del municipio o de una escuela acreditada', 'Driving certificate from IMOVEQROO, the municipality or an accredited school'],
-      ['Certificado de examen de la vista de una dependencia municipal o un particular acreditado', 'Eye-exam certificate from a municipal office or an accredited provider']
-    ] }]
-  },
-  renovacion: {
-    es: { label: 'Renovar licencia', titulo: 'Renovación de licencia', nota: 'Para renovar la licencia de automovilista no se requieren los certificados de manejo ni de examen de la vista. Otros tipos de licencia pueden requerir documentos adicionales.' },
-    en: { label: 'Renew license', titulo: 'License renewal', nota: 'Renewing a standard driver license does not require the driving or eye certificates. Other license types may need extra documents.' },
-    grupos: [{ es: '', en: '', items: [
-      ['Solicitud de licencia de IMOVEQROO', 'IMOVEQROO license application'],
-      ['INE o pasaporte vigente', 'Valid INE voter ID or passport'],
-      ['Comprobante de domicilio (luz o agua) no mayor a 3 meses', 'Proof of address (power or water bill) under 3 months old'],
-      ['Licencia anterior en original', 'Your previous license (original)']
-    ] }]
-  },
-  emplacamiento: {
-    es: { label: 'Emplacamiento', titulo: 'Emplacamiento', nota: 'Requisitos de referencia. Cada caso (auto nuevo, de otro estado o extranjero) puede requerir documentos adicionales; se los confirmamos al iniciar.' },
-    en: { label: 'License plates', titulo: 'License plates', nota: 'Reference list. Each case (new car, from another state or foreign) may need extra documents; we confirm them when we start.' },
-    grupos: [
-      { es: 'EN TODOS LOS CASOS', en: 'ALL CASES', items: [
-        ['Factura original, carta factura o título de propiedad (endosado si es usado)', 'Original invoice, invoice letter or title (endorsed if used)'],
-        ['INE o pasaporte vigente', 'Valid INE voter ID or passport'],
-        ['CURP', 'CURP'],
-        ['Comprobante de domicilio en Quintana Roo, reciente', 'Recent proof of address in Quintana Roo'],
-        ['Inscripción en el Registro Estatal de Contribuyentes (REC)', 'Registration in the State Taxpayer Registry (REC)']
-      ] },
-      { es: 'SI VIENE DE OTRO ESTADO', en: 'FROM ANOTHER STATE', items: [
-        ['Tarjeta de circulación y placas del estado de origen', 'Registration card and plates from the original state'],
-        ['Baja vehicular del estado de origen, si se requiere', 'Deregistration from the original state, if required']
-      ] },
-      { es: 'AUTO EXTRANJERO', en: 'FOREIGN CAR', items: [
-        ['Título de propiedad original', 'Original title'],
-        ['Pedimento de importación definitiva con sello de caja, o documento que acredite su legal estancia en México', 'Permanent import declaration (pedimento) with customs stamp, or proof of legal stay in Mexico'],
-        ['El vehículo presente para su revisión', 'The vehicle present for inspection']
-      ] }
-    ]
-  },
-  propietario: {
-    es: { label: 'Cambio de propietario', titulo: 'Cambio de propietario', nota: 'Los vehículos importados, las placas extraviadas o las compras a nombre de una empresa requieren documentos adicionales; se los indicamos al iniciar.' },
-    en: { label: 'Change of owner', titulo: 'Change of ownership', nota: 'Imported vehicles, lost plates or purchases by a company need extra documents: we tell you when we start.' },
-    grupos: [
-      { es: 'DEL VEHÍCULO', en: 'VEHICLE', items: [
-        ['Tarjeta de circulación original', 'Original registration card'],
-        ['Las dos placas (motocicleta: una)', 'Both plates (motorcycle: one)'],
-        ['Factura original o carta factura', 'Original invoice or invoice letter'],
-        ['Tenencias pagadas de los últimos 5 años, sin adeudos', 'Vehicle tax paid for the last 5 years, no debts'],
-        ['El vehículo presente el día de la cita', 'The vehicle present on the appointment day']
-      ] },
-      { es: 'DEL VENDEDOR', en: 'SELLER', items: [
-        ['INE vigente', 'Valid INE voter ID']
-      ] },
-      { es: 'DEL COMPRADOR', en: 'BUYER', items: [
-        ['INE o pasaporte vigente', 'Valid INE voter ID or passport'],
-        ['Licencia de conducir vigente', 'Valid driver license'],
-        ['CURP y RFC', 'CURP and RFC'],
-        ['Comprobante de domicilio a su nombre, no mayor a 60 días', 'Proof of address in your name, under 60 days old'],
-        ['Teléfono y correo electrónico', 'Phone number and email']
-      ] }
-    ]
-  }
-};
-var ORDER = ['primera', 'renovacion', 'propietario', 'emplacamiento'];
+var WA = (window.GP_CONFIG && window.GP_CONFIG.numeros[0]) || '529841156912';
+var REQ = window.GP_REQ;
+var ORDER = window.GP_REQ_ORDER;
 var TXT = {
   es: {
     homeAria: 'Gestoría Paredes, inicio', descriptor: 'GESTORÍA Y TRAMITOLOGÍA', navAria: 'Principal', footNavAria: 'Pie de página',
-    nav1: 'Servicios', nav2: 'Requisitos', nav3: 'Cómo funciona', nav4: 'Contacto',
+    nav1: 'Servicios', nav2: 'Requisitos', nav3: 'Cómo funciona', nav4: 'Contacto', nav5: 'Subir documentos', upDocs: 'Subir mis documentos',
     langAria: 'Idioma', themeAria: 'Cambiar entre modo oscuro y claro', menuOpen: 'Abrir menú', menuClose: 'Cerrar', menuLabel: 'Menú',
     heroAlt: 'Frente de un auto clásico amarillo con placa 595 AOK',
     h1a: 'Gestoría vehicular.', h1b: 'Trámites sin', h1c: 'hacer filas.',
@@ -101,7 +33,7 @@ var TXT = {
     okTitle: 'Recibimos sus datos', okText: 'Le contactaremos pronto para iniciar su trámite. Si es urgente, escríbanos por WhatsApp.', okAgain: 'Enviar otro',
     toTop: 'Volver arriba', exitTitle: '¿Le quedó alguna duda?', exitText: 'Consulte por WhatsApp qué documentos requiere su caso, sin compromiso.',
     legal: 'Gestoría privada e independiente; no somos una dependencia de gobierno. Realizamos los trámites en su representación ante IMOVEQROO y SEFIPLAN. Los requisitos pueden cambiar: los confirmamos con usted antes de iniciar.',
-    of: 'de', ready: 'listos', waHello: 'Hola, quiero iniciar este trámite: ', waHave: 'Ya tengo: ', waMiss: 'Me falta: ', waNone: 'ninguno',
+    of: 'de', ready: 'listos', waHello: 'Hola, quiero iniciar este trámite:', waHave: 'Ya tengo:', waMiss: 'Me falta:', waNone: 'Ninguno todavía',
     lic: [['Motociclista', 'Para conducir motocicleta, primera vez o renovación.'], ['Automovilista', 'Para su auto particular, primera vez o renovación.'], ['Chofer', 'Para quien conduce de manera profesional.'], ['Servicio público o privado', 'Para operar transporte de pasajeros o de carga.']],
     pasos: [['Contáctenos', 'Indíquenos qué trámite necesita.'], ['Revisamos sus documentos', 'Le confirmamos si falta alguno.'], ['Realizamos el trámite', 'Agendamos la cita y damos seguimiento.'], ['Reciba su documento', 'Le avisamos en cuanto esté listo.']],
     test: [['[Testimonio real de un cliente: qué trámite hizo y cómo le fue.]', '[Nombre del cliente]', '[Trámite realizado]'], ['[Testimonio real de un cliente.]', '[Nombre del cliente]', '[Trámite realizado]'], ['[Testimonio real de un cliente.]', '[Nombre del cliente]', '[Trámite realizado]']],
@@ -109,7 +41,7 @@ var TXT = {
   },
   en: {
     homeAria: 'Gestoría Paredes, home', descriptor: 'VEHICLE PAPERWORK AGENCY', navAria: 'Main', footNavAria: 'Footer',
-    nav1: 'Services', nav2: 'Requirements', nav3: 'How it works', nav4: 'Contact',
+    nav1: 'Services', nav2: 'Requirements', nav3: 'How it works', nav4: 'Contact', nav5: 'Upload documents', upDocs: 'Upload my documents',
     langAria: 'Language', themeAria: 'Switch between dark and light mode', menuOpen: 'Open menu', menuClose: 'Close', menuLabel: 'Menu',
     heroAlt: 'Front of a yellow classic car with plate 595 AOK',
     h1a: 'Vehicle paperwork.', h1b: 'Done without', h1c: 'the lines.',
@@ -135,7 +67,7 @@ var TXT = {
     okTitle: 'We got your details', okText: 'We will contact you soon to start. If it is urgent, message us on WhatsApp.', okAgain: 'Send another',
     toTop: 'Back to top', exitTitle: 'Any questions left?', exitText: 'Ask on WhatsApp which documents your case needs. No commitment.',
     legal: 'Independent agency: we are not a government office. We file your paperwork on your behalf with IMOVEQROO and SEFIPLAN. Requirements can change; we confirm them with you before we start.',
-    of: 'of', ready: 'ready', waHello: 'Hi, I want to start this procedure: ', waHave: 'I already have: ', waMiss: 'Missing: ', waNone: 'none',
+    of: 'of', ready: 'ready', waHello: 'Hi, I want to start this procedure:', waHave: 'I already have:', waMiss: 'Still missing:', waNone: 'None yet',
     lic: [['Motorcycle', 'To ride a motorcycle, first time or renewal.'], ['Driver', 'For your private car, first time or renewal.'], ['Chauffeur', 'For people who drive for a living.'], ['Public or private service', 'To operate passenger or cargo transport.']],
     pasos: [['Contact us', 'Tell us which procedure you need.'], ['We review your documents', 'We confirm if anything is missing.'], ['We handle the procedure', 'We book the appointment and follow up.'], ['Receive your document', 'We let you know as soon as it is ready.']],
     test: [['[A real client testimonial: what they did and how it went.]', '[Client name]', '[Procedure]'], ['[A real client testimonial.]', '[Client name]', '[Procedure]'], ['[A real client testimonial.]', '[Client name]', '[Procedure]']],
@@ -268,7 +200,8 @@ function renderReq() {
   $('req-nota').textContent = sel[lang].nota;
   $('req-progreso').textContent = have.length + ' ' + t.of + ' ' + n + ' ' + t.ready;
   $('req-barra').style.width = Math.round(have.length / n * 100) + '%';
-  var msg = t.waHello + sel[lang].titulo + '. ' + t.waHave + (have.length ? have.join('; ') : t.waNone) + '. ' + t.waMiss + (miss.length ? miss.join('; ') : t.waNone) + '.';
+  var bullets = function (arr) { return arr.length ? arr.map(function (x) { return '• ' + x; }).join('\n') : '• ' + t.waNone; };
+  var msg = t.waHello + '\n*' + sel[lang].titulo + '*\n\n*' + t.waHave + '*\n' + bullets(have) + '\n\n*' + t.waMiss + '*\n' + bullets(miss);
   $('req-wa').href = waUrl(msg);
 }
 

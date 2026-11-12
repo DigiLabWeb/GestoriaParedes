@@ -2,13 +2,13 @@
  * Reparte a cada cliente nuevo entre los números de NUMEROS, uno y uno.
  * Un cliente que ya escribió (mismo dispositivo o mismo teléfono en el formulario)
  * vuelve siempre al mismo número.
- * El turno se lleva en una hoja de Google Sheets (ver README, sección "WhatsApp por turnos").
- * Si ENDPOINT está vacío o no responde, el cliente nuevo se asigna 50/50 y queda fijo en su número.
+ * Los números y la dirección del servidor están en js/config.js.
+ * Si la dirección está vacía o no responde, el cliente nuevo se asigna 50/50 y queda fijo en su número.
  */
 (function () {
-  var NUMEROS = ['529841156912', '529842021770'];
-  // Pegue aquí la URL de la aplicación web de Google Apps Script (termina en /exec):
-  var ENDPOINT = 'https://script.google.com/macros/s/AKfycbwTVWufAYLSGaEYx2g_a1kojUmRbT3dXQ04IVqTe_rZouGVuZH6-j84ub6-zig5NUd7/exec';
+  var CFG = window.GP_CONFIG || {};
+  var NUMEROS = CFG.numeros || ['529841156912', '529842021770'];
+  var ENDPOINT = CFG.endpoint || '';
 
   var K_AG = 'gp-wa-numero', K_DEV = 'gp-wa-dispositivo';
   var ls = {
@@ -90,5 +90,21 @@
     e.preventDefault(); abrir(a.getAttribute('href'), { origen: (a.id || a.className || 'enlace') + ' ' + location.pathname });
   });
 
-  window.GPWA = { abrir: abrir, consultarTelefono: consultarTelefono, numeros: NUMEROS };
+  // Abre el chat con un número ya decidido por el servidor (p. ej. al subir documentos).
+  function abrirCon(numero, texto) {
+    var i = idx(numero); if (i >= 0) { fijo = i; ls.set(K_AG, NUMEROS[i]); }
+    var href = 'https://wa.me/' + numero + (texto ? '?text=' + encodeURIComponent(texto) : '');
+    var t = waText(href);
+    if (IS_MOBILE) {
+      var fallback = setTimeout(function () { if (!document.hidden) window.location.href = href; }, 1600);
+      document.addEventListener('visibilitychange', function onHide() { if (document.hidden) { clearTimeout(fallback); document.removeEventListener('visibilitychange', onHide); } });
+      window.location.href = 'whatsapp://send?phone=' + numero + (t ? '&text=' + t : '');
+    } else {
+      var desk = 'https://web.whatsapp.com/send?phone=' + numero + (t ? '&text=' + t : '');
+      var w = null; try { w = window.open(desk, '_blank'); if (w) w.opener = null; } catch (e) {}
+      if (!w) window.location.href = desk;
+    }
+  }
+
+  window.GPWA = { abrir: abrir, abrirCon: abrirCon, consultarTelefono: consultarTelefono, numeros: NUMEROS, dispositivo: dev, asignado: function () { return fijo >= 0 ? NUMEROS[fijo] : ''; } };
 })();
