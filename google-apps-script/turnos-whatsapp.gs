@@ -4,12 +4,14 @@
  * 1. Turnos de WhatsApp entre los dos números (hoja "Clientes").
  * 2. Recepción de expedientes en PDF (carpeta de Drive + hoja "Expedientes").
  * 3. Panel de administrador: inicio de sesión, lista, ver, descargar, editar y borrar expedientes.
+ * 4. Contenido editable de la página (textos y requisitos) con traducción automática al inglés.
  *
  * Las contraseñas no se guardan en texto: solo su huella (SHA-256 con sal).
  */
 
 var HOJA = 'Clientes';
 var HOJA_EXP = 'Expedientes';
+var HOJA_CONT = 'Contenido';
 var CARPETA = 'Gestoría Paredes — Expedientes';
 var NUMEROS = ['529841297165', '529842021770'];
 var ETIQUETAS = ['984 129 7165', '984 202 1770'];
@@ -31,6 +33,7 @@ function doGet(e) {
   var res;
   try {
     if (p.a === 'registro') res = registrar_(p);
+    else if (p.a === 'contenido') res = contenido_();
     else res = turno_(p);
   } catch (err) {
     res = { ok: false, error: String(err && err.message || err) };
@@ -48,6 +51,9 @@ function doPost(e) {
     else if (b.a === 'pdf') res = pdf_(b);
     else if (b.a === 'editar') res = editar_(b);
     else if (b.a === 'borrar') res = borrar_(b);
+    else if (b.a === 'guardarContenido') res = guardarContenido_(b);
+    else if (b.a === 'historialContenido') res = historialContenido_(b);
+    else if (b.a === 'restaurarContenido') res = restaurarContenido_(b);
     else res = { ok: false, error: 'Acción no válida' };
   } catch (err) {
     res = { ok: false, error: String(err && err.message || err) };
@@ -300,6 +306,145 @@ function borrar_(b) {
   }
 }
 
+/* ===================== Contenido editable ===================== */
+
+/** Lo que la página pública lee al abrirse: la última versión guardada (o null si nunca se ha editado). */
+function contenido_() {
+  var cache = CacheService.getScriptCache(), s = cache.get('contenido');
+  if (s) return { ok: true, c: JSON.parse(s) };
+  var h = hojaCont_(), n = h.getLastRow();
+  if (n < 2) return { ok: true, c: null };
+  s = String(h.getRange(n, 4).getValue());
+  if (s.length < 95000) cache.put('contenido', s, 21600);
+  return { ok: true, c: JSON.parse(s) };
+}
+
+function guardarContenido_(b) {
+  var usr = verificar_(b.token);
+  if (!usr) return { ok: false, sesion: false, error: 'Su sesión terminó. Entre de nuevo.' };
+  var c = b.c;
+  if (!c || typeof c !== 'object' || !c.req || !c.textos) return { ok: false, error: 'Contenido no válido.' };
+  traducirContenido_(c);
+  var lock = LockService.getScriptLock();
+  lock.waitLock(20000);
+  try {
+    var h = hojaCont_(), n = h.getLastRow();
+    var ant = n >= 2 ? (parseInt(h.getRange(n, 3).getValue(), 10) || 0) : 0;
+    c.v = ant + 1; c.fecha = Date.now(); c.por = usr.nombre;
+    var json = JSON.stringify(c);
+    if (json.length > 48000) return { ok: false, error: 'El contenido es demasiado largo. Acorte algunos textos.' };
+    h.appendRow([new Date(), usr.nombre, c.v, json]);
+    CacheService.getScriptCache().put('contenido', json, 21600);
+    return { ok: true, c: c };
+  } finally {
+    lock.releaseLock();
+  }
+}
+
+function historialContenido_(b) {
+  var usr = verificar_(b.token);
+  if (!usr) return { ok: false, sesion: false, error: 'Su sesión terminó. Entre de nuevo.' };
+  var h = hojaCont_(), n = h.getLastRow(), out = [];
+  if (n >= 2) {
+    var desde = Math.max(2, n - 29), v = h.getRange(desde, 1, n - desde + 1, 3).getValues();
+    for (var i = v.length - 1; i >= 0; i--) out.push({ fila: desde + i, fecha: v[i][0] instanceof Date ? v[i][0].getTime() : String(v[i][0]), por: String(v[i][1]), v: v[i][2] });
+  }
+  return { ok: true, versiones: out };
+}
+
+function restaurarContenido_(b) {
+  var usr = verificar_(b.token);
+  if (!usr) return { ok: false, sesion: false, error: 'Su sesión terminó. Entre de nuevo.' };
+  var lock = LockService.getScriptLock();
+  lock.waitLock(20000);
+  try {
+    var h = hojaCont_(), n = h.getLastRow(), fila = parseInt(b.fila, 10);
+    if (!(fila >= 2 && fila <= n)) return { ok: false, error: 'Esa versión no existe.' };
+    var c = JSON.parse(String(h.getRange(fila, 4).getValue()));
+    var vieja = c.v;
+    c.v = (parseInt(h.getRange(n, 3).getValue(), 10) || 0) + 1; c.fecha = Date.now(); c.por = usr.nombre + ' (restauró la versión ' + vieja + ')';
+    var json = JSON.stringify(c);
+    h.appendRow([new Date(), c.por, c.v, json]);
+    CacheService.getScriptCache().put('contenido', json, 21600);
+    return { ok: true, c: c };
+  } finally {
+    lock.releaseLock();
+  }
+}
+
+/** Recorre cada texto traducible: llama fn(unidad) con get/set del español, inglés y sus marcas.
+ *  m = inglés escrito a mano (no se toca), f = el español del que salió la traducción actual. */
+function recorrerContenido_(c, fn) {
+  Object.keys(c.textos || {}).forEach(function (k) {
+    var t = c.textos[k];
+    fn({ es: function () { return t.es; }, en: function () { return t.en; }, setEn: function (v) { t.en = v; }, m: !!t.m, f: t.f, setF: function (v) { t.f = v; } });
+  });
+  Object.keys(c.req || {}).forEach(function (id) {
+    var r = c.req[id];
+    r.es = r.es || {}; r.en = r.en || {}; r.meta = r.meta || {};
+    ['label', 'titulo', 'nota'].forEach(function (k) {
+      var mt = r.meta[k] = r.meta[k] || {};
+      fn({ es: function () { return r.es[k]; }, en: function () { return r.en[k]; }, setEn: function (v) { r.en[k] = v; }, m: !!mt.m, f: mt.f, setF: function (v) { mt.f = v; } });
+    });
+    (r.grupos || []).forEach(function (g) {
+      fn({ es: function () { return g.es; }, en: function () { return g.en; }, setEn: function (v) { g.en = v; }, m: !!g.m, f: g.f, setF: function (v) { g.f = v; } });
+      (g.items || []).forEach(function (it) {
+        fn({ es: function () { return it[0]; }, en: function () { return it[1]; }, setEn: function (v) { it[1] = v; }, m: !!it[2], f: it[3], setF: function (v) { it[3] = v; } });
+      });
+    });
+  });
+}
+
+/** Traduce al inglés solo los textos nuevos o cambiados; respeta el inglés escrito a mano. */
+function traducirContenido_(c) {
+  recorrerContenido_(c, function (u) {
+    var es = String(u.es() || '').trim();
+    if (!es) { u.setEn(''); u.setF(''); return; }
+    if (u.m) return;
+    if (u.f === es && u.en()) return;
+    try { u.setEn(traducir_(es)); u.setF(es); } catch (e) { /* si falla, se queda el inglés anterior */ }
+  });
+}
+
+/** Términos del giro que el traductor debe respetar */
+var GLOSARIO = [
+  ['tarjetas de circulación', 'registration cards'], ['tarjeta de circulación', 'registration card'],
+  ['carta factura', 'invoice letter'], ['comprobante de domicilio', 'proof of address'],
+  ['licencias de conducir', "driver's licenses"], ['licencia de conducir', "driver's license"],
+  ['pedimento de importación', 'import declaration (pedimento)'], ['cambio de propietario', 'change of ownership'],
+  ['baja vehicular', 'vehicle deregistration'], ['emplacamiento', 'license plates'],
+  ['tenencias', 'vehicle taxes'], ['tenencia', 'vehicle tax'], ['gestoría vehicular', 'vehicle paperwork agency']
+];
+var SIGLAS = ['Gestoría Paredes', 'Quintana Roo', 'IMOVEQROO', 'SEFIPLAN', 'WhatsApp', 'CURP', 'INE', 'RFC', 'REC', 'SAT', 'REPUVE'];
+
+function traducir_(es) {
+  var marcas = [], txt = es, i;
+  function proteger(re, reemplazo) {
+    txt = txt.replace(re, function (m) {
+      var r = reemplazo == null ? m : (m.charAt(0) === m.charAt(0).toUpperCase() && m.charAt(0) !== m.charAt(0).toLowerCase() ? reemplazo.charAt(0).toUpperCase() + reemplazo.slice(1) : reemplazo);
+      marcas.push(r); return 'GPX' + (marcas.length - 1) + 'X';
+    });
+  }
+  for (i = 0; i < SIGLAS.length; i++) proteger(new RegExp('(?<![\\p{L}])' + SIGLAS[i] + '(?![\\p{L}])', 'gu'), null);
+  for (i = 0; i < GLOSARIO.length; i++) proteger(new RegExp('(?<![\\p{L}])' + GLOSARIO[i][0] + '(?![\\p{L}])', 'giu'), GLOSARIO[i][1]);
+  var mayus = es === es.toUpperCase() && /\p{L}/u.test(es);
+  var en = LanguageApp.translate(mayus ? txt.toLowerCase().replace(/gpx(\d+)x/g, 'GPX$1X') : txt, 'es', 'en');
+  en = en.replace(/GPX\s*(\d+)\s*X/gi, function (m, n) { return marcas[+n] != null ? marcas[+n] : m; });
+  return mayus ? en.toUpperCase() : en;
+}
+
+function hojaCont_() {
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var h = ss.getSheetByName(HOJA_CONT);
+  if (!h) {
+    h = ss.insertSheet(HOJA_CONT);
+    h.appendRow(['Fecha', 'Guardó', 'Versión', 'Contenido (no editar a mano)']);
+    h.setFrozenRows(1);
+    h.getRange('A1:D1').setFontWeight('bold');
+  }
+  return h;
+}
+
 /* ===================== Sesión ===================== */
 
 function secreto_() {
@@ -403,7 +548,9 @@ function limpio_(s) {
 function prueba() {
   hoja_();
   hojaExp_();
+  hojaCont_();
   carpeta_();
   secreto_();
   Logger.log(JSON.stringify(turno_({})));
+  Logger.log(traducir_('Tarjeta de circulación original y CURP'));
 }

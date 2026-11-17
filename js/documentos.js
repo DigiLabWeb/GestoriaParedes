@@ -13,10 +13,17 @@
   var items = [], seq = 0, ultimo = null; // ultimo: { bytes, nombreArchivo, folio, numero, paginas }
 
   /* ---------- trámites y lista de requisitos ---------- */
-  var o0 = document.createElement('option'); o0.value = ''; o0.textContent = 'Elija su trámite'; F.tram.appendChild(o0);
-  ORDER.forEach(function (k) { var o = document.createElement('option'); o.value = k; o.textContent = REQ[k].es.titulo; F.tram.appendChild(o); });
-  var oo = document.createElement('option'); oo.value = 'otro'; oo.textContent = 'Otro trámite'; F.tram.appendChild(oo);
+  function opciones() {
+    var cur = F.tram.value; F.tram.textContent = '';
+    var o0 = document.createElement('option'); o0.value = ''; o0.textContent = 'Elija su trámite'; F.tram.appendChild(o0);
+    ORDER.forEach(function (k) { var o = document.createElement('option'); o.value = k; o.textContent = REQ[k].es.titulo; F.tram.appendChild(o); });
+    var oo = document.createElement('option'); oo.value = 'otro'; oo.textContent = 'Otro trámite'; F.tram.appendChild(oo);
+    if (cur && (REQ[cur] || cur === 'otro')) F.tram.value = cur;
+  }
+  opciones();
   var pre = (location.hash || '').replace('#', ''); if (REQ[pre]) F.tram.value = pre;
+  // contenido nuevo desde el panel (js/contenido.js)
+  window.GPDocsContenido = function () { REQ = window.GP_REQ || REQ; ORDER = window.GP_REQ_ORDER || ORDER; opciones(); pintarNecesita(); };
 
   function pintarNecesita() {
     var k = F.tram.value, ul = $('need-list'); ul.textContent = '';

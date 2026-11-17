@@ -66,6 +66,35 @@ window.GP_REQ = {
         ['Teléfono y correo electrónico', 'Phone number and email']
       ] }
     ]
+  },
+  federales: {
+    es: { label: 'Placas federales', titulo: 'Placas federales (SICT)', nota: 'Para vehículos de autotransporte federal: carga, pasajeros, turismo y transporte privado. Si el trámite es a nombre de una empresa se requiere además el acta constitutiva, el poder y la identificación del representante legal. Mientras se entregan las placas, la unidad puede circular con permiso provisional.' },
+    en: { label: 'Federal plates', titulo: 'Federal plates (SICT)', nota: 'For federal motor-carrier vehicles: freight, passengers, tourism and private transport. If the procedure is in a company\'s name, the articles of incorporation, power of attorney and the legal representative\'s ID are also required. Until the plates are delivered, the unit can circulate with a provisional permit.' },
+    grupos: [
+      { es: 'DEL SOLICITANTE', en: 'APPLICANT', items: [
+        ['Pre-registro en línea (Ventanilla Única de Autotransporte Federal, con e.firma)', 'Online pre-registration (Federal Motor Carrier Single Window, with e.firma)'],
+        ['Identificación oficial vigente', 'Valid official ID']
+      ] },
+      { es: 'DEL VEHÍCULO', en: 'VEHICLE', items: [
+        ['Factura, carta factura o contrato de arrendamiento vigente', 'Invoice, invoice letter or current lease agreement'],
+        ['Si es de procedencia extranjera: documento de legal importación', 'If foreign-made: proof of legal import'],
+        ['Certificado de baja emisión de contaminantes o constancia de exención', 'Low-emissions certificate or exemption'],
+        ['Dictamen físico-mecánico (unidades con más de 2 años que ya prestaron servicio federal)', 'Physical-mechanical inspection report (units over 2 years old that have already been in federal service)']
+      ] },
+      { es: 'SEGURO', en: 'INSURANCE', items: [
+        ['Póliza de responsabilidad civil por daños a terceros, o fondo de garantía vigente', 'Third-party liability policy, or current guarantee fund']
+      ] },
+      { es: 'SEGÚN EL SERVICIO', en: 'DEPENDING ON THE SERVICE', items: [
+        ['Pasajeros: póliza anual de seguro de viajero', 'Passengers: annual traveler insurance policy'],
+        ['Transporte privado de carga: tarjeta de circulación estatal', 'Private freight: state registration card'],
+        ['Remolques y semirremolques modelo 2010 o posterior: constancia NOM-035', 'Trailers and semi-trailers 2010 or newer: NOM-035 certificate'],
+        ['Materiales peligrosos: póliza de daños ecológicos y constancias técnicas del autotanque', 'Hazardous materials: environmental damage policy and tank technical certificates'],
+        ['Si conserva su placa federal actual: tarjeta de circulación', 'If keeping its current federal plate: registration card']
+      ] }
+    ]
   }
 };
-window.GP_REQ_ORDER = ['primera', 'renovacion', 'propietario', 'emplacamiento'];
+window.GP_REQ_ORDER = ['primera', 'renovacion', 'propietario', 'emplacamiento', 'federales'];
+/* trámites agregados después de que existe el editor: se suman aunque haya contenido guardado */
+window.GP_REQ_NUEVOS = ['federales'];
+window.GP_REQ_BASE = window.GP_REQ;

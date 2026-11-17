@@ -12,8 +12,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&amp;family=Poppins:wght@400;500;600&amp;display=swap">
-<link rel="stylesheet" href="css/styles.css">
-<link rel="stylesheet" href="css/app.css">
+<link rel="stylesheet" href="css/styles.css?v=202611171330">
+<link rel="stylesheet" href="css/app.css?v=202611171330">
 </head>
 <body style="margin:0">
 <div class="gp light adm-body" id="gp">
@@ -56,6 +56,11 @@
 
   <!-- Panel -->
   <main id="v-panel" class="wrap adm-wrap" hidden>
+    <div class="adm-tabs" role="tablist" aria-label="Secciones del panel">
+      <button type="button" class="adm-tab" id="tab-exp" role="tab" aria-selected="true" aria-controls="sec-exp">Expedientes</button>
+      <button type="button" class="adm-tab" id="tab-edit" role="tab" aria-selected="false" aria-controls="sec-edit">Editar página</button>
+    </div>
+    <div id="sec-exp" role="tabpanel" aria-labelledby="tab-exp">
     <div class="adm-head">
       <div>
         <p class="kicker">Panel de administrador</p>
@@ -95,6 +100,44 @@
       </table>
       <p id="t-empty" class="adm-empty" hidden></p>
     </div>
+    </div>
+
+    <div id="sec-edit" role="tabpanel" aria-labelledby="tab-edit" hidden>
+      <div class="adm-head">
+        <div>
+          <p class="kicker">Panel de administrador</p>
+          <h1>Editar página</h1>
+        </div>
+      </div>
+      <ol class="ed-pasos" aria-label="Cómo funciona">
+        <li><b>1</b><span><strong>Elija</strong> qué quiere cambiar</span></li>
+        <li><b>2</b><span><strong>Escriba</strong> directo sobre el texto</span></li>
+        <li><b>3</b><span><strong>Publique</strong> y listo: el inglés se hace solo</span></li>
+      </ol>
+      <div class="ed-modo" role="tablist" aria-label="Qué quiere cambiar">
+        <button type="button" role="tab" id="ed-m-req" aria-selected="true">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="m9 9 1.5 1.5L13 8"/><path d="M9 15h6"/></svg>
+          <span><b>Requisitos</b><small>Agregar, quitar o cambiar documentos de cada trámite</small></span>
+        </button>
+        <button type="button" role="tab" id="ed-m-txt" aria-selected="false">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7V5h16v2"/><path d="M12 5v14"/><path d="M9 19h6"/></svg>
+          <span><b>Textos de la página</b><small>Títulos, botones, pasos y contacto</small></span>
+        </button>
+      </div>
+      <div id="ed-cuerpo"></div>
+      <div class="ed-dock" id="ed-dock">
+        <div class="ed-dock-in">
+          <p id="ed-estado" class="ed-estado" role="status"></p>
+          <div class="ed-dock-acts">
+            <button type="button" class="ed-lnk" id="ed-hist">Versiones anteriores</button>
+            <button type="button" class="btn btn-o" id="ed-deshacer" hidden>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 14 4 9l5-5"/><path d="M4 9h11a5 5 0 0 1 0 10h-3"/></svg>Deshacer</button>
+            <button type="button" class="btn btn-o" id="ed-previa" hidden>Ver cómo queda</button>
+            <button type="button" class="btn btn-y" id="ed-guardar" hidden>Publicar cambios</button>
+          </div>
+        </div>
+      </div>
+    </div>
   </main>
 
   <!-- Cargando -->
@@ -119,7 +162,10 @@
     <iframe class="adm-frame" id="v-frame" title="Documento PDF" hidden></iframe>
   </div>
 </div>
-<script src="js/config.js" defer></script>
-<script src="js/admin.js" defer></script>
+<script src="js/config.js?v=202611171330" defer></script>
+<script src="js/textos.js?v=202611171330" defer></script>
+<script src="js/requisitos.js?v=202611171330" defer></script>
+<script src="js/admin.js?v=202611171330" defer></script>
+<script src="js/editor.js?v=202611171330" defer></script>
 </body>
 </html>

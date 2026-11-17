@@ -297,4 +297,6 @@
   /* ---------- inicio ---------- */
   ses = leerSesion();
   if (ses) cargar(); else mostrarLogin('');
+  /* para la sección «Editar página» (js/editor.js) */
+  window.GPAdmin = { api: api, token: function () { return ses && ses.token; }, sesionVencida: sesionVencida, abrirDlg: abrirDlg, cerrarDlg: cerrarDlg, aviso: aviso };
 })();
