@@ -68,28 +68,24 @@ window.GP_REQ = {
     ]
   },
   federales: {
-    es: { label: 'Placas federales', titulo: 'Placas federales (SICT)', nota: 'Para vehículos de autotransporte federal: carga, pasajeros, turismo y transporte privado. Si el trámite es a nombre de una empresa se requiere además el acta constitutiva, el poder y la identificación del representante legal. Mientras se entregan las placas, la unidad puede circular con permiso provisional.' },
-    en: { label: 'Federal plates', titulo: 'Federal plates (SICT)', nota: 'For federal motor-carrier vehicles: freight, passengers, tourism and private transport. If the procedure is in a company\'s name, the articles of incorporation, power of attorney and the legal representative\'s ID are also required. Until the plates are delivered, the unit can circulate with a provisional permit.' },
+    es: { label: 'Placas federales', titulo: 'Placas federales (SICT)', nota: 'Trámite para empresas de autotransporte federal: turismo, carga, transporte privado de personas o de carga y materiales peligrosos. El objeto social del acta debe corresponder al tipo de servicio; se lo revisamos antes de iniciar.' },
+    en: { label: 'Federal plates', titulo: 'Federal plates (SICT)', nota: 'Procedure for federal motor-carrier companies: tourism, freight, private passenger or freight transport and hazardous materials. The corporate purpose in the articles of incorporation must match the type of service; we review it before starting.' },
     grupos: [
-      { es: 'DEL SOLICITANTE', en: 'APPLICANT', items: [
-        ['Pre-registro en línea (Ventanilla Única de Autotransporte Federal, con e.firma)', 'Online pre-registration (Federal Motor Carrier Single Window, with e.firma)'],
-        ['Identificación oficial vigente', 'Valid official ID']
+      { es: 'DE LA EMPRESA', en: 'COMPANY', items: [
+        ['Solicitud de alta de la empresa dirigida a la Subdirección de Transporte del Centro SICT Quintana Roo', 'Company registration request addressed to the Transportation Office of the SICT Center in Quintana Roo'],
+        ['Acta constitutiva con leyenda de registro, objeto social del servicio y cláusula de exclusión de extranjeros', 'Articles of incorporation with registration note, corporate purpose for the service and foreigner-exclusion clause'],
+        ['RFC o constancia de situación fiscal de la empresa', 'Company RFC or tax status certificate'],
+        ['Comprobante de domicilio de la empresa, a su nombre, no mayor a 3 meses', 'Company proof of address, in its name, no older than 3 months'],
+        ['Constancia del notario', 'Notary certificate'],
+        ['Boleta de ingreso al Registro Público de la Propiedad', 'Public Property Registry filing receipt']
       ] },
-      { es: 'DEL VEHÍCULO', en: 'VEHICLE', items: [
-        ['Factura, carta factura o contrato de arrendamiento vigente', 'Invoice, invoice letter or current lease agreement'],
-        ['Si es de procedencia extranjera: documento de legal importación', 'If foreign-made: proof of legal import'],
-        ['Certificado de baja emisión de contaminantes o constancia de exención', 'Low-emissions certificate or exemption'],
-        ['Dictamen físico-mecánico (unidades con más de 2 años que ya prestaron servicio federal)', 'Physical-mechanical inspection report (units over 2 years old that have already been in federal service)']
+      { es: 'DE LOS SOCIOS', en: 'PARTNERS', items: [
+        ['Acta de nacimiento de cada socio', 'Birth certificate of each partner'],
+        ['INE de cada socio', 'Voter ID (INE) of each partner']
       ] },
-      { es: 'SEGURO', en: 'INSURANCE', items: [
-        ['Póliza de responsabilidad civil por daños a terceros, o fondo de garantía vigente', 'Third-party liability policy, or current guarantee fund']
-      ] },
-      { es: 'SEGÚN EL SERVICIO', en: 'DEPENDING ON THE SERVICE', items: [
-        ['Pasajeros: póliza anual de seguro de viajero', 'Passengers: annual traveler insurance policy'],
-        ['Transporte privado de carga: tarjeta de circulación estatal', 'Private freight: state registration card'],
-        ['Remolques y semirremolques modelo 2010 o posterior: constancia NOM-035', 'Trailers and semi-trailers 2010 or newer: NOM-035 certificate'],
-        ['Materiales peligrosos: póliza de daños ecológicos y constancias técnicas del autotanque', 'Hazardous materials: environmental damage policy and tank technical certificates'],
-        ['Si conserva su placa federal actual: tarjeta de circulación', 'If keeping its current federal plate: registration card']
+      { es: 'DEL REPRESENTANTE LEGAL', en: 'LEGAL REPRESENTATIVE', items: [
+        ['RFC o constancia de situación fiscal', 'RFC or tax status certificate'],
+        ['Comprobante de domicilio a su nombre, no mayor a 3 meses', 'Proof of address in their name, no older than 3 months']
       ] }
     ]
   }
