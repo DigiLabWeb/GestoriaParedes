@@ -11,8 +11,11 @@
 
   var ses = null, datos = { expedientes: [], reparto: null }, cache = {}, abierto = null;
 
-  function leerSesion() { try { var s = JSON.parse(sessionStorage.getItem(K) || 'null'); return s && s.vence > Date.now() ? s : null; } catch (e) { return null; } }
-  function guardarSesion(s) { try { if (s) sessionStorage.setItem(K, JSON.stringify(s)); else sessionStorage.removeItem(K); } catch (e) {} }
+  // En la app instalada la sesión se conserva al cerrarla (12 h); en el navegador, solo mientras la pestaña esté abierta.
+  var APP = (window.matchMedia && matchMedia('(display-mode: standalone)').matches) || navigator.standalone === true;
+  var ALM = APP ? localStorage : sessionStorage;
+  function leerSesion() { try { var s = JSON.parse(ALM.getItem(K) || sessionStorage.getItem(K) || 'null'); return s && s.vence > Date.now() ? s : null; } catch (e) { return null; } }
+  function guardarSesion(s) { try { if (s) ALM.setItem(K, JSON.stringify(s)); else { ALM.removeItem(K); sessionStorage.removeItem(K); } } catch (e) {} }
 
   function api(body) {
     if (!CFG.endpoint) return Promise.reject(new Error('Falta la dirección del servidor en js/config.js.'));

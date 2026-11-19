@@ -3,7 +3,7 @@
 window.GP_TXT = {
   es: {
     homeAria: 'Gestoría Paredes, inicio', descriptor: 'GESTORÍA Y TRAMITOLOGÍA', navAria: 'Principal', footNavAria: 'Pie de página',
-    nav1: 'Servicios', nav2: 'Requisitos', nav3: 'Cómo funciona', nav4: 'Contacto', nav5: 'Subir documentos', adminLink: 'Acceso administradores', upDocs: 'Subir mis documentos',
+    nav1: 'Servicios', nav2: 'Requisitos', nav3: 'Cómo funciona', nav4: 'Contacto', nav5: 'Subir documentos', adminLink: 'Acceso administradores', instalar: 'Instalar app', upDocs: 'Subir mis documentos',
     langAria: 'Idioma', themeAria: 'Cambiar entre modo oscuro y claro', menuOpen: 'Abrir menú', menuClose: 'Cerrar', menuLabel: 'Menú',
     heroAlt: 'Frente de un auto clásico amarillo con placa 595 AOK',
     h1a: 'Gestoría vehicular.', h1b: 'Trámites sin', h1c: 'hacer filas.',
@@ -37,7 +37,7 @@ window.GP_TXT = {
   },
   en: {
     homeAria: 'Gestoría Paredes, home', descriptor: 'VEHICLE PAPERWORK AGENCY', navAria: 'Main', footNavAria: 'Footer',
-    nav1: 'Services', nav2: 'Requirements', nav3: 'How it works', nav4: 'Contact', nav5: 'Upload documents', adminLink: 'Staff login', upDocs: 'Upload my documents',
+    nav1: 'Services', nav2: 'Requirements', nav3: 'How it works', nav4: 'Contact', nav5: 'Upload documents', adminLink: 'Staff login', instalar: 'Install app', upDocs: 'Upload my documents',
     langAria: 'Language', themeAria: 'Switch between dark and light mode', menuOpen: 'Open menu', menuClose: 'Close', menuLabel: 'Menu',
     heroAlt: 'Front of a yellow classic car with plate 595 AOK',
     h1a: 'Vehicle paperwork.', h1b: 'Done without', h1c: 'the lines.',

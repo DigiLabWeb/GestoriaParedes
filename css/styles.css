@@ -237,3 +237,30 @@ body.menu-open{overflow:hidden}
 @media (min-width:600px) and (max-width:1100px){.hero-img{height:calc((100% - 127px) * .66)}}
 .red{display:grid;place-items:center;width:44px;height:44px;border:1px solid var(--c-line_d);border-radius:999px;color:var(--c-niebla);transition:color .2s ease,border-color .2s ease,background-color .2s ease}
 .red:hover,.red:focus-visible{color:var(--c-dark);background:var(--c-acc);border-color:var(--c-acc)}
+/* instalar app */
+[data-instalar][hidden]{display:none!important}
+.btn-app{gap:8px}
+.foot-app{display:inline-flex;align-items:center;gap:8px;padding:0;border:0;background:none;font:inherit;font-size:13px;color:var(--c-niebla);cursor:pointer}
+.foot-app svg{color:var(--c-acc)}
+.ins-fondo{position:fixed;inset:0;z-index:200;display:flex;align-items:flex-end;justify-content:center;padding:13px;background:rgba(11,15,16,.6);animation:insF .2s ease}
+.ins{width:min(460px,100%);max-height:calc(100% - 26px);overflow:auto;padding:28px 24px 24px;border-radius:16px;background:#F6F3EC;color:#141C1E;font-family:"Poppins",system-ui,sans-serif;box-shadow:0 21px 55px rgba(0,0,0,.35);animation:insS .3s cubic-bezier(.2,.7,.2,1)}
+@media (min-width:700px){.ins-fondo{align-items:center}}
+.ins-cab{display:flex;align-items:center;gap:16px;margin-bottom:21px}
+.ins-cab img{flex:none;width:56px;height:56px;border-radius:13px;box-shadow:0 6px 16px -6px rgba(0,0,0,.4)}
+.ins h2{margin:0 0 2px;font:700 24px/1.1 "Oswald","Arial Narrow",sans-serif;text-transform:uppercase}
+.ins-cab p{margin:0;font-size:13px;line-height:19px;color:#4F5A5C}
+.ins-p{margin:0 0 8px;font-size:14px;color:#4F5A5C}
+.ins-l{list-style:none;margin:0 0 21px;padding:0}
+.ins-l li{display:flex;align-items:center;gap:13px;padding:12px 0;border-top:1px solid #DCD5C6;font-size:15px;line-height:22px}
+.ins-i{flex:none;display:grid;place-items:center;width:44px;height:44px;border-radius:10px;background:#fff;border:1px solid #DCD5C6;color:#141C1E}
+.ins-n{display:inline-grid;place-items:center;width:20px;height:20px;margin-right:4px;border-radius:999px;background:#EBCB4F;font-size:11px}
+.ins .ins-ok{width:100%}
+@keyframes insF{from{opacity:0}}
+@keyframes insS{from{opacity:0;transform:translateY(21px)}}
+.ins .ins-ok{display:flex;align-items:center;justify-content:center;min-height:52px;border:0;border-radius:6px;background:#EBCB4F;color:#141C1E;font:600 15px/1 "Poppins",system-ui,sans-serif;cursor:pointer}
+.ins .ins-ok:hover{background:#F3D96E}
+.menu .btn-app,.menu .btn-app:visited{display:inline-flex;align-items:center;justify-content:center;gap:10px;color:#F6F3EC!important;border:1.5px solid #57625F!important;background:transparent!important}
+.menu .btn-app svg{color:#EBCB4F}
+.menu .btn-app:hover{border-color:#F6F3EC!important}
+footer a.red{color:#C9D0D0}
+footer a.red:hover,footer a.red:focus-visible{color:#141C1E}
