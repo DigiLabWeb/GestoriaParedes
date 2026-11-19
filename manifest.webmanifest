@@ -1,22 +1,18 @@
 {
-  "id": "./",
-  "name": "Gestoría Paredes",
-  "short_name": "Paredes",
-  "description": "Requisitos de trámites vehiculares y envío de documentos en Quintana Roo.",
+  "name": "Registro de Socios · Sindicato de Taxistas Lázaro Cárdenas del Río",
+  "short_name": "Socios",
+  "description": "Registro de socios del Sindicato de Taxistas Lázaro Cárdenas del Río",
   "lang": "es-MX",
-  "start_url": "./?app=1",
+  "id": "./",
+  "start_url": "./",
   "scope": "./",
   "display": "standalone",
-  "orientation": "portrait",
-  "background_color": "#141C1E",
-  "theme_color": "#141C1E",
+  "orientation": "any",
+  "background_color": "#0bbfc4",
+  "theme_color": "#0bbfc4",
   "icons": [
-    { "src": "img/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
-    { "src": "img/icon-512-app.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
-    { "src": "img/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
-  ],
-  "shortcuts": [
-    { "name": "Requisitos", "short_name": "Requisitos", "url": "./?app=1#requisitos", "icons": [{ "src": "img/icon-192.png", "sizes": "192x192" }] },
-    { "name": "Subir documentos", "short_name": "Subir", "url": "./documentos.html", "icons": [{ "src": "img/icon-192.png", "sizes": "192x192" }] }
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
   ]
 }
