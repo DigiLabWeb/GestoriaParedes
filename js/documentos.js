@@ -3,7 +3,15 @@
   'use strict';
   var CFG = window.GP_CONFIG || {};
   var REQ = window.GP_REQ || {}, ORDER = window.GP_REQ_ORDER || [];
-  var MAX_ARCHIVOS = 40, MAX_MB_ARCHIVO = 40, MAX_MB_PDF = 24, LADO_MAX = 2000, CALIDAD = 0.82;
+  var MAX_ARCHIVOS = 40, MAX_MB_ARCHIVO = 40, MAX_MB_PDF = 24, LADO_MAX = 1700, CALIDAD = 0.74; // ~200 ppp en tamaño carta: legible y mucho más ligero de subir
+  // pdf-lib (500 KB) se carga en segundo plano, no antes de mostrar la página
+  var pdfLib = null;
+  function libPDF() {
+    if (window.PDFLib) return Promise.resolve(window.PDFLib);
+    if (!pdfLib) pdfLib = new Promise(function (ok, no) { var sc = document.createElement('script'); sc.src = 'js/vendor/pdf-lib.min.js?v=1'; sc.async = true; sc.onload = function () { ok(window.PDFLib); }; sc.onerror = function () { pdfLib = null; no(new Error('No se pudo cargar el generador de PDF. Revise su conexión.')); }; document.head.appendChild(sc); });
+    return pdfLib;
+  }
+  if ('requestIdleCallback' in window) requestIdleCallback(function () { libPDF().catch(function () {}); }, { timeout: 4000 }); else setTimeout(function () { libPDF().catch(function () {}); }, 1500);
   var CARTA = [612, 792], MARGEN = 18;
 
   function $(id) { return document.getElementById(id); }
@@ -72,7 +80,7 @@
           return enCola(function () { return items.indexOf(it) >= 0 ? ajustar(it, true) : null; });
         }).catch(function () { it.estado = 'error'; it.msg = 'Este formato de imagen no se puede leer. Tómele foto desde aquí o súbalo en JPG o PDF.'; pintar(); validar(false); });
       } else {
-        f.arrayBuffer().then(function (buf) { it.buf = buf; return PDFLib.PDFDocument.load(buf, { ignoreEncryption: true }); })
+        Promise.all([f.arrayBuffer(), libPDF()]).then(function (r) { it.buf = r[0]; return r[1].PDFDocument.load(r[0], { ignoreEncryption: true }); })
           .then(function (doc) { it.pages = doc.getPageCount(); it.estado = 'ok'; pintar(); })
           .catch(function () { it.estado = 'error'; it.msg = 'No se pudo abrir este PDF (puede estar protegido o dañado).'; pintar(); });
       }
@@ -91,7 +99,7 @@
     return new Promise(function (ok) { setTimeout(ok, 30); }).then(function () {
       if (!window.GPScan) return null;
       var cv = window.GPScan.procesar(it.img, it.quad, it.modo);
-      return new Promise(function (ok) { cv.toBlob(ok, 'image/jpeg', 0.88); });
+      return new Promise(function (ok) { cv.toBlob(ok, 'image/jpeg', 0.85); });
     }).then(function (blob) {
       if (it.url && it.url !== it.orig) URL.revokeObjectURL(it.url);
       it.url = blob ? URL.createObjectURL(blob) : it.orig;
@@ -213,8 +221,8 @@
   }
 
   function construir(progreso) {
-    var PDF = PDFLib, out, validos = items.filter(function (it) { return it.estado === 'ok'; });
-    return PDF.PDFDocument.create().then(function (d) {
+    var PDF, out, validos = items.filter(function (it) { return it.estado === 'ok'; });
+    return libPDF().then(function (L) { PDF = L; return PDF.PDFDocument.create(); }).then(function (d) {
       out = d;
       out.setTitle('Expediente de ' + F.nombre.value.trim()); out.setAuthor(F.nombre.value.trim());
       out.setCreator('Gestoría Paredes'); out.setProducer('Gestoría Paredes');

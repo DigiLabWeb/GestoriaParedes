@@ -235,3 +235,5 @@ body.menu-open{overflow:hidden}
 /* celular y tableta: el carro funciona como fondo, igual que en escritorio */
 @media (max-width:1100px){.scrim{display:block;background:linear-gradient(180deg,rgba(var(--rgb-dark),.1) 0%,rgba(var(--rgb-dark),.35) 32%,rgba(var(--rgb-dark),.8) 55%,rgba(var(--rgb-dark),1) 72%),linear-gradient(90deg,rgba(var(--rgb-dark),.55) 0%,rgba(var(--rgb-dark),0) 75%)}}
 @media (min-width:600px) and (max-width:1100px){.hero-img{height:calc((100% - 127px) * .66)}}
+.red{display:grid;place-items:center;width:44px;height:44px;border:1px solid var(--c-line_d);border-radius:999px;color:var(--c-niebla);transition:color .2s ease,border-color .2s ease,background-color .2s ease}
+.red:hover,.red:focus-visible{color:var(--c-dark);background:var(--c-acc);border-color:var(--c-acc)}

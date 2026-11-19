@@ -49,6 +49,7 @@ function doPost(e) {
     else if (b.a === 'login') res = login_(b);
     else if (b.a === 'lista') res = lista_(b);
     else if (b.a === 'pdf') res = pdf_(b);
+    else if (b.a === 'cuenta') res = cuenta_(b);
     else if (b.a === 'editar') res = editar_(b);
     else if (b.a === 'borrar') res = borrar_(b);
     else if (b.a === 'guardarContenido') res = guardarContenido_(b);
@@ -178,16 +179,69 @@ function login_(b) {
   var kFallos = 'fallos:' + u;
   var fallos = parseInt(cache.get(kFallos), 10) || 0;
   if (fallos >= 5) return { ok: false, error: 'Demasiados intentos. Espere 15 minutos.' };
-  var usr = null;
-  for (var i = 0; i < USUARIOS.length; i++) if (USUARIOS[i].usuario === u) usr = USUARIOS[i];
+  var usr = buscarCuenta_(u);
   var p = String(b.p || '').normalize('NFC');
   if (!usr || sha256_(usr.sal + ':' + p) !== usr.huella) {
     cache.put(kFallos, String(fallos + 1), 900);
     return { ok: false, error: 'Usuario o contraseña incorrectos.' };
   }
   cache.remove(kFallos);
+  return sesion_(usr, u);
+}
+
+function sesion_(usr, u) {
   var exp = Date.now() + HORAS_SESION * 3600 * 1000;
-  return { ok: true, token: firmar_(usr.usuario + '|' + exp), nombre: usr.nombre, vence: exp };
+  return { ok: true, token: firmar_(usr.id + '|' + exp + '|' + usr.huella.slice(0, 12)), nombre: usr.nombre, usuario: u || usr.usuarios[0], vence: exp };
+}
+
+/* ---- Cuentas: se guardan en las propiedades del script para poder cambiarlas desde el panel ---- */
+function cuentas_() {
+  var raw = PropertiesService.getScriptProperties().getProperty('cuentas');
+  if (raw) { try { return JSON.parse(raw); } catch (e) {} }
+  var out = [], porHuella = {};
+  USUARIOS.forEach(function (x) {
+    var c = porHuella[x.huella];
+    if (!c) { c = porHuella[x.huella] = { id: x.usuario, nombre: x.nombre, usuarios: [], sal: x.sal, huella: x.huella }; out.push(c); }
+    c.usuarios.push(x.usuario);
+  });
+  return out;
+}
+function buscarCuenta_(u) {
+  var cs = cuentas_();
+  for (var i = 0; i < cs.length; i++) if (cs[i].usuarios.indexOf(u) >= 0) return cs[i];
+  return null;
+}
+
+function cuenta_(b) {
+  var usr = verificar_(b.token);
+  if (!usr) return { ok: false, sesion: false, error: 'Su sesión terminó. Entre de nuevo.' };
+  var cache = CacheService.getScriptCache(), kF = 'fallos-cuenta:' + usr.id;
+  var fallos = parseInt(cache.get(kF), 10) || 0;
+  if (fallos >= 5) return { ok: false, error: 'Demasiados intentos. Espere 15 minutos.' };
+  var actual = String(b.actual || '').normalize('NFC');
+  if (sha256_(usr.sal + ':' + actual) !== usr.huella) { cache.put(kF, String(fallos + 1), 900); return { ok: false, error: 'La contraseña actual no es correcta.' }; }
+  cache.remove(kF);
+  var nuevoU = normUsuario_(b.usuario || ''), nuevaP = String(b.clave || '').normalize('NFC');
+  if (nuevoU && (nuevoU.length < 3 || nuevoU.length > 30)) return { ok: false, error: 'El usuario debe tener entre 3 y 30 caracteres.' };
+  if (nuevaP && nuevaP.length < 8) return { ok: false, error: 'La contraseña nueva debe tener al menos 8 caracteres.' };
+  var lock = LockService.getScriptLock(); lock.waitLock(10000);
+  try {
+    var cs = cuentas_(), yo = null;
+    for (var i = 0; i < cs.length; i++) if (cs[i].id === usr.id) yo = cs[i];
+    if (!yo) return { ok: false, error: 'No se encontró su cuenta.' };
+    if (nuevoU && yo.usuarios.indexOf(nuevoU) < 0) {
+      for (var k = 0; k < cs.length; k++) if (cs[k] !== yo && cs[k].usuarios.indexOf(nuevoU) >= 0) return { ok: false, error: 'Ese usuario ya lo usa otra persona. Elija otro.' };
+      yo.usuarios = [nuevoU];
+    }
+    if (nuevaP) {
+      yo.sal = Utilities.getUuid().replace(/-/g, '').slice(0, 16);
+      yo.huella = sha256_(yo.sal + ':' + nuevaP);
+    }
+    PropertiesService.getScriptProperties().setProperty('cuentas', JSON.stringify(cs));
+    var r = sesion_(yo, yo.usuarios[0]);
+    r.mensaje = nuevaP ? 'Listo. Se cerró la sesión en los demás dispositivos.' : 'Listo, ya quedó.';
+    return r;
+  } finally { lock.releaseLock(); }
 }
 
 function lista_(b) {
@@ -468,7 +522,14 @@ function verificar_(token) {
   if (firmar_(datos) !== token) return null;
   var d = datos.split('|');
   if (Number(d[1]) < Date.now()) return null;
-  for (var i = 0; i < USUARIOS.length; i++) if (USUARIOS[i].usuario === d[0]) return USUARIOS[i];
+  var cs = cuentas_();
+  for (var i = 0; i < cs.length; i++) {
+    var c = cs[i];
+    if (c.id === d[0] || (!d[2] && c.usuarios.indexOf(d[0]) >= 0)) {
+      if (d[2] && c.huella.slice(0, 12) !== d[2]) return null; // la contraseña cambió: sesión vieja inválida
+      return c;
+    }
+  }
   return null;
 }
 
@@ -516,7 +577,7 @@ function sha256_(s) {
 }
 
 function normUsuario_(u) {
-  return String(u || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z ]/g, '').replace(/\s+/g, ' ').trim();
+  return String(u || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9 ._-]/g, '').replace(/\s+/g, ' ').trim();
 }
 
 /** Nombre del PDF: Nombre - Trámite - 12-nov-26.pdf */

@@ -4,5 +4,5 @@
  */
 window.GP_CONFIG = {
   numeros: ['529841297165', '529842021770'],
-  endpoint: 'https://script.google.com/macros/s/AKfycbzy45ltSBb0fYMtMzqBEkCLq-EEEjhvxSIhLSOFYMbGeL1vmtJdOqwDdPaTHKxt08hU/exec'
+  endpoint: 'https://script.google.com/macros/s/AKfycbxbxFR6FK7zDwmDXAKaMs6Pfgv5s59z87BA_n7ac5bXJGqwZvgUUJlmBzv1O2IFJbr4/exec'
 };

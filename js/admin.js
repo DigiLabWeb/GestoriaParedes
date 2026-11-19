@@ -38,7 +38,7 @@
     var b = $('l-btn'); b.disabled = true; b.textContent = 'Entrando…';
     api({ a: 'login', u: u, p: p }).then(function (j) {
       if (!j.ok) throw new Error(j.error || 'No se pudo entrar.');
-      ses = { token: j.token, nombre: j.nombre, vence: j.vence }; guardarSesion(ses);
+      ses = { token: j.token, nombre: j.nombre, usuario: j.usuario || u.toLowerCase(), vence: j.vence }; guardarSesion(ses);
       $('l-p').value = '';
       cargar();
     }).catch(function (e) { mostrarLogin(e.message); $('l-p').select(); })
@@ -51,23 +51,29 @@
   });
 
   $('adm-salir').addEventListener('click', function () {
-    ses = null; guardarSesion(null); cache = {}; datos = { expedientes: [], reparto: null };
+    ses = null; guardarSesion(null); cache = {}; datos = { expedientes: [], reparto: null }; try { sessionStorage.removeItem(KL); } catch (e) {}
     $('t-body').textContent = ''; mostrarLogin('');
   });
 
-  function sesionVencida(j) { if (j && j.sesion === false) { ses = null; guardarSesion(null); mostrarLogin(j.error); return true; } return false; }
+  function sesionVencida(j) { if (j && j.sesion === false) { ses = null; guardarSesion(null); try { sessionStorage.removeItem(KL); } catch (e) {} mostrarLogin(j.error); return true; } return false; }
 
   /* ---------- lista ---------- */
+  var KL = 'gp-admin-lista';
   function cargar(silencioso) {
-    if (!silencioso) vista('v-cargando');
+    // Muestra al instante la última lista conocida y la actualiza en segundo plano.
+    var previa = null; try { previa = JSON.parse(sessionStorage.getItem(KL) || 'null'); } catch (e) {}
+    if (previa && !silencioso) { datos = previa; $('adm-nombre').textContent = ses.nombre; vista('v-panel'); pintarFiltro(); pintar(); silencioso = 'previa'; }
+    else if (!silencioso) vista('v-cargando');
     return api({ a: 'lista', token: ses.token }).then(function (j) {
       if (sesionVencida(j)) return;
       if (!j.ok) throw new Error(j.error || 'No se pudo cargar la lista.');
       datos = j; $('adm-nombre').textContent = ses.nombre;
+      try { sessionStorage.setItem(KL, JSON.stringify(j)); } catch (e) {}
       vista('v-panel'); pintarFiltro(); pintar();
       var h = decodeURIComponent((location.hash || '').slice(1));
       if (/^GP-\d+$/.test(h) && !abierto) abrir(h);
     }).catch(function (e) {
+      if (silencioso === 'previa') { aviso('Sin conexión con el servidor; se muestra la última lista.'); return; }
       if (silencioso) { alert(e.message); return; }
       mostrarLogin(e.message);
     });
@@ -242,19 +248,45 @@
       var bin = atob(j.b64), n = bin.length, u8 = new Uint8Array(n);
       for (var i = 0; i < n; i++) u8[i] = bin.charCodeAt(i);
       var blob = new Blob([u8], { type: 'application/pdf' });
-      cache[folio] = { url: URL.createObjectURL(blob), nombre: j.archivo || (folio + '.pdf') };
+      cache[folio] = { blob: blob, url: URL.createObjectURL(blob), nombre: j.archivo || (folio + '.pdf') };
       var e = (datos.expedientes || []).filter(function (x) { return x.folio === folio; })[0];
       if (e && (!e.estado || e.estado === 'Nuevo')) { e.estado = 'En revisión'; pintar(); }
       return cache[folio];
     });
   }
 
+  // Guardar el PDF funcionando en Chrome, Brave, Safari, Firefox y Samsung Internet.
+  // En el celular el navegador solo permite descargar si el toque ocurre cuando el PDF ya está listo,
+  // así que primero se prepara y luego se ofrecen botones directos (y «Compartir», que guarda en Archivos, Drive o WhatsApp).
+  function nombreSeguro(c) { return c.nombre.replace(/[\\/:*?"<>|]+/g, '-'); }
+  function archivoDe(c) { try { return new File([c.blob], nombreSeguro(c), { type: 'application/pdf' }); } catch (e) { return null; } }
+  function puedeCompartir(c) { var f = archivoDe(c); return !!(f && navigator.canShare && navigator.share && navigator.canShare({ files: [f] })); }
+  function compartir(c) {
+    return navigator.share({ files: [archivoDe(c)], title: nombreSeguro(c) }).catch(function (e) { if (e && e.name !== 'AbortError') aviso('No se pudo compartir. Use «Descargar».'); });
+  }
   function guardarArchivo(c) {
-    var a = document.createElement('a'); a.href = c.url; a.download = c.nombre.replace(/[\\/:*?"<>|]+/g, '-');
-    document.body.appendChild(a); a.click(); a.remove();
+    if (window.navigator.msSaveOrOpenBlob) { window.navigator.msSaveOrOpenBlob(c.blob, nombreSeguro(c)); return; }
+    var a = document.createElement('a'); a.href = c.url; a.download = nombreSeguro(c); a.rel = 'noopener';
+    document.body.appendChild(a); a.click(); setTimeout(function () { a.remove(); }, 1000);
+  }
+  function botonesGuardar(c, caja) {
+    caja.innerHTML = '';
+    var d = document.createElement('a'); d.className = 'btn btn-y'; d.href = c.url; d.download = nombreSeguro(c); d.textContent = 'Descargar PDF';
+    caja.appendChild(d);
+    if (puedeCompartir(c)) {
+      var s = document.createElement('button'); s.type = 'button'; s.className = 'btn btn-o'; s.textContent = 'Compartir o guardar en…';
+      s.addEventListener('click', function () { compartir(c); }); caja.appendChild(s);
+    }
+    var v = document.createElement('a'); v.className = 'btn btn-o'; v.href = c.url; v.target = '_blank'; v.rel = 'noopener'; v.textContent = 'Ver PDF';
+    caja.appendChild(v);
+    var p = document.createElement('p'); p.className = 'v-ayuda';
+    p.textContent = 'Si «Descargar» no hace nada en su navegador, use «Compartir o guardar en…» y elija Archivos, Drive o WhatsApp.';
+    if (!puedeCompartir(c)) p.textContent = 'El archivo se guarda en Descargas.';
+    caja.appendChild(p);
   }
 
   function descargar(folio, btn) {
+    if (IS_MOBILE) { abrir(folio); return; } // en celular se ofrecen botones directos dentro del visor
     var txt = btn && btn.textContent; if (btn) { btn.disabled = true; btn.textContent = 'Preparando…'; }
     obtener(folio).then(guardarArchivo).catch(function (e) { if (e.message !== 'sesion') alert(e.message); })
       .then(function () { if (btn) { btn.disabled = false; btn.textContent = txt; } });
@@ -273,11 +305,11 @@
     obtener(folio).then(function (c) {
       if (abierto !== folio) return;
       if (IS_MOBILE) {
-        // En celular el PDF se abre con el visor del teléfono.
+        // En celular el PDF se guarda o se abre con botones directos (funciona también en Brave y Safari).
         $('v-msg').innerHTML = '';
-        var b = document.createElement('a'); b.className = 'btn btn-y'; b.href = c.url; b.target = '_blank'; b.rel = 'noopener'; b.textContent = 'Abrir PDF';
-        var p = document.createElement('p'); p.style.marginTop = '13px'; p.textContent = 'O use «Descargar» para guardarlo en el teléfono.';
-        $('v-msg').appendChild(b); $('v-msg').appendChild(p);
+        var caja = document.createElement('div'); caja.className = 'v-acciones';
+        $('v-msg').appendChild(document.createTextNode('El documento está listo.'));
+        $('v-msg').appendChild(caja); botonesGuardar(c, caja);
         $('v-load').querySelector('.spin').hidden = true;
       } else {
         $('v-frame').src = c.url; $('v-frame').hidden = false; $('v-load').hidden = true;
@@ -291,10 +323,58 @@
     if (ultimoFoco && ultimoFoco.focus) ultimoFoco.focus();
   }
   $('v-cerrar').addEventListener('click', cerrar);
-  $('v-desc').addEventListener('click', function () { if (abierto) descargar(abierto, this); });
+  $('v-desc').addEventListener('click', function () { if (!abierto) return; if (IS_MOBILE && cache[abierto]) guardarArchivo(cache[abierto]); else if (!IS_MOBILE) descargar(abierto, this); });
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !$('visor').hidden) cerrar(); });
 
+
+  /* ---------- Mi cuenta: cambiar usuario y contraseña ---------- */
+  function ojo(id) { return '<button type="button" class="adm-ojo" data-ojo="' + id + '" aria-label="Mostrar contraseña" aria-pressed="false"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></button>'; }
+  function miCuenta() {
+    abrirDlg(
+      '<p class="kicker">' + esc(ses.nombre) + '</p><h2 id="dlg-t">Mi cuenta</h2>' +
+      '<p class="adm-dlg-p">Cambie su usuario, su contraseña o ambos. Para confirmar que es usted, al final escriba su contraseña actual.</p>' +
+      '<form id="cu-f" novalidate autocomplete="off">' +
+      '<div class="fld"><label for="cu-u">Usuario</label><input id="cu-u" class="inp" autocomplete="username" autocapitalize="none" spellcheck="false" value="' + esc(ses.usuario || '') + '">' +
+      '<p class="adm-help">Con este nombre entrará al panel. Sin acentos importa poco: «Tomás» y «tomas» son lo mismo.</p></div>' +
+      '<div class="fld"><label for="cu-p">Contraseña nueva <span class="adm-opc">(déjela vacía si no la quiere cambiar)</span></label><div class="adm-pass"><input id="cu-p" class="inp" type="password" autocomplete="new-password">' + ojo('cu-p') + '</div>' +
+      '<div class="adm-fuerza" id="cu-fz" hidden><i></i><span></span></div></div>' +
+      '<div class="fld" id="cu-p2w" hidden><label for="cu-p2">Repita la contraseña nueva</label><div class="adm-pass"><input id="cu-p2" class="inp" type="password" autocomplete="new-password">' + ojo('cu-p2') + '</div></div>' +
+      '<div class="fld adm-confirma"><label for="cu-a">Contraseña actual</label><div class="adm-pass"><input id="cu-a" class="inp" type="password" autocomplete="current-password">' + ojo('cu-a') + '</div></div>' +
+      '<p class="adm-alert" id="cu-err" hidden></p>' +
+      '<div class="adm-dlg-acts"><button type="button" class="btn btn-o" data-cerrar>Cancelar</button><button type="submit" class="btn btn-y" id="cu-ok">Guardar</button></div></form>', '#cu-u');
+    $('dlg-body').querySelectorAll('[data-ojo]').forEach(function (b) {
+      b.addEventListener('click', function () { var i = $(b.getAttribute('data-ojo')), on = i.type === 'password'; i.type = on ? 'text' : 'password'; b.setAttribute('aria-pressed', on ? 'true' : 'false'); b.setAttribute('aria-label', on ? 'Ocultar contraseña' : 'Mostrar contraseña'); });
+    });
+    $('cu-p').addEventListener('input', function () {
+      var v = this.value, n = 0; $('cu-p2w').hidden = !v; $('cu-fz').hidden = !v;
+      if (v.length >= 8) n++; if (v.length >= 12) n++; if (/[A-Z]/.test(v) && /[a-z]/.test(v)) n++; if (/\d/.test(v)) n++; if (/[^A-Za-z0-9]/.test(v)) n++;
+      var t = v.length < 8 ? ['Muy corta: mínimo 8 caracteres', 0] : n <= 2 ? ['Aceptable', 1] : n <= 3 ? ['Buena', 2] : ['Muy segura', 3];
+      $('cu-fz').className = 'adm-fuerza f' + t[1]; $('cu-fz').querySelector('span').textContent = t[0];
+    });
+    $('cu-f').addEventListener('submit', function (ev) {
+      ev.preventDefault();
+      var err = $('cu-err'), u = $('cu-u').value.trim(), p = $('cu-p').value, p2 = $('cu-p2').value, a = $('cu-a').value;
+      function mal(t, foco) { err.textContent = t; err.hidden = false; if (foco) $(foco).focus(); }
+      err.hidden = true;
+      if (u.length < 3) return mal('El usuario debe tener al menos 3 letras.', 'cu-u');
+      if (p && p.length < 8) return mal('La contraseña nueva debe tener al menos 8 caracteres.', 'cu-p');
+      if (p && p !== p2) return mal('Las dos contraseñas nuevas no coinciden.', 'cu-p2');
+      var mismoU = u.toLowerCase() === String(ses.usuario || '').toLowerCase();
+      if (mismoU && !p) return mal('No hay nada que cambiar: escriba un usuario distinto o una contraseña nueva.', 'cu-u');
+      if (!a) return mal('Escriba su contraseña actual para confirmar.', 'cu-a');
+      var b = $('cu-ok'); b.disabled = true; b.textContent = 'Guardando…';
+      api({ a: 'cuenta', token: ses.token, actual: a, usuario: mismoU ? '' : u, clave: p }).then(function (j) {
+        if (sesionVencida(j)) { cerrarDlg(); return; }
+        if (!j.ok) throw new Error(j.error || 'No se pudo guardar.');
+        ses = { token: j.token, nombre: j.nombre, usuario: j.usuario, vence: j.vence }; guardarSesion(ses);
+        cerrarDlg(); aviso((mismoU ? '' : 'Su usuario ahora es «' + j.usuario + '». ') + (j.mensaje || 'Listo.'));
+      }).catch(function (x) { mal(x.message); b.disabled = false; b.textContent = 'Guardar'; });
+    });
+  }
+  $('adm-cuenta').addEventListener('click', miCuenta);
+
   /* ---------- inicio ---------- */
+  if (IS_MOBILE) $('v-desc').hidden = true;
   ses = leerSesion();
   if (ses) cargar(); else mostrarLogin('');
   /* para la sección «Editar página» (js/editor.js) */
