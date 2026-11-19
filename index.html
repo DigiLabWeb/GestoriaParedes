@@ -1,2154 +1,387 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#0bbfc4">
-<title>Registro de Socios · Sindicato de Taxistas Lázaro Cárdenas del Río</title>
-<link rel="icon" href="favicon.ico?v=2" sizes="any">
-<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png?v=2">
-<link rel="icon" type="image/png" sizes="512x512" href="logo.png?v=2">
-<link rel="apple-touch-icon" href="apple-touch-icon.png?v=2">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gestoría Paredes — Licencias y cambio de propietario sin hacer filas</title>
+<meta name="description" content="Gestoría vehicular en Quintana Roo. Tramitamos su licencia de conducir (motociclista, automovilista, chofer, servicio público) el cambio de propietario, el emplacamiento de su auto (incluidos autos extranjeros) y placas federales. Consulte los requisitos y escríbanos por WhatsApp.">
+<meta name="theme-color" content="#141C1E">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="es_MX">
+<meta property="og:title" content="Gestoría Paredes — Trámites vehiculares sin hacer filas">
+<meta property="og:description" content="Licencias de conducir, cambio de propietario, emplacamiento (incluidos autos extranjeros) y placas federales. Usted reúne sus documentos; nosotros nos encargamos de la cita, la gestión y el seguimiento.">
+<meta property="og:image" content="img/compartir.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32.png">
+<link rel="apple-touch-icon" href="img/apple-touch-icon.png">
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="Socios">
-<meta name="application-name" content="Socios">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="apple-mobile-web-app-title" content="Paredes">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Space+Mono:wght@700&display=swap" rel="stylesheet">
-<style>
-  :root{
-    --turq:#0bbfc4;
-    --turq-deep:#06737d;
-    --lagoon:#7ff3f0;
-    --cyan:#00ffff;
-    --foam:#eafaf8;
-    --ink:#0b1f22;
-    --muted:#5f8486;
-    --white:#fff;
-    --coral:#ef5b5b;
-    --r:22px;
-    --display:'Bricolage Grotesque',system-ui,sans-serif;
-    --mono:'Space Mono',ui-monospace,monospace;
-  }
-  *{box-sizing:border-box;margin:0;padding:0}
-  html,body{min-height:100%}
-  body{font-family:var(--display);color:var(--ink);background:var(--white);-webkit-font-smoothing:antialiased}
-  button,input{font-family:inherit;font-size:inherit;color:inherit}
-  button{cursor:pointer;border:none;background:none}
-  svg{display:block}
-  [hidden]{display:none!important}
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&amp;family=Poppins:wght@400;500;600&amp;display=swap">
 
-  /* ---------- Botones ---------- */
-  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:999px;padding:14px 22px;font-weight:800;letter-spacing:.2px;transition:transform .12s,background .2s,box-shadow .2s}
-  .btn:active{transform:scale(.96)}
-  .btn-main{background:var(--ink);color:#fff;box-shadow:0 6px 0 -2px var(--turq)}
-  .btn-main:hover{background:#082a2d}
-  .btn-turq{background:var(--turq);color:#fff}
-  .btn-soft{background:var(--foam);color:var(--turq-deep)}
-  .btn-danger{background:var(--coral);color:#fff}
-  .btn[disabled]{opacity:.55;pointer-events:none}
-
-  .checker{background:conic-gradient(var(--cyan) 25%,var(--ink) 0 50%,var(--cyan) 0 75%,var(--ink) 0) 0 0/var(--ck,12px) var(--ck,12px)}
-
-  /* ================= LOGIN ================= */
-  #login{min-height:100vh;min-height:100dvh;background:linear-gradient(170deg,var(--turq) 0%,var(--turq-deep) 100%);position:relative;overflow:hidden;display:flex;flex-direction:column;align-items:center;padding:0 20px 140px}
-  .lanyard{--ck:13px;width:26px;height:min(16vh,130px);border-radius:0 0 6px 6px;flex-shrink:0;box-shadow:0 0 0 3px rgba(11,31,34,.25)}
-  .badge{background:var(--white);width:100%;max-width:360px;border-radius:26px;padding:22px 24px 26px;position:relative;box-shadow:0 30px 60px -20px rgba(4,40,44,.55);transform-origin:50% -60px;animation:swing 1.4s cubic-bezier(.3,1.6,.5,1) both}
-  @keyframes swing{0%{transform:rotate(-7deg) translateY(-30px);opacity:0}100%{transform:none;opacity:1}}
-  .badge::before{content:'';position:absolute;top:14px;left:50%;width:54px;height:10px;margin-left:-27px;border-radius:10px;background:var(--foam);box-shadow:inset 0 2px 3px rgba(0,0,0,.12)}
-  .badge-head{margin-top:18px;text-align:center}
-  .org-logo{width:132px;height:132px;display:block;margin:0 auto 12px;border-radius:50%;box-shadow:0 10px 24px -10px rgba(11,31,34,.5);animation:spinin 1.2s .3s cubic-bezier(.2,1.2,.4,1) both}
-  @keyframes spinin{from{transform:rotate(-120deg) scale(.6);opacity:0}to{transform:none;opacity:1}}
-  .logo{width:62px;height:62px;margin:0 auto 10px;border-radius:18px;background:var(--turq);display:grid;place-items:center;transform:rotate(-6deg)}
-  .badge h1{font-size:1.85rem;font-weight:800;line-height:1;letter-spacing:-1px}
-  .badge h1 span{color:var(--turq)}
-  .badge-head p{color:var(--muted);margin-top:6px;font-size:.85rem;font-weight:600;line-height:1.3}
-  .lf{margin-top:16px}
-  .lf label{display:block;font-size:.8rem;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin:0 0 6px 4px}
-  .inp{display:flex;align-items:center;background:var(--foam);border:2px solid transparent;border-radius:16px;transition:border .2s,background .2s}
-  .inp:focus-within{border-color:var(--turq);background:#fff}
-  .inp input{flex:1;min-width:0;border:none;background:transparent;padding:14px 16px;font-size:1.05rem;outline:none}
-  .inp button{padding:0 14px;color:var(--muted)}
-  .login-err{color:var(--coral);font-weight:600;font-size:.9rem;text-align:center;margin-top:14px;min-height:1.2em}
-  .badge .btn{width:100%;margin-top:14px;font-size:1.05rem}
-  .shake{animation:shake .4s}
-  @keyframes shake{25%{transform:translateX(-8px)}50%{transform:translateX(8px)}75%{transform:translateX(-4px)}}
-
-  .waves{position:absolute;left:0;right:0;bottom:0;height:140px;pointer-events:none}
-  .waves svg{position:absolute;bottom:0;width:200%;height:100%}
-  .w1{animation:drift 14s linear infinite;opacity:.35}
-  .w2{animation:drift 9s linear infinite reverse;opacity:.6}
-  .w3{animation:drift 20s linear infinite}
-  @keyframes drift{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-
-  /* ================= APP ================= */
-  .top{background:linear-gradient(160deg,var(--turq),var(--turq-deep));color:#fff;padding:26px 0 0;position:relative;overflow:hidden}
-  .top::before{content:'';position:absolute;top:0;left:0;right:0;height:10px;--ck:10px;background:conic-gradient(var(--cyan) 25%,var(--ink) 0 50%,var(--cyan) 0 75%,var(--ink) 0) 0 0/10px 10px}
-  .top-inner{max-width:1080px;margin:0 auto;padding:0 20px;position:relative;z-index:1}
-  .bar{display:flex;align-items:center;justify-content:space-between;gap:12px}
-  .brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:1.1rem;letter-spacing:-.3px}
-  .brand-logo{width:48px;height:48px;border-radius:50%;box-shadow:0 0 0 3px rgba(255,255,255,.35);flex-shrink:0}
-  .brand small{display:block;font-size:.72rem;font-weight:600;opacity:.85;letter-spacing:.2px}
-  .user{display:flex;align-items:center;gap:6px;background:rgba(255,255,255,.16);border-radius:999px;padding:5px 6px 5px 14px;font-weight:600;font-size:.9rem}
-  .user button{background:#fff;color:var(--turq-deep);border-radius:999px;padding:6px 12px;font-weight:800;font-size:.8rem}
-  .hero{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;padding:30px 0 20px}
-  .hero h2{font-size:clamp(2rem,8vw,4.2rem);font-weight:800;line-height:.9;letter-spacing:-2px}
-  .hero h2 em{font-style:normal;color:var(--lagoon)}
-  .count{text-align:right;flex-shrink:0}
-  .count b{display:block;font-family:var(--mono);font-size:clamp(2.2rem,7vw,3.4rem);line-height:1}
-  .count span{font-size:.85rem;opacity:.85;font-weight:600}
-  .top-mark{position:absolute;right:-80px;top:-10px;width:420px;opacity:.06;transform:rotate(-14deg);filter:grayscale(1);pointer-events:none}
-  .kicker{display:flex;align-items:center;gap:8px;font-size:.78rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;opacity:.9;margin-bottom:10px}
-  .kicker i{width:8px;height:8px;border-radius:50%;background:var(--cyan);box-shadow:0 0 0 0 rgba(0,255,255,.7);animation:pulse 2s infinite}
-  @keyframes pulse{70%{box-shadow:0 0 0 9px rgba(0,255,255,0)}100%{box-shadow:0 0 0 0 rgba(0,255,255,0)}}
-  .quote{margin-top:12px;font-weight:600;opacity:.92;font-size:1rem}
-  .stats{display:flex;gap:8px;flex-wrap:wrap;padding:4px 0 6px}
-  .chip{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.14);border:1.5px solid rgba(255,255,255,.3);color:#fff;border-radius:999px;padding:7px 14px;font-weight:700;font-size:.86rem;white-space:nowrap;transition:background .2s,transform .12s}
-  .chip:hover{background:rgba(255,255,255,.24)}
-  .chip:active{transform:scale(.95)}
-  .chip b{font-family:var(--mono);font-size:.82rem;background:rgba(11,31,34,.25);border-radius:999px;padding:1px 7px}
-  .chip.on{background:#fff;color:var(--turq-deep);border-color:#fff}
-  .chip.on b{background:var(--foam)}
-  .top-waves{position:relative;height:64px;margin-top:10px}
-  .top-waves svg{position:absolute;left:0;bottom:-1px;width:200%;height:100%}
-
-  .wrap{max-width:1040px;margin:0 auto;padding:0 16px 120px}
-  .tools{display:flex;gap:10px;margin-top:-34px;position:relative;z-index:2}
-  .search{flex:1;display:flex;align-items:center;gap:10px;background:#fff;border-radius:999px;padding:0 20px;box-shadow:0 10px 30px -10px rgba(10,125,132,.45);border:2px solid transparent;transition:border .2s}
-  .search:focus-within{border-color:var(--turq)}
-  .search input{flex:1;min-width:0;border:none;outline:none;padding:16px 0;font-size:1.02rem;background:transparent}
-  .search svg{color:var(--turq)}
-  .tools .btn-main{flex-shrink:0}
-
-  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:22px;margin-top:30px}
-
-  /* ---------- Gafete de socio ---------- */
-  .card{background:#fff;border-radius:var(--r);box-shadow:0 2px 0 var(--foam),0 14px 34px -18px rgba(13,59,63,.45);overflow:hidden;display:flex;flex-direction:column;animation:pop .45s cubic-bezier(.2,1.3,.4,1) both;transition:transform .2s}
-  .card:hover{transform:translateY(-4px) rotate(-.6deg)}
-  @keyframes pop{from{opacity:0;transform:translateY(16px) scale(.97)}to{opacity:1;transform:none}}
-  .band{height:86px;background:linear-gradient(135deg,var(--turq),var(--turq-deep));position:relative;color:#fff;padding:14px 16px;display:flex;justify-content:space-between;align-items:flex-start}
-  .band::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(-45deg,rgba(255,255,255,.08) 0 7px,transparent 7px 14px)}
-  .band::after{content:'';position:absolute;top:10px;left:50%;width:40px;height:8px;margin-left:-20px;border-radius:8px;background:rgba(255,255,255,.9);box-shadow:inset 0 2px 3px rgba(0,0,0,.2)}
-  .band-ck{position:absolute;left:0;right:0;bottom:0;height:10px;--ck:10px}
-  .tag{position:relative;font-size:.68rem;font-weight:800;letter-spacing:2px;opacity:.9}
-  .num i{font-style:normal}.num u{display:none;text-decoration:none}
-  .num{position:relative;font-family:var(--mono);font-size:.95rem;background:rgba(13,59,63,.28);padding:2px 8px;border-radius:8px}
-  .photo{width:96px;height:96px;border-radius:50%;margin:-50px auto 0;border:5px solid #fff;background:var(--foam);position:relative;overflow:hidden;display:grid;place-items:center;font-weight:800;font-size:1.9rem;color:var(--turq-deep);box-shadow:0 6px 16px -6px rgba(13,59,63,.4)}
-  .photo img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0}
-  .photo.clickable{cursor:zoom-in}
-  .card-body{padding:10px 18px 16px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:12px;flex:1}
-  .card h3{font-size:1.2rem;font-weight:800;line-height:1.15;letter-spacing:-.3px;word-break:break-word}
-
-  .plate{display:inline-flex;flex-direction:column;align-items:center;background:#fff;border:2.5px solid var(--ink);border-radius:9px;padding:2px 12px 4px;min-width:140px;position:relative}
-  .plate::before,.plate::after{content:'';position:absolute;top:50%;width:5px;height:5px;border-radius:50%;background:var(--ink);opacity:.35}
-  .plate::before{left:5px}.plate::after{right:5px}
-  .plate small{font-size:.52rem;font-weight:800;letter-spacing:2.5px;color:var(--turq-deep)}
-  .plate b{font-family:var(--mono);font-size:1.2rem;letter-spacing:1.5px;line-height:1.1}
-  .plate.none{border-style:dashed;border-color:#b9d6d5;color:var(--muted)}
-  .plate.none b{font-size:.85rem;letter-spacing:.5px;font-family:var(--display);font-weight:600;padding:4px 0}
-
-  .card-actions{display:flex;border-top:2px dashed var(--foam)}
-  .card-actions button{flex:1;padding:13px;font-weight:800;font-size:.88rem;display:flex;align-items:center;justify-content:center;gap:6px;color:var(--turq-deep);transition:background .2s}
-  .card-actions button:hover{background:var(--foam)}
-  .card-actions button+button{border-left:2px dashed var(--foam);color:var(--coral)}
-  .card-actions button+button:hover{background:#fdeeee}
-
-  .empty{text-align:center;padding:60px 20px;color:var(--muted)}
-  .empty svg{margin:0 auto 14px}
-  .empty h3{color:var(--ink);font-size:1.3rem;margin-bottom:4px}
-
-  .loader{display:flex;justify-content:center;gap:8px;padding:70px 0}
-  .loader i{width:12px;height:12px;border-radius:50%;background:var(--turq);animation:bob .9s ease-in-out infinite}
-  .loader i:nth-child(2){animation-delay:.15s}.loader i:nth-child(3){animation-delay:.3s}
-  @keyframes bob{50%{transform:translateY(-12px);opacity:.5}}
-
-  .fab{position:fixed;right:18px;bottom:calc(20px + env(safe-area-inset-bottom));width:64px;height:64px;border-radius:22px;background:var(--ink);color:#fff;display:none;place-items:center;box-shadow:0 6px 0 -2px var(--turq),0 14px 28px -8px rgba(13,59,63,.6);z-index:20;transform:rotate(-6deg)}
-  .fab:active{transform:rotate(-6deg) scale(.94)}
-
-  /* ---------- Hojas / modales ---------- */
-  .overlay{position:fixed;inset:0;background:rgba(8,42,45,.55);backdrop-filter:blur(3px);display:none;align-items:flex-end;justify-content:center;z-index:50}
-  .overlay.open{display:flex}
-  .sheet{background:#fff;width:100%;overflow-x:hidden;max-width:460px;border-radius:28px 28px 0 0;padding:14px 22px calc(24px + env(safe-area-inset-bottom));max-height:94vh;overflow:auto;animation:rise .3s cubic-bezier(.2,1.2,.4,1)}
-  @keyframes rise{from{transform:translateY(60px);opacity:0}to{transform:none;opacity:1}}
-  .grab{width:44px;height:5px;border-radius:5px;background:#d4ebea;margin:0 auto 14px}
-  .sheet h2{font-size:1.6rem;font-weight:800;letter-spacing:-.5px;text-align:center}
-  .sheet .sub{color:var(--muted);text-align:center;margin:4px 0 18px}
-
-  .pick{display:flex;flex-direction:column;align-items:center;gap:8px;margin-bottom:8px}
-  .pick-circle{width:124px;height:124px;border-radius:50%;background:var(--foam);border:3px dashed var(--lagoon);display:grid;place-items:center;position:relative;overflow:hidden;color:var(--turq-deep);transition:border .2s}
-  .pick-circle:hover{border-color:var(--turq)}
-  .pick-circle img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-  .pick-circle .cam{position:absolute;right:6px;bottom:6px;width:34px;height:34px;border-radius:50%;background:var(--ink);color:#fff;display:grid;place-items:center;z-index:2}
-  .pick-hint{font-size:.85rem;color:var(--muted);font-weight:600}
-  .pick-remove{font-size:.82rem;color:var(--coral);font-weight:800}
-
-  .row{display:grid;grid-template-columns:110px minmax(0,1fr);gap:12px}
-  .row .lf{min-width:0}
-  .plate-input{background:#fff;border:2.5px solid var(--ink);border-radius:14px;display:flex;flex-direction:column;align-items:center;padding:4px 10px 2px}
-  .plate-input:focus-within{border-color:var(--turq);box-shadow:0 0 0 4px var(--foam)}
-  .plate-input small{font-size:.6rem;font-weight:800;letter-spacing:3px;color:var(--turq-deep);padding-top:4px}
-  .plate-input input{width:100%;border:none;outline:none;text-align:center;font-family:var(--mono);font-size:1.5rem;letter-spacing:3px;text-transform:uppercase;padding:2px 0 8px;background:transparent}
-  .plate-input input::placeholder{color:#c3dcdb}
-  .mono input{font-family:var(--mono)}
-  .sheet-actions{display:flex;gap:10px;margin-top:22px}
-  .sheet-actions .btn{flex:1}
-
-  .confirm-photo{margin:4px auto 14px}
-
-  .lightbox{position:fixed;inset:0;background:rgba(8,42,45,.85);display:none;place-items:center;z-index:70;padding:24px;cursor:zoom-out}
-  .lightbox.open{display:grid}
-  .lightbox img{max-width:100%;max-height:85vh;border-radius:24px;border:6px solid #fff}
-
-  .toast{position:fixed;left:50%;top:calc(16px + env(safe-area-inset-top));transform:translate(-50%,-30px);background:var(--ink);color:#fff;padding:12px 20px;border-radius:999px;font-weight:600;opacity:0;transition:.35s cubic-bezier(.2,1.3,.4,1);z-index:80;pointer-events:none;width:max-content;max-width:calc(100vw - 32px);text-align:center;display:flex;align-items:center;gap:8px}
-  .toast.show{opacity:1;transform:translate(-50%,0)}
-  .toast.error{background:var(--coral)}
-  .demo{background:#fff6d8;color:#7a5d00;border-radius:14px;padding:10px 14px;font-size:.85rem;margin-top:16px;text-align:center}
-
-  @media (min-width:640px){
-    .overlay{align-items:center;padding:20px}
-    .sheet{border-radius:28px}
-    .grab{display:none}
-  }
-  @media (max-width:600px){
-    .tools .btn-main{display:none}
-    .fab{display:grid}
-    .hero{padding:22px 0 14px}
-    .top-mark{width:260px;right:-70px;top:40px}
-    .stats{flex-wrap:nowrap;overflow-x:auto;margin:0 -20px;padding:4px 20px 8px;scrollbar-width:none}
-    .stats::-webkit-scrollbar{display:none}
-    .quote{font-size:.9rem}
-    .kicker{font-size:.68rem;letter-spacing:1px}
-    .grid{grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:14px}
-    .photo{width:80px;height:80px;margin-top:-42px;font-size:1.5rem}
-    .band{height:74px;padding:12px}
-    .tag,.num i{display:none}
-    .brand small{display:none}
-    .brand{font-size:1rem}
-    .brand-logo{width:42px;height:42px}
-    .num{font-size:.8rem}
-    .num u{display:inline}
-    .card h3{font-size:1.02rem}
-    .plate{min-width:0;padding:2px 9px 3px}
-    .plate b{font-size:.98rem}
-    .card-actions button span{display:none}
-  }
-  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
-</style>
-<style>
-  /* ================= v4: INE, detalle, escáner ================= */
-  .sheet.wide{max-width:560px}
-  textarea.ta{width:100%;border:none;background:transparent;padding:13px 16px;font-size:1rem;font-family:inherit;color:var(--ink);outline:none;resize:vertical;min-height:70px}
-  .inp input[type=date]{min-height:50px}
-  .sec{display:flex;align-items:center;gap:10px;font-weight:800;font-size:1.02rem;margin:22px 0 10px}
-  .sec-n{width:28px;height:28px;border-radius:9px;background:var(--ink);color:var(--cyan);display:grid;place-items:center;font-family:var(--mono);font-size:.85rem;transform:rotate(-6deg)}
-  .sec small{margin-left:auto;font-weight:600;color:var(--muted);font-size:.78rem}
-  .row2{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px}
-  .row2 .lf,.row .lf{min-width:0}
-  .lf .tagauto{display:none;margin-left:6px;background:var(--cyan);color:var(--ink);border-radius:6px;padding:0 6px;font-size:.62rem;letter-spacing:1px;vertical-align:1px}
-  .lf.auto .tagauto{display:inline-block}
-  .lf.auto .inp{border-color:var(--cyan);background:#effffe;box-shadow:0 0 0 4px rgba(0,255,255,.12)}
-  .upper input{text-transform:uppercase;font-family:var(--mono);letter-spacing:.5px}
-
-  /* --- Ranuras de INE --- */
-  .ine-slots{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-  .ine-slot{display:flex;flex-direction:column;gap:6px;text-align:left}
-  .ine-img{position:relative;aspect-ratio:1.585;border-radius:14px;background:var(--foam);border:2.5px dashed var(--lagoon);overflow:hidden;display:grid;place-items:center;color:var(--turq-deep);transition:border .2s,transform .12s}
-  .ine-slot:hover .ine-img{border-color:var(--turq)}
-  .ine-slot:active .ine-img{transform:scale(.97)}
-  .ine-img img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-  .ine-img .ph{display:flex;flex-direction:column;align-items:center;gap:4px;font-weight:800;font-size:.8rem}
-  .ine-slot.has .ine-img{border-style:solid;border-color:var(--ink)}
-  .ine-slot.ok .ine-img{border-color:#1f9d5c}
-  .ine-slot.warn .ine-img{border-color:#e19a00}
-  .ine-slot.bad .ine-img{border-color:var(--coral)}
-  .ine-lbl{display:flex;align-items:center;justify-content:space-between;font-weight:800;font-size:.85rem}
-  .st{font-size:.72rem;font-weight:800;border-radius:999px;padding:2px 8px;background:var(--foam);color:var(--muted)}
-  .st.ok{background:#e3f7ec;color:#1a7f4b}
-  .st.warn{background:#fff3d6;color:#9a6700}
-  .st.bad{background:#fdeaea;color:#c0392b}
-  .st.info{background:var(--foam);color:var(--turq-deep)}
-  .reading .ine-img::after{content:'';position:absolute;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent,var(--cyan),transparent);box-shadow:0 0 12px var(--cyan);animation:scanline 1.4s ease-in-out infinite}
-  .reading .ine-img::before{content:'';position:absolute;inset:0;background:rgba(11,31,34,.35);z-index:1}
-
-  .ine-match{margin-top:10px;border-radius:12px;padding:8px 12px;font-weight:800;font-size:.85rem;text-align:center}
-  .ine-match.ok{background:#e3f7ec;color:#1a7f4b}
-  .ine-match.bad{background:#fdeaea;color:#c0392b}
-  .ine-match.info{background:var(--foam);color:var(--turq-deep)}
-  .ine-msg{margin-top:12px;border-radius:16px;padding:12px 14px;font-size:.88rem;line-height:1.4;border:2px solid}
-  .ine-msg b.t{display:block;font-size:.95rem;margin-bottom:4px}
-  .ine-msg ul{margin:6px 0 0 18px}
-  .ine-msg.ok{background:#effaf4;border-color:#bfe9d1;color:#14593a}
-  .ine-msg.warn{background:#fff8e6;border-color:#f5dc9c;color:#7a5200}
-  .ine-msg.bad{background:#fdf0f0;border-color:#f3c3c3;color:#8d2a2a}
-  .ine-msg.info{background:var(--foam);border-color:#c9eeec;color:var(--turq-deep)}
-  .ine-msg .det{display:grid;grid-template-columns:auto 1fr;gap:2px 10px;margin-top:6px;font-size:.82rem}
-  .ine-msg .det span{opacity:.75}
-  .ine-msg .det em{font-style:normal;font-weight:700;word-break:break-word}
-
-  .pick-row{display:flex;align-items:center;gap:14px;margin-bottom:6px}
-  .pick-row .pick-circle{width:84px;height:84px;flex-shrink:0}
-  .pick-row .pick-circle .cam{width:28px;height:28px;right:2px;bottom:2px}
-  .pick-row .txt{display:flex;flex-direction:column;align-items:flex-start;gap:2px}
-
-  /* --- Tarjeta: concesión, edad, INE --- */
-  .meta-row{display:flex;flex-wrap:wrap;justify-content:center;gap:6px}
-  .card{cursor:pointer}
-  .req{color:var(--coral)}
-  .inp .pref{padding-left:16px;font-family:var(--mono);font-weight:700;color:var(--muted)}
-  #f_telefono{font-family:var(--mono);letter-spacing:.5px}
-  .det-list .tel-acts{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap;padding:0;border:0}
-  .tel-acts a{display:inline-flex;align-items:center;gap:6px;padding:7px 12px;border-radius:999px;font-weight:800;font-size:.82rem;text-decoration:none;background:var(--foam);color:var(--turq-deep)}
-  .tel-acts a.wa{background:#e3f7ec;color:#1a7f4b}
-  .addr-sum{width:100%;display:flex;align-items:center;gap:10px;background:var(--foam);border:2px solid transparent;border-radius:16px;padding:12px 14px;text-align:left;transition:border .2s,background .2s}
-  .addr-sum:hover{border-color:var(--lagoon)}
-  .addr.open .addr-sum{border-color:var(--turq);background:#fff;border-bottom-left-radius:6px;border-bottom-right-radius:6px}
-  .addr.err .addr-sum{border-color:var(--coral);background:#fff6f6}
-  .addr-txt{flex:1;min-width:0;font-weight:600;line-height:1.3}
-  .addr-txt.vacio{color:#8fb1b2;font-weight:500}
-  .addr-chev{transition:transform .25s;color:var(--turq-deep);flex-shrink:0}
-  .addr.open .addr-chev{transform:rotate(180deg)}
-  .addr-body{border:2px solid var(--turq);border-top:none;border-radius:0 0 16px 16px;padding:4px 12px 12px;margin-top:-4px;animation:rise .2s ease}
-  .addr-body .lf{margin-top:10px}
-  .addr-body .inp input,.addr-body .inp select{padding:11px 13px;font-size:.98rem}
-  .inp select{flex:1;min-width:0;border:none;background:transparent;padding:14px 16px;font-size:1.05rem;font-family:inherit;color:var(--ink);outline:none;appearance:none;-webkit-appearance:none}
-  .row3{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px}
-  .lf.bad .inp{border-color:var(--coral);background:#fff6f6}
-  .lf .msg{display:none;color:#c0392b;font-size:.78rem;font-weight:700;margin:4px 0 0 4px}
-  .lf.bad .msg{display:block}
-  .addr-foot{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:12px;flex-wrap:wrap}
-  .linkbtn{color:var(--turq-deep);font-weight:800;font-size:.85rem;text-decoration:underline;text-underline-offset:3px}
-
-  /* --- Detalle --- */
-  .det-head{display:flex;align-items:center;gap:14px;margin-bottom:6px}
-  .det-head .photo{margin:0;width:84px;height:84px;flex-shrink:0;font-size:1.6rem}
-  .det-head h2{text-align:left;font-size:1.4rem;line-height:1.1}
-  .det-head .chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
-  .det-list{margin-top:14px;border-top:2px dashed var(--foam)}
-  .det-list div{display:grid;grid-template-columns:120px 1fr;gap:10px;padding:11px 2px;border-bottom:2px dashed var(--foam);font-size:.95rem}
-  .det-list dt{font-size:.72rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--muted);padding-top:3px}
-  .det-list dd{font-weight:600;word-break:break-word}
-  .det-list dd.mono{font-family:var(--mono);font-size:.9rem}
-  .ine-view{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
-  .ine-view figure{display:flex;flex-direction:column;gap:5px}
-  .ine-view figcaption{font-size:.75rem;font-weight:800;color:var(--muted);letter-spacing:1px;text-transform:uppercase}
-  .ine-view .box{aspect-ratio:1.585;border-radius:12px;background:var(--foam);display:grid;place-items:center;overflow:hidden;color:var(--muted);font-size:.8rem;font-weight:600;cursor:zoom-in}
-  .ine-view .box img{width:100%;height:100%;object-fit:cover}
-  .verify{width:100%;margin-top:12px}
-  .lock-note{display:flex;gap:6px;align-items:center;font-size:.75rem;color:var(--muted);margin-top:8px}
-
-  /* --- Escáner --- */
-  .scanner{position:fixed;inset:0;background:#000;z-index:90;display:none;overflow:hidden}
-  .scanner.open{display:block}
-  .scanner video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-  .scan-frame{position:absolute;left:50%;top:45%;width:min(88vw,560px);aspect-ratio:1.585;transform:translate(-50%,-50%);border-radius:18px;box-shadow:0 0 0 200vmax rgba(5,20,22,.62)}
-  .scan-frame .c{position:absolute;width:38px;height:38px;border:5px solid var(--cyan);transition:border-color .25s}
-  .scan-frame .tl{top:-5px;left:-5px;border-right:0;border-bottom:0;border-radius:18px 0 0 0}
-  .scan-frame .tr{top:-5px;right:-5px;border-left:0;border-bottom:0;border-radius:0 18px 0 0}
-  .scan-frame .bl{bottom:-5px;left:-5px;border-right:0;border-top:0;border-radius:0 0 0 18px}
-  .scan-frame .br{bottom:-5px;right:-5px;border-left:0;border-top:0;border-radius:0 0 18px 0}
-  .scan-frame.vert{width:min(58vw,330px);aspect-ratio:.631;top:42%}
-  .scan-rot{justify-self:end;color:#fff;font-weight:700;background:rgba(255,255,255,.16);border-radius:999px;padding:10px 14px;font-size:.88rem}
-  .scan-frame.good .c{border-color:#3ddc84}
-  .scan-frame.bad .c{border-color:#ffb020}
-  .scan-frame .scan-line{position:absolute;left:5%;right:5%;height:2px;background:linear-gradient(90deg,transparent,var(--cyan),transparent);box-shadow:0 0 10px var(--cyan);animation:scanline 2.4s ease-in-out infinite}
-  @keyframes scanline{0%,100%{top:6%}50%{top:92%}}
-  .scan-frame .ghost{position:absolute;inset:10%;opacity:.18;border:2px dashed #fff;border-radius:10px}
-  .scan-top{position:absolute;top:0;left:0;right:0;padding:calc(16px + env(safe-area-inset-top)) 18px 16px;display:flex;gap:14px;align-items:center;color:#fff;background:linear-gradient(rgba(0,0,0,.5),transparent)}
-  .scan-top b{display:block;font-size:1.15rem}
-  .scan-top span{font-size:.85rem;opacity:.85}
-  .scan-x{width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.16);color:#fff;font-size:1.4rem;flex-shrink:0}
-  .scan-hint{position:absolute;left:50%;bottom:calc(140px + env(safe-area-inset-bottom));transform:translateX(-50%);background:rgba(11,31,34,.88);color:#fff;padding:10px 18px;border-radius:999px;font-weight:700;font-size:.92rem;white-space:nowrap;transition:background .25s}
-  .scan-hint.good{background:#1f9d5c}
-  .scan-hint.bad{background:#b76e00}
-  .scan-bottom{position:absolute;bottom:0;left:0;right:0;padding:20px 22px calc(28px + env(safe-area-inset-bottom));display:grid;grid-template-columns:1fr auto 1fr;align-items:center;background:linear-gradient(transparent,rgba(0,0,0,.55))}
-  .shutter{width:78px;height:78px;border-radius:50%;background:#fff;box-shadow:0 0 0 6px rgba(255,255,255,.3);transition:transform .1s}
-  .shutter:active{transform:scale(.9)}
-  .scan-side{justify-self:start;color:#fff;font-weight:700;background:rgba(255,255,255,.16);border-radius:999px;padding:10px 16px;font-size:.88rem}
-  .flash{position:absolute;inset:0;background:#fff;opacity:0;pointer-events:none}
-
-  /* --- Editor de la foto --- */
-  .editor{position:fixed;inset:0;background:#0b1f22;z-index:95;display:none;flex-direction:column;color:#fff}
-  .editor.open{display:flex}
-  .ed-top{display:flex;gap:14px;align-items:center;padding:calc(14px + env(safe-area-inset-top)) 18px 8px}
-  .ed-top b{display:block;font-size:1.15rem}
-  .ed-top span{font-size:.85rem;opacity:.8}
-  .ed-stage{flex:1;min-height:0;position:relative;display:grid;place-items:center;overflow:hidden;margin:8px 16px;touch-action:none}
-  #edCanvas{display:block;border-radius:4px}
-  .ed-box{position:absolute;border:2px solid var(--cyan);box-shadow:0 0 0 200vmax rgba(5,20,22,.68);cursor:move;touch-action:none;transition:border-color .2s}
-  .ed-box.good{border-color:#3ddc84}
-  .ed-box.bad{border-color:#ffb020}
-  .grid3{position:absolute;inset:0;pointer-events:none;background:
-    linear-gradient(90deg,transparent calc(33.33% - .5px),rgba(255,255,255,.35) 0 calc(33.33% + .5px),transparent 0 calc(66.66% - .5px),rgba(255,255,255,.35) 0 calc(66.66% + .5px),transparent 0),
-    linear-gradient(transparent calc(33.33% - .5px),rgba(255,255,255,.35) 0 calc(33.33% + .5px),transparent 0 calc(66.66% - .5px),rgba(255,255,255,.35) 0 calc(66.66% + .5px),transparent 0)}
-  .ed-box .h{position:absolute;width:26px;height:26px;border:5px solid #fff}
-  .ed-box .h::before,.ed-box .e::before{content:'';position:absolute;inset:-14px}
-  .ed-box .tl{top:-5px;left:-5px;border-right:0;border-bottom:0;cursor:nwse-resize}
-  .ed-box .tr{top:-5px;right:-5px;border-left:0;border-bottom:0;cursor:nesw-resize}
-  .ed-box .bl{bottom:-5px;left:-5px;border-right:0;border-top:0;cursor:nesw-resize}
-  .ed-box .br{bottom:-5px;right:-5px;border-left:0;border-top:0;cursor:nwse-resize}
-  .ed-box .e{position:absolute;background:#fff;border-radius:4px}
-  .ed-box .e.t,.ed-box .e.b{left:50%;width:34px;height:5px;margin-left:-17px;cursor:ns-resize}
-  .ed-box .e.t{top:-4px}.ed-box .e.b{bottom:-4px}
-  .ed-box .e.l,.ed-box .e.r{top:50%;height:34px;width:5px;margin-top:-17px;cursor:ew-resize}
-  .ed-box .e.l{left:-4px}.ed-box .e.r{right:-4px}
-  .ed-q{align-self:center;margin:6px 0 4px;padding:8px 16px;border-radius:999px;font-weight:700;font-size:.88rem;background:rgba(255,255,255,.12)}
-  .ed-q.good{background:#1f9d5c}
-  .ed-q.bad{background:#b76e00}
-  .ed-tools{display:flex;justify-content:center;gap:10px;padding:8px 12px}
-  .ed-tools button{display:flex;flex-direction:column;align-items:center;gap:4px;color:#fff;background:rgba(255,255,255,.1);border-radius:16px;padding:10px 0;width:76px;font-size:.75rem;font-weight:700;transition:background .2s}
-  .ed-tools button:hover{background:rgba(255,255,255,.18)}
-  .ed-tools button:active{transform:scale(.95)}
-  .ed-actions{display:grid;grid-template-columns:1fr 1.5fr;gap:10px;padding:8px 16px calc(18px + env(safe-area-inset-bottom));width:100%;max-width:560px;margin:0 auto}
-  .ed-repeat{background:rgba(255,255,255,.12);color:#fff}
-  .ed-side{display:flex;flex-direction:column}
-
-  /* --- Administración --- */
-  .es-capturista .solo-admin{display:none!important}
-  .adm-chip{background:rgba(255,255,255,.16);color:#fff;border-radius:999px;padding:8px 14px;font-weight:800;font-size:.82rem;white-space:nowrap}
-  .adm-chip:hover{background:rgba(255,255,255,.26)}
-  .user .who{background:none;color:#fff;padding:0 2px;font-weight:700;font-size:.9rem;text-decoration:underline dotted rgba(255,255,255,.6);text-underline-offset:4px}
-  .tabs{display:flex;gap:6px;background:var(--foam);border-radius:14px;padding:5px;margin:4px 0 16px}
-  .tab{flex:1;padding:10px;border-radius:10px;font-weight:800;font-size:.9rem;color:var(--muted)}
-  .tab.on{background:#fff;color:var(--ink);box-shadow:0 2px 8px -3px rgba(11,31,34,.25)}
-  .adm-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:14px 0 10px}
-  .btn.sm{padding:9px 14px;font-size:.85rem}
-  .hint{font-size:.82rem;color:var(--muted);margin:6px 0 10px;line-height:1.4}
-  .fijos{background:var(--foam);border-radius:14px;padding:10px 14px}
-  .fijos summary{font-weight:800;cursor:pointer}
-  .fijos summary small{font-weight:600;color:var(--muted)}
-  .fijos-list{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
-  .fijos-list span{background:#fff;border-radius:999px;padding:4px 10px;font-size:.8rem;font-weight:700;color:var(--turq-deep)}
-  .crow{display:flex;align-items:center;gap:10px;padding:11px 12px;border:2px solid var(--foam);border-radius:14px;margin-bottom:8px}
-  .crow .ci{flex:1;min-width:0}
-  .crow .ci b{display:block;word-break:break-word}
-  .crow .ci small{color:var(--muted);font-weight:600;font-size:.78rem}
-  .crow .acts{display:flex;gap:4px;flex-shrink:0}
-  .crow .acts button{width:34px;height:34px;border-radius:10px;background:var(--foam);color:var(--turq-deep);font-weight:800}
-  .crow .acts button:disabled{opacity:.3}
-  .crow .acts .del{color:var(--coral);background:#fdeeee}
-  .crow .acts .del.confirm{width:auto;padding:0 10px;background:var(--coral);color:#fff;font-size:.78rem}
-  .crow .av{width:36px;height:36px;border-radius:50%;background:var(--ink);color:var(--cyan);display:grid;place-items:center;font-weight:800;flex-shrink:0}
-  .vacio-box{text-align:center;color:var(--muted);padding:16px;border:2px dashed var(--foam);border-radius:14px;font-size:.9rem}
-  .editor-card{border:2px solid var(--turq);border-radius:16px;padding:14px;margin-top:10px;animation:rise .2s ease}
-  .editor-card .sheet-actions{margin-top:14px}
-  .switch{display:flex;align-items:center;gap:10px;cursor:pointer;padding:12px 0;text-transform:none;letter-spacing:0;font-size:.9rem!important;color:var(--ink)!important}
-  .switch input{display:none}
-  .switch span{width:46px;height:28px;border-radius:999px;background:#cfe3e2;position:relative;transition:background .2s;flex-shrink:0}
-  .switch span::after{content:'';position:absolute;top:3px;left:3px;width:22px;height:22px;border-radius:50%;background:#fff;transition:transform .2s;box-shadow:0 1px 3px rgba(0,0,0,.2)}
-  .switch input:checked+span{background:var(--turq)}
-  .switch input:checked+span::after{transform:translateX(18px)}
-  .switch em{font-style:normal;font-weight:600}
-  .seg{display:flex;gap:6px}
-  .seg button{flex:1;padding:12px;border-radius:14px;background:var(--foam);font-weight:800;color:var(--muted);border:2px solid transparent}
-  .seg button.on{background:#fff;border-color:var(--turq);color:var(--ink)}
-  @media (max-width:520px){ .adm-chip span{display:none} .adm-chip{padding:7px 11px;font-size:1rem} }
-
-  /* --- Instalar como app --- */
-  .bar-right{display:flex;align-items:center;gap:8px}
-  .install-chip{background:var(--ink);color:var(--cyan);border-radius:999px;padding:8px 14px;font-weight:800;font-size:.82rem;white-space:nowrap;box-shadow:0 4px 0 -1px rgba(0,0,0,.2)}
-  .install-link{display:block;margin:14px auto 0;color:var(--turq-deep);font-weight:800;font-size:.88rem;text-decoration:underline;text-underline-offset:3px}
-  .inst-icon{display:block;width:84px;height:84px;margin:0 auto 10px;border-radius:22px;box-shadow:0 8px 20px -8px rgba(11,31,34,.4)}
-  .inst-steps{display:flex;flex-direction:column;gap:10px;margin:6px 0 4px}
-  .inst-steps div{display:flex;align-items:center;gap:12px;background:var(--foam);border-radius:14px;padding:12px 14px;font-size:.95rem}
-  .inst-steps div>b:first-child{width:28px;height:28px;flex-shrink:0;border-radius:9px;background:var(--ink);color:var(--cyan);display:grid;place-items:center;font-family:var(--mono)}
-  .inst-steps .ico{display:inline-grid;place-items:center;min-width:24px;height:24px;border-radius:6px;background:#fff;font-weight:800}
-  @media (max-width:420px){ .install-chip{padding:7px 10px;font-size:.75rem} .brand > div{display:none} }
-
-  /* ================= Ajustes responsivos ================= */
-  .search{min-width:0}
-  .scan-hint{white-space:normal;max-width:calc(100vw - 32px);width:max-content;text-align:center}
-  .ine-lbl{flex-wrap:wrap;gap:4px}
-  .st{white-space:nowrap}
-
-  @media (max-width:360px){
-    .sec small{display:none}
-    .sheet{padding-left:16px;padding-right:16px}
-    .ed-tools button{width:64px;font-size:.7rem}
-    .hero h2{font-size:1.9rem}
-    .shutter{width:66px;height:66px}
-    .scan-bottom{padding-left:14px;padding-right:14px}
-    .scan-side,.scan-rot{padding:9px 12px;font-size:.8rem}
-  }
-
-  /* Celular acostado (horizontal) */
-  @media (orientation:landscape) and (max-height:520px){
-    /* Inicio de sesión más compacto */
-    .lanyard{height:28px}
-    .org-logo{width:76px;height:76px;margin-bottom:6px}
-    .badge h1{font-size:1.5rem}
-    #login{padding-bottom:40px}
-    .waves{height:70px}
-    /* Escáner: controles a la derecha y marco ajustado a la altura */
-    .scan-frame{left:calc(50% - 60px);top:54%;width:min(70vw,calc((100dvh - 100px) * 1.585))}
-    .scan-frame.vert{width:calc((100dvh - 100px) * .631);top:54%}
-    .scan-top{padding:10px 14px}
-    .scan-top b{font-size:1rem}
-    .scan-hint{left:calc(50% - 60px);bottom:10px;font-size:.8rem;padding:7px 14px}
-    .scan-bottom{left:auto;top:0;width:130px;padding:14px 12px;grid-template-columns:1fr;grid-template-rows:1fr auto 1fr;justify-items:center;background:linear-gradient(90deg,transparent,rgba(0,0,0,.55))}
-    .scan-side{justify-self:center;align-self:start;margin-top:52px}
-    .scan-rot{justify-self:center;align-self:end}
-    .shutter{width:64px;height:64px}
-    /* Editor: imagen a la izquierda, herramientas a la derecha */
-    .editor.open{display:grid;grid-template-columns:minmax(0,1fr) 300px;grid-template-rows:auto minmax(0,1fr)}
-    .ed-top{grid-column:1 / -1;padding:8px 14px 0}
-    .ed-top span{display:none}
-    .ed-stage{margin:6px 10px 10px 14px}
-    .ed-side{justify-content:center;padding-right:10px}
-    .ed-tools{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:8px 6px}
-    .ed-tools button{width:auto;flex-direction:row;justify-content:center;gap:6px;padding:9px 0}
-    .ed-actions{grid-template-columns:1fr 1.4fr;padding:6px 6px 10px}
-    /* Hojas */
-    .overlay{align-items:center;padding:8px}
-    .sheet{max-height:96dvh;border-radius:22px}
-  }
-  .flash.go{animation:flash .35s ease-out}
-  @keyframes flash{from{opacity:.9}to{opacity:0}}
-
-  @media (max-width:600px){
-    .det-list div{grid-template-columns:1fr;gap:2px}
-    .row2.keep{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
-    .row2:not(.keep){grid-template-columns:1fr}
-  }
-</style>
-
-</head>
-<body>
-
-<!-- ================= LOGIN ================= -->
-<section id="login" hidden>
-  <div class="lanyard checker"></div>
-  <form class="badge" id="loginForm" autocomplete="on">
-    <div class="badge-head">
-      <img class="org-logo" src="logo.png" alt="Sindicato de Taxistas Lázaro Cárdenas del Río">
-      <h1>Registro de <span>Socios</span></h1>
-      <p>Sindicato de Taxistas<br>Lázaro Cárdenas del Río</p>
-    </div>
-    <div class="lf">
-      <label for="lu">Usuario</label>
-      <div class="inp"><input id="lu" name="username" autocomplete="username" autocapitalize="none" spellcheck="false" required></div>
-    </div>
-    <div class="lf">
-      <label for="lp">Contraseña</label>
-      <div class="inp">
-        <input id="lp" name="password" type="password" autocomplete="current-password" required>
-        <button type="button" id="eye" aria-label="Mostrar contraseña">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>
-        </button>
-      </div>
-    </div>
-    <div class="login-err" id="loginErr"></div>
-    <button class="btn btn-main" id="loginBtn" type="submit">Entrar</button>
-    <button type="button" class="install-link" id="instLogin" hidden onclick="instalarApp()">📲 Instalar como app en este dispositivo</button>
-  </form>
-  <div class="waves" aria-hidden="true">
-    <svg class="w1" viewBox="0 0 1440 140" preserveAspectRatio="none"><path fill="#fff" d="M0 60c120 30 240 30 360 0s240-30 360 0 240 30 360 0 240-30 360 0v80H0z"/></svg>
-    <svg class="w2" viewBox="0 0 1440 140" preserveAspectRatio="none"><path fill="#fff" d="M0 85c120-25 240-25 360 0s240 25 360 0 240-25 360 0 240 25 360 0v55H0z"/></svg>
-    <svg class="w3" viewBox="0 0 1440 140" preserveAspectRatio="none"><path fill="#fff" d="M0 110c120 15 240 15 360 0s240-15 360 0 240 15 360 0 240-15 360 0v30H0z"/></svg>
-  </div>
-</section>
-
-<!-- ================= APP ================= -->
-<section id="app" hidden>
-  <header class="top">
-    <img class="top-mark" src="logo.png" alt="" aria-hidden="true">
-    <div class="top-inner">
-      <div class="bar">
-        <div class="brand">
-          <img class="brand-logo" src="logo.png" alt="">
-          <div><div>Registro de Socios</div><small>Sindicato de Taxistas · Lázaro Cárdenas del Río</small></div>
-        </div>
-        <div class="bar-right"><button class="install-chip" id="instTop" hidden onclick="instalarApp()">📲 Instalar app</button><button class="adm-chip" id="admBtn" hidden onclick="abrirAdmin()" aria-label="Administrar">⚙<span> Administrar</span></button><div class="user"><button class="who" id="who" onclick="abrirCuenta()" title="Mi cuenta"></button><button onclick="logout()">Salir</button></div></div>
-      </div>
-      <div class="hero">
-        <div>
-          <div class="kicker"><i></i><span id="today"></span></div>
-          <h2 id="greet">Hola,<br><em>bienvenido</em></h2>
-          <p class="quote" id="quote"></p>
-        </div>
-        <div class="count"><b id="count">—</b><span id="countLbl">socios</span></div>
-      </div>
-      <div class="stats" id="stats"></div>
-    </div>
-    <div class="top-waves" aria-hidden="true">
-      <svg class="w1" viewBox="0 0 1440 64" preserveAspectRatio="none"><path fill="#fff" d="M0 20c120 22 240 22 360 0s240-22 360 0 240 22 360 0 240-22 360 0V64H0z"/></svg>
-      <svg class="w2" viewBox="0 0 1440 64" preserveAspectRatio="none"><path fill="#fff" d="M0 36c120-18 240-18 360 0s240 18 360 0 240-18 360 0 240 18 360 0V64H0z"/></svg>
-      <svg class="w3" viewBox="0 0 1440 64" preserveAspectRatio="none"><path fill="#fff" d="M0 48c120 10 240 10 360 0s240-10 360 0 240 10 360 0 240-10 360 0V64H0z"/></svg>
-    </div>
-  </header>
-
-  <main class="wrap">
-    <div class="tools">
-      <label class="search">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
-        <input id="q" type="search" placeholder="Nombre, número, concesión o CURP…" autocomplete="off">
-      </label>
-      <button class="btn btn-main" onclick="openForm()">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
-        Nuevo socio
-      </button>
-    </div>
-    <div class="demo" id="demo" hidden>Modo demostración · los datos se guardan solo en este navegador.</div>
-    <div id="list"></div>
-  </main>
-
-  <button class="fab" onclick="openForm()" aria-label="Nuevo socio">
-    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
-  </button>
-</section>
-
-<!-- ================= FORMULARIO ================= -->
-<div class="overlay" id="formOv">
-  <form class="sheet wide" id="form" novalidate>
-    <div class="grab"></div>
-    <h2 id="formTitle">Nuevo socio</h2>
-    <p class="sub" id="formSub">Empieza escaneando su INE</p>
-
-    <div class="sec"><span class="sec-n">1</span> Credencial INE <small>Toca para escanear</small></div>
-    <div class="ine-slots">
-      <button type="button" class="ine-slot" id="slot-frente" onclick="startScan('frente')">
-        <div class="ine-img"><div class="ph">
-          <svg width="44" height="30" viewBox="0 0 44 30" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="1" width="42" height="28" rx="4"/><circle cx="12" cy="13" r="4"/><path d="M5 24c1-4 4-5 7-5s6 1 7 5M24 9h14M24 15h14M24 21h9"/></svg>
-          Frente</div><img alt="" hidden></div>
-        <span class="ine-lbl">Frente <span class="st">Pendiente</span></span>
-      </button>
-      <button type="button" class="ine-slot" id="slot-reverso" onclick="startScan('reverso')">
-        <div class="ine-img"><div class="ph">
-          <svg width="44" height="30" viewBox="0 0 44 30" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="1" width="42" height="28" rx="4"/><path d="M6 8h10v8H6zM20 9h18M20 14h12M6 21h32M6 25h32" stroke-dasharray="2 2"/></svg>
-          Reverso</div><img alt="" hidden></div>
-        <span class="ine-lbl">Reverso <span class="st">Pendiente</span></span>
-      </button>
-    </div>
-    <div class="ine-match" id="ineMatch" hidden></div>
-    <div class="ine-msg" id="ineMsg" hidden></div>
-
-    <div class="sec"><span class="sec-n">2</span> Datos del socio</div>
-    <div class="pick-row">
-      <button type="button" class="pick-circle" id="pickBtn" aria-label="Foto del socio">
-        <svg id="pickIcon" width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg>
-        <img id="pickImg" alt="" hidden>
-        <span class="cam"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg></span>
-      </button>
-      <div class="txt">
-        <b>Foto del gafete</b>
-        <span class="pick-hint" id="pickHint">Opcional · toca para tomarla</span>
-        <button type="button" class="pick-remove" id="pickRemove" hidden>Quitar foto</button>
-      </div>
-      <input type="file" id="file" accept="image/*" hidden>
-    </div>
-
-    <div class="row2 keep">
-      <div class="lf mono"><label for="f_numero">N.º socio</label><div class="inp"><input id="f_numero" inputmode="numeric" placeholder="001"></div></div>
-      <div class="lf upper"><label for="f_concesion">Concesión</label><div class="inp"><input id="f_concesion" placeholder="Ej. 0123" autocapitalize="characters"></div></div>
-    </div>
-    <div class="lf" id="lf_nombre"><label for="f_nombre">Nombre completo <span class="tagauto">INE</span></label><div class="inp"><input id="f_nombre" placeholder="Nombre(s) y apellidos" autocapitalize="words"></div></div>
-    <div class="lf" id="lf_telefono"><label for="f_telefono">Teléfono <span class="req">*</span></label><div class="inp"><span class="pref">+52</span><input id="f_telefono" type="tel" inputmode="numeric" autocomplete="tel-national" maxlength="18" placeholder="984 123 4567"></div><span class="msg"></span></div>
-    <div class="row2">
-      <div class="lf" id="lf_nacimiento"><label for="f_nacimiento">Fecha de nacimiento <span class="tagauto">INE</span></label><div class="inp"><input id="f_nacimiento" type="date"></div></div>
-      <div class="lf upper" id="lf_curp"><label for="f_curp">CURP <span class="tagauto">INE</span></label><div class="inp"><input id="f_curp" maxlength="18" placeholder="18 caracteres" spellcheck="false"></div></div>
-    </div>
-    <div class="lf addr" id="addr">
-      <label>Dirección <span class="req">*</span></label>
-      <button type="button" class="addr-sum" id="addrSum" onclick="toggleAddr()">
-        <span class="addr-txt vacio" id="addrTxt">Toca para capturar la dirección</span>
-        <span class="st" id="addrSt">Pendiente</span>
-        <svg class="addr-chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
-      </button>
-      <div class="addr-body" id="addrBody" hidden>
-        <div class="lf" id="lf_calle"><label for="f_calle">Calle <span class="req">*</span></label><div class="inp"><input id="f_calle" placeholder="Ej. Calle 10 Norte" autocapitalize="words"></div><span class="msg"></span></div>
-        <div class="row3">
-          <div class="lf upper" id="lf_numExt"><label for="f_numExt">Núm. exterior <span class="req">*</span></label><div class="inp"><input id="f_numExt" placeholder="245 o S/N"></div><span class="msg"></span></div>
-          <div class="lf upper" id="lf_numInt"><label for="f_numInt">Núm. interior</label><div class="inp"><input id="f_numInt" placeholder="Opcional"></div><span class="msg"></span></div>
-        </div>
-        <div class="lf" id="lf_colonia"><label for="f_colonia">Colonia <span class="req">*</span></label><div class="inp"><input id="f_colonia" placeholder="Ej. Centro" autocapitalize="words"></div><span class="msg"></span></div>
-        <div class="row3">
-          <div class="lf mono" id="lf_cp"><label for="f_cp">C.P. <span class="req">*</span></label><div class="inp"><input id="f_cp" inputmode="numeric" maxlength="5" placeholder="77710"></div><span class="msg"></span></div>
-          <div class="lf" id="lf_estado"><label for="f_estado">Estado <span class="req">*</span></label><div class="inp"><select id="f_estado"></select></div><span class="msg"></span></div>
-        </div>
-        <div class="lf" id="lf_municipio"><label for="f_municipio">Municipio <span class="req">*</span></label><div class="inp"><input id="f_municipio" placeholder="Ej. Solidaridad" autocapitalize="words"></div><span class="msg"></span></div>
-        <div class="addr-foot">
-          <button type="button" class="linkbtn" id="addrIne" hidden onclick="usarDireccionIne()">Copiar la dirección de la INE</button>
-          <button type="button" class="btn btn-soft" style="padding:9px 18px;margin-left:auto" onclick="toggleAddr(false)">Listo</button>
-        </div>
-      </div>
-    </div>
-    <div class="lf upper" id="lf_claveElector"><label for="f_claveElector">Clave de elector <span class="tagauto">INE</span></label><div class="inp"><input id="f_claveElector" maxlength="18" placeholder="Se llena al escanear" spellcheck="false"></div></div>
-
-    <div class="sec" id="secExtras" hidden><span class="sec-n">3</span> Datos adicionales</div>
-    <div id="extras"></div>
-
-    <div class="sheet-actions">
-      <button type="button" class="btn btn-soft" onclick="closeOv('formOv')">Cancelar</button>
-      <button type="submit" class="btn btn-main" id="saveBtn">Guardar</button>
-    </div>
-  </form>
-</div>
-
-<!-- ================= DETALLE ================= -->
-<div class="overlay" id="detOv"><div class="sheet wide" id="det"></div></div>
-
-<!-- ================= ELIMINAR ================= -->
-<div class="overlay" id="delOv">
-  <div class="sheet">
-    <div class="grab"></div>
-    <div class="photo confirm-photo" id="delPhoto"></div>
-    <h2>¿Dar de baja?</h2>
-    <p class="sub" id="delText"></p>
-    <div class="sheet-actions">
-      <button class="btn btn-soft" onclick="closeOv('delOv')">Mejor no</button>
-      <button class="btn btn-danger" id="delBtn">Sí, eliminar</button>
-    </div>
-  </div>
-</div>
-
-<!-- ================= ESCÁNER ================= -->
-<div class="scanner" id="scanner">
-  <video id="cam" playsinline muted autoplay></video>
-  <div class="scan-frame" id="scanFrame"><i class="c tl"></i><i class="c tr"></i><i class="c bl"></i><i class="c br"></i><div class="ghost"></div><div class="scan-line"></div></div>
-  <div class="scan-top">
-    <button class="scan-x" onclick="stopScan()" aria-label="Cerrar">✕</button>
-    <div><b id="scanTitle">Frente de la INE</b><span>Coloca la credencial dentro del marco</span></div>
-  </div>
-  <div class="scan-hint" id="scanHint">Buscando la credencial…</div>
-  <div class="scan-bottom">
-    <button class="scan-side" onclick="stopScan(); $('ineFile').click()">Subir foto</button>
-    <button class="shutter" id="shutter" aria-label="Tomar foto"></button>
-    <button class="scan-rot" id="scanRot" onclick="girarMarco()">↻ Vertical</button>
-  </div>
-  <div class="flash" id="flash"></div>
-</div>
-<input type="file" id="ineFile" accept="image/*" capture="environment" hidden>
-
-<!-- ================= EDITOR DE LA FOTO ================= -->
-<div class="editor" id="editor">
-  <div class="ed-top">
-    <button class="scan-x" onclick="cerrarEditor()" aria-label="Cancelar">✕</button>
-    <div><b id="edTitle">Ajusta el frente</b><span>Arrastra las esquinas para dejar solo la credencial</span></div>
-  </div>
-  <div class="ed-stage" id="edStage">
-    <canvas id="edCanvas"></canvas>
-    <div class="ed-box" id="edBox">
-      <div class="grid3"></div>
-      <i class="h tl" data-h="tl"></i><i class="h tr" data-h="tr"></i><i class="h bl" data-h="bl"></i><i class="h br" data-h="br"></i>
-      <i class="e t" data-h="t"></i><i class="e b" data-h="b"></i><i class="e l" data-h="l"></i><i class="e r" data-h="r"></i>
-    </div>
-  </div>
-  <div class="ed-side">
-  <div class="ed-q" id="edQ"></div>
-  <div class="ed-tools">
-    <button onclick="edRotar(-90)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg>Girar</button>
-    <button onclick="edRotar(90)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-3-6.7L21 8"/><path d="M21 3v5h-5"/></svg>Girar</button>
-    <button onclick="edVoltear()"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18"/><path d="M8 7 3 12l5 5V7zM16 7l5 5-5 5V7z"/></svg>Voltear</button>
-    <button onclick="edReset()"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3h6M3 3v6M21 21h-6M21 21v-6M21 3h-6M21 3v6M3 21h6M3 21v-6"/></svg>Restablecer</button>
-  </div>
-  <div class="ed-actions">
-    <button class="btn ed-repeat" onclick="repetirEscaneo()">Repetir</button>
-    <button class="btn btn-turq" onclick="aceptarEditor()">✓ Aceptar</button>
-  </div>
-  </div>
-</div>
-
-<!-- ================= ADMINISTRAR ================= -->
-<div class="overlay" id="admOv">
-  <div class="sheet wide adm">
-    <div class="grab"></div>
-    <h2>Administrar</h2>
-    <p class="sub">Solo los administradores ven esta sección.</p>
-    <div class="tabs">
-      <button class="tab on" id="tabBtnCampos" onclick="verTab('campos')">Campos del registro</button>
-      <button class="tab" id="tabBtnUsuarios" onclick="verTab('usuarios')">Usuarios</button>
-    </div>
-
-    <div id="tab-campos">
-      <details class="fijos">
-        <summary>Campos fijos <small>(no se pueden quitar)</small></summary>
-        <div class="fijos-list">
-          <span>N.º de socio</span><span>Concesión</span><span>Nombre</span><span>Teléfono</span><span>Fecha de nacimiento</span><span>CURP</span><span>Clave de elector</span><span>Dirección</span><span>INE (frente y reverso)</span><span>Foto del gafete</span>
-        </div>
-        <p class="hint">Estos campos los usa la lectura de la INE y las validaciones, por eso siempre están.</p>
-      </details>
-      <div class="adm-head"><b>Campos personalizados</b><button class="btn btn-turq sm" onclick="editarCampo(null)">＋ Agregar</button></div>
-      <div id="camposList"></div>
-      <div class="editor-card" id="campoEd" hidden>
-        <b id="campoEdT">Nuevo campo</b>
-        <div class="lf"><label for="ce_etq">Nombre del campo</label><div class="inp"><input id="ce_etq" maxlength="40" placeholder="Ej. Teléfono, Tipo de sangre, Marca del taxi"></div></div>
-        <div class="row2 keep">
-          <div class="lf"><label for="ce_tipo">Tipo</label><div class="inp"><select id="ce_tipo" onchange="$('ce_opsBox').hidden = this.value !== 'lista'"><option value="texto">Texto</option><option value="numero">Número</option><option value="fecha">Fecha</option><option value="sino">Sí / No</option><option value="lista">Lista de opciones</option></select></div></div>
-          <div class="lf"><label>Obligatorio</label><label class="switch"><input type="checkbox" id="ce_obl"><span></span><em>Debe llenarse</em></label></div>
-        </div>
-        <div class="lf" id="ce_opsBox" hidden><label for="ce_ops">Opciones <small>(una por línea)</small></label><div class="inp"><textarea class="ta" id="ce_ops" rows="4" placeholder="Opción 1&#10;Opción 2&#10;Opción 3"></textarea></div></div>
-        <div class="sheet-actions"><button class="btn btn-soft" onclick="$('campoEd').hidden = true">Cancelar</button><button class="btn btn-main" id="ce_save" onclick="guardarCampo()">Guardar campo</button></div>
-      </div>
-    </div>
-
-    <div id="tab-usuarios" hidden>
-      <div class="adm-head"><b>Usuarios con acceso</b><button class="btn btn-turq sm" onclick="editarUsuario(null)">＋ Agregar</button></div>
-      <p class="hint"><b>Administrador:</b> hace todo. <b>Capturista:</b> registra y edita socios, pero no puede eliminarlos ni entrar a esta sección.</p>
-      <div id="usersList"><div class="loader"><i></i><i></i><i></i></div></div>
-      <div class="editor-card" id="userEd" hidden>
-        <b id="userEdT">Nuevo usuario</b>
-        <div class="lf"><label for="ue_user">Usuario</label><div class="inp"><input id="ue_user" maxlength="20" autocapitalize="none" spellcheck="false" placeholder="Ej. maria"></div></div>
-        <div class="lf"><label for="ue_pass" id="ue_passL">Contraseña</label><div class="inp"><input id="ue_pass" type="password" autocomplete="new-password" placeholder="Mínimo 8 caracteres"><button type="button" onclick="const p=$('ue_pass');p.type=p.type==='password'?'text':'password'">👁</button></div></div>
-        <div class="lf"><label for="ue_rol">Rol</label><div class="inp"><select id="ue_rol"><option value="admin">Administrador</option><option value="capturista">Capturista</option></select></div></div>
-        <div class="sheet-actions"><button class="btn btn-soft" onclick="$('userEd').hidden = true">Cancelar</button><button class="btn btn-main" id="ue_save" onclick="guardarUsuario()">Guardar usuario</button></div>
-      </div>
-    </div>
-
-    <div class="sheet-actions"><button class="btn btn-soft" onclick="closeOv('admOv')">Cerrar</button></div>
-  </div>
-</div>
-
-<!-- ================= MI CUENTA ================= -->
-<div class="overlay" id="cuentaOv">
-  <form class="sheet" id="cuentaForm" autocomplete="on">
-    <div class="grab"></div>
-    <h2>Mi cuenta</h2>
-    <p class="sub" id="cuentaSub"></p>
-    <input type="text" autocomplete="username" id="cu_user" hidden>
-    <div class="lf"><label for="cu_act">Contraseña actual</label><div class="inp"><input id="cu_act" type="password" autocomplete="current-password"></div></div>
-    <div class="lf"><label for="cu_new">Nueva contraseña</label><div class="inp"><input id="cu_new" type="password" autocomplete="new-password" placeholder="Mínimo 8 caracteres"></div></div>
-    <div class="lf"><label for="cu_rep">Repite la nueva contraseña</label><div class="inp"><input id="cu_rep" type="password" autocomplete="new-password"></div></div>
-    <div class="sheet-actions"><button type="button" class="btn btn-soft" onclick="closeOv('cuentaOv')">Cancelar</button><button class="btn btn-main" id="cu_save">Cambiar contraseña</button></div>
-  </form>
-</div>
-
-<!-- ================= INSTALAR APP ================= -->
-<div class="overlay" id="instOv">
-  <div class="sheet">
-    <div class="grab"></div>
-    <img src="icon-192.png" alt="" class="inst-icon">
-    <h2>Instala la app</h2>
-    <p class="sub">Queda en tu pantalla de inicio y se abre como cualquier app, sin descargar nada de una tienda.</p>
-    <div class="inst-steps" id="instIos" hidden>
-      <div><b>1</b><span>Toca el botón <b>Compartir</b> <span class="ico">⬆︎</span> (abajo en Safari).</span></div>
-      <div><b>2</b><span>Elige <b>“Agregar a pantalla de inicio”</b>.</span></div>
-      <div><b>3</b><span>Toca <b>Agregar</b>. ¡Listo! Busca el ícono <b>Socios</b>.</span></div>
-    </div>
-    <div class="inst-steps" id="instOtro" hidden>
-      <div><b>1</b><span>Abre el menú del navegador <span class="ico">⋮</span> (arriba a la derecha).</span></div>
-      <div><b>2</b><span>Elige <b>“Instalar app”</b> o <b>“Agregar a pantalla principal”</b>.</span></div>
-      <div><b>3</b><span>Confirma. El ícono <b>Socios</b> aparecerá con tus apps.</span></div>
-    </div>
-    <div class="sheet-actions"><button class="btn btn-main" onclick="closeOv('instOv')">Entendido</button></div>
-  </div>
-</div>
-
-<div class="lightbox" id="lightbox" onclick="this.classList.remove('open')"><img id="lightImg" alt=""></div>
-<div class="toast" id="toast"></div>
-
+<link rel="stylesheet" href="css/styles.css?v=202611191300">
 <script>
-/* ================= CONFIGURACIÓN ================= */
-const CONFIG = {
-  API_URL: 'https://script.google.com/macros/s/AKfycbx5TF24HKjNQ8rrP6TLqbVpCfB_JGn6_M_vjKhXMz0VjWlAxJIbbuMx10T_Z5fFzTI/exec'
-};
-// Usuarios y contraseñas viven en Code.gs (no aquí).
-
-/* ================= ALMACÉN LOCAL ================= */
-const store = {
-  get(k) { try { return localStorage.getItem(k); } catch { return null; } },
-  set(k, v) { try { localStorage.setItem(k, v); } catch {} },
-  del(k) { try { localStorage.removeItem(k); } catch {} }
-};
-
-/* ================= API ================= */
-const DEMO = !CONFIG.API_URL || new URLSearchParams(location.search).has('demo');
-
-async function handle(res) {
-  let j;
-  try { j = await res.json(); } catch { throw new Error('El servidor no respondió bien. Revisa la implementación de Apps Script.'); }
-  if (!j.ok) { const e = new Error(j.error || 'Error'); e.auth = !!j.auth; e.ocrOff = !!j.ocrOff; throw e; }
-  return j;
-}
-// fetch con mensaje claro cuando no hay internet
-async function pedir(url, opts) {
-  try { return await fetch(url, opts); }
-  catch { throw new Error(navigator.onLine === false ? 'Sin conexión a internet. Revisa tu señal e intenta de nuevo.' : 'No se pudo conectar con el servidor. Intenta de nuevo en un momento.'); }
-}
-const api = {
-  async list() {
-    if (DEMO) return demo.list();
-    return handle(await pedir(CONFIG.API_URL + '?token=' + encodeURIComponent(session.token || '')));
-  },
-  async post(action, extra = {}) {
-    if (DEMO) return demo.post(action, extra);
-    const res = await pedir(CONFIG.API_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-      body: JSON.stringify({ action, token: session.token, ...extra })
-    });
-    return handle(res);
-  }
-};
-
-/* ---------- Modo demostración (sin conexión) ---------- */
-const DEMO_TXT = {
-  frente: 'MÉXICO\nINSTITUTO NACIONAL ELECTORAL\nCREDENCIAL PARA VOTAR\nNOMBRE\nPÉREZ\nLÓPEZ\nJUAN CARLOS\nSEXO H\nDOMICILIO\nC 10 NORTE 245\nCOL CENTRO 77710\nSOLIDARIDAD, Q. ROO.\nCLAVE DE ELECTOR PRLPJN80031523H400\nCURP PELJ800315HQRRPN09\nAÑO DE REGISTRO 1998 01\nFECHA DE NACIMIENTO\n15/03/1980\nSECCIÓN 0412 VIGENCIA 2021 - 2031',
-  reverso: 'IDMEX2154856321<<0412098765432\n8003155M3112314MEX<02<<00412<3\nPEREZ<LOPEZ<<JUAN<CARLOS<<<<<<<'
-};
-const demo = {
-  all() { try { return JSON.parse(store.get('socios_demo4') || '[]'); } catch { return []; } },
-  save(v) { store.set('socios_demo4', JSON.stringify(v)); },
-  pub(s) { const p = { ...s, ineFrente: !!s.ineFrenteData, ineReverso: !!s.ineReversoData }; delete p.ineFrenteData; delete p.ineReversoData; return p; },
-  users() { try { return JSON.parse(store.get('users_demo')) || { gael: { pass: 'admin', rol: 'admin' } }; } catch { return { gael: { pass: 'admin', rol: 'admin' } }; } },
-  saveUsers(u) { store.set('users_demo', JSON.stringify(u)); },
-  campos() { try { return JSON.parse(store.get('campos_demo') || '[]'); } catch { return []; } },
-  quien() { const u = this.users()[session.user]; if (!u) { const e = new Error('Tu sesión terminó. Vuelve a entrar.'); e.auth = true; throw e; } return { user: session.user, rol: u.rol }; },
-  lista() { const u = this.users(); return Object.keys(u).sort().map(k => ({ user: k, rol: u[k].rol })); },
-  list() { const w = this.quien(); return { ok: true, data: this.all().map(s => this.pub(s)), campos: this.campos(), user: w.user, rol: w.rol }; },
-  async post(action, { id, data, user, pass, lado, estado, campos, original, rol, actual, nueva }) {
-    await new Promise(r => setTimeout(r, 350));
-    if (action === 'login') {
-      const u = this.users()[String(user).toLowerCase()];
-      if (u && u.pass === pass) return { ok: true, token: 'demo', user: String(user).toLowerCase(), rol: u.rol };
-      throw new Error('Usuario o contraseña incorrectos.');
-    }
-    const w = this.quien();
-    const admin = () => { if (w.rol !== 'admin') throw new Error('Solo un administrador puede hacer esto.'); };
-    if (action === 'guardarCampos') {
-      admin();
-      const c = campos.map(x => ({ ...x, id: x.id || 'c_' + Math.random().toString(36).slice(2, 10) }));
-      store.set('campos_demo', JSON.stringify(c)); return { ok: true, campos: c };
-    }
-    if (action === 'usuarios') { admin(); return { ok: true, usuarios: this.lista() }; }
-    if (action === 'guardarUsuario') {
-      admin();
-      const u = this.users(), nu = String(user).toLowerCase();
-      if (!/^[a-z0-9._-]{3,20}$/.test(nu)) throw new Error('El usuario debe tener de 3 a 20 letras o números, sin espacios ni acentos.');
-      if (nu !== original && u[nu]) throw new Error(`Ya existe el usuario "${nu}".`);
-      if (!original && !pass) throw new Error('Escribe una contraseña.');
-      if (pass && pass.length < 8) throw new Error('La contraseña debe tener al menos 8 caracteres.');
-      if (original && u[original].rol === 'admin' && rol !== 'admin' && Object.keys(u).filter(k => k !== original && u[k].rol === 'admin').length === 0) throw new Error('Debe quedar al menos un administrador.');
-      const rec = original ? u[original] : {};
-      rec.rol = rol === 'capturista' ? 'capturista' : 'admin'; if (pass) rec.pass = pass;
-      if (original && original !== nu) delete u[original];
-      u[nu] = rec; this.saveUsers(u);
-      return { ok: true, usuarios: this.lista(), renombrado: !!original && original !== nu, yo: original === w.user };
-    }
-    if (action === 'eliminarUsuario') {
-      admin(); const u = this.users();
-      if (user === w.user) throw new Error('No puedes eliminar tu propio usuario.');
-      if (u[user].rol === 'admin' && Object.keys(u).filter(k => u[k].rol === 'admin').length <= 1) throw new Error('Debe quedar al menos un administrador.');
-      delete u[user]; this.saveUsers(u); return { ok: true, usuarios: this.lista() };
-    }
-    if (action === 'cambiarClave') {
-      const u = this.users();
-      if (u[w.user].pass !== actual) throw new Error('La contraseña actual no es correcta.');
-      if (String(nueva).length < 8) throw new Error('La nueva contraseña debe tener al menos 8 caracteres.');
-      u[w.user].pass = nueva; this.saveUsers(u); return { ok: true };
-    }
-    if (action === 'leerIne') {
-      await new Promise(r => setTimeout(r, 700));
-      const im = await new Promise(r => { const i = new Image(); i.onload = () => r(i); i.src = arguments[1].imagen; });
-      const derecha = im.width > im.height && !(window.DEMO_DE_CABEZA && (window.DEMO_DE_CABEZA--, true));
-      return { ok: true, texto: derecha ? (DEMO_TXT[scan.lado] || '') : 'XX#@' };
-    }
-    const all = this.all(), now = new Date().toISOString();
-    const s0 = all.find(x => x.id === id);
-    if (action === 'archivo') return { ok: true, imagen: lado === 'reverso' ? s0.ineReversoData : s0.ineFrenteData };
-    if (action === 'estadoIne') { s0.ineEstado = estado; this.save(all); return { ok: true }; }
-    if (action === 'delete') { admin(); all.splice(all.indexOf(s0), 1); this.save(all); return { ok: true }; }
-    const n = v => String(v || '').toUpperCase().replace(/[\s-]/g, '');
-    if (!data.nombre) throw new Error('El nombre es obligatorio.');
-    if (!data.numero) throw new Error('El número de socio es obligatorio.');
-    if (DIR_KEYS.some(k => DIR_REQ[k] && !data[k])) throw new Error('Falta completar la dirección.');
-    for (const s of all) {
-      if (s.id === id) continue;
-      if (n(s.numero) === n(data.numero)) throw new Error(`Ya existe un socio con el número ${data.numero}.`);
-      if (data.curp && n(s.curp) === n(data.curp)) throw new Error(`La CURP ${data.curp} ya está registrada (socio N.º ${s.numero}).`);
-    }
-    const s = action === 'create' ? { id: crypto.randomUUID(), creado: now } : s0;
-    if (!/^\d{10}$/.test(data.telefono || '')) throw new Error('El teléfono debe tener 10 dígitos.');
-    Object.assign(s, { numero: data.numero, nombre: data.nombre, telefono: data.telefono, calle: data.calle, numExt: data.numExt, numInt: data.numInt, colonia: data.colonia, cp: data.cp, municipio: data.municipio, estado: data.estado, direccion: componerDireccion(data), nacimiento: data.nacimiento, concesion: (data.concesion || '').toUpperCase(), curp: (data.curp || '').toUpperCase(), claveElector: (data.claveElector || '').toUpperCase(), actualizado: now });
-    if (data.ineEstado !== undefined) s.ineEstado = data.ineEstado;
-    for (const c of this.campos()) if (c.obligatorio && !(data.extras || {})[c.id]) throw new Error(`Falta "${c.etiqueta}".`);
-    s.extras = JSON.stringify({ ...extrasDe(s), ...(data.extras || {}) });
-    if (data.fotoThumb) s.fotoThumb = data.fotoThumb; else if (data.quitarFoto) s.fotoThumb = '';
-    if (data.ineFrente) s.ineFrenteData = data.ineFrente;
-    if (data.ineReverso) s.ineReversoData = data.ineReverso;
-    if (action === 'create') all.push(s);
-    this.save(all);
-    return { ok: true, id: s.id };
-  }
-};
-
-/* ================= UTILIDADES ================= */
-const $ = id => document.getElementById(id);
-const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]));
-const fold = s => String(s ?? '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[\s-]/g, '');
-const initials = n => String(n || '?').trim().split(/\s+/).slice(0, 2).map(w => w[0]).join('').toUpperCase();
-const photoSrc = s => s.fotoThumb || (s.fotoId ? `https://drive.google.com/thumbnail?id=${encodeURIComponent(s.fotoId)}&sz=w400` : '');
-const MESES = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
-
-function edad(f) {
-  const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(f || ''); if (!m) return null;
-  const hoy = new Date(); let e = hoy.getFullYear() - +m[1];
-  if (hoy.getMonth() + 1 < +m[2] || (hoy.getMonth() + 1 === +m[2] && hoy.getDate() < +m[3])) e--;
-  return e >= 0 && e < 120 ? e : null;
-}
-function fechaLarga(f) {
-  const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(f || ''); if (!m) return '';
-  return `${+m[3]} de ${MESES[+m[2] - 1]} de ${m[1]}`;
-}
-function soloTel(v) {
-  let t = String(v || '').replace(/\D/g, '');
-  if (t.length === 12 && t.startsWith('52')) t = t.slice(2);
-  if (t.length === 13 && t.startsWith('521')) t = t.slice(3);
-  return t;
-}
-const telBonito = t => (t = soloTel(t)).length === 10 ? `${t.slice(0, 3)} ${t.slice(3, 6)} ${t.slice(6)}` : t;
-function fechaCorta(f) { const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(f || ''); return m ? `${m[3]}/${m[2]}/${m[1]}` : ''; }
-
-/* ---------- Dirección ---------- */
-const DIR_KEYS = ['calle', 'numExt', 'numInt', 'colonia', 'cp', 'estado', 'municipio'];
-const DIR_REQ = { calle: 'la calle', numExt: 'el núm. exterior', colonia: 'la colonia', cp: 'el C.P.', estado: 'el estado', municipio: 'el municipio' };
-// Primeros 2 dígitos del código postal por estado (SEPOMEX)
-const ESTADOS = [
-  ['Aguascalientes', [20, 20]], ['Baja California', [21, 22]], ['Baja California Sur', [23, 23]], ['Campeche', [24, 24]],
-  ['Chiapas', [29, 30]], ['Chihuahua', [31, 33]], ['Ciudad de México', [0, 16]], ['Coahuila', [25, 27]], ['Colima', [28, 28]],
-  ['Durango', [34, 35]], ['Estado de México', [50, 57]], ['Guanajuato', [36, 38]], ['Guerrero', [39, 41]], ['Hidalgo', [42, 43]],
-  ['Jalisco', [44, 49]], ['Michoacán', [58, 61]], ['Morelos', [62, 62]], ['Nayarit', [63, 63]], ['Nuevo León', [64, 67]],
-  ['Oaxaca', [68, 71]], ['Puebla', [72, 75]], ['Querétaro', [76, 76]], ['Quintana Roo', [77, 77]], ['San Luis Potosí', [78, 79]],
-  ['Sinaloa', [80, 82]], ['Sonora', [83, 85]], ['Tabasco', [86, 86]], ['Tamaulipas', [87, 89]], ['Tlaxcala', [90, 90]],
-  ['Veracruz', [91, 96]], ['Yucatán', [97, 97]], ['Zacatecas', [98, 99]]
-];
-function estadoDeCP(cp) {
-  if (!/^\d{5}$/.test(cp)) return '';
-  const n = +cp.slice(0, 2);
-  const e = ESTADOS.find(([, [a, b]]) => n >= a && n <= b);
-  return e ? e[0] : '';
-}
-function componerDireccion(d) {
-  if (!d.calle) return d.direccion || '';
-  return `${d.calle} ${d.numExt || ''}${d.numInt ? ' Int. ' + d.numInt : ''}, Col. ${d.colonia || ''}, C.P. ${d.cp || ''}, ${d.municipio || ''}, ${d.estado || ''}`;
-}
-function faltantes(s) {
-  const f = [];
-  if (soloTel(s.telefono).length !== 10) f.push('teléfono');
-  if (!s.nacimiento) f.push('fecha de nacimiento');
-  if (!s.curp) f.push('CURP');
-  if (!s.concesion) f.push('concesión');
-  if (!direccionCompleta(s)) f.push('dirección');
-  const x = extrasDe(s);
-  CAMPOS.forEach(c => { if (c.obligatorio && !x[c.id]) f.push(c.etiqueta.toLowerCase()); });
-  return f;
-}
-function direccionCompleta(s) { return Object.keys(DIR_REQ).every(k => s[k]) && /^\d{5}$/.test(s.cp || ''); }
-function titulo(s) {
-  const minus = ['de', 'del', 'la', 'las', 'los', 'y', 'e'];
-  return String(s || '').toLowerCase().replace(/\s+/g, ' ').trim().split(' ')
-    .map((w, i) => i > 0 && minus.includes(w) ? w : w.replace(/^(\p{L})/u, c => c.toUpperCase())).join(' ');
-}
-
-let session = { token: store.get('socios_token'), user: store.get('socios_user'), rol: store.get('socios_rol') || '' };
-let CAMPOS = [];   // campos personalizados del registro (los define un administrador)
-const extrasDe = s => { try { return JSON.parse(s.extras || '{}') || {}; } catch { return {}; } };
-const TIPOS = { texto: 'Texto', numero: 'Número', fecha: 'Fecha', sino: 'Sí / No', lista: 'Lista de opciones' };
-function valorExtra(c, v) {
-  if (!v) return '';
-  if (c.tipo === 'sino') return v === 'si' ? 'Sí' : 'No';
-  if (c.tipo === 'fecha') return fechaCorta(v);
-  return v;
-}
-function aplicarRol() {
-  const admin = session.rol === 'admin';
-  document.body.classList.toggle('es-capturista', !admin);
-  $('admBtn').hidden = !admin;
-}
-let socios = [];
-let filtro = 'todos';
-
-function toast(msg, error = false) {
-  const t = $('toast');
-  t.textContent = msg;
-  t.className = 'toast show' + (error ? ' error' : '');
-  clearTimeout(t._h);
-  t._h = setTimeout(() => t.className = 'toast', 3200);
-}
-function openOv(id) { $(id).classList.add('open'); }
-function closeOv(id) { $(id).classList.remove('open'); }
-function zoom(src) { if (!src) return; $('lightImg').src = src; $('lightbox').classList.add('open'); }
-
-/* ================= SESIÓN ================= */
-const FRASES = [
-  'Unidos llegamos más lejos.', 'Que hoy sea un buen día de ruta.', 'Cada socio cuenta.',
-  'Buen camino y buen servicio.', 'Un sindicato fuerte se construye entre todos.',
-  'Al volante, con orgullo.', 'Paso a paso, kilómetro a kilómetro.'
-];
-function showLogin(msg = '') {
-  $('app').hidden = true; $('login').hidden = false;
-  $('loginErr').textContent = msg;
-  setTimeout(() => $('lu').focus(), 300);
-}
-function showApp() {
-  $('login').hidden = true; $('app').hidden = false;
-  $('demo').hidden = !DEMO;
-  aplicarRol();
-  const name = session.user ? session.user.charAt(0).toUpperCase() + session.user.slice(1) : '';
-  $('who').textContent = name;
-  const hoy = new Date(), h = hoy.getHours();
-  $('greet').innerHTML = `${h < 12 ? 'Buenos días' : h < 19 ? 'Buenas tardes' : 'Buenas noches'},<br><em>${esc(name)}</em>`;
-  $('today').textContent = hoy.toLocaleDateString('es-MX', { weekday: 'long', day: 'numeric', month: 'long' });
-  const dia = Math.floor((hoy - new Date(hoy.getFullYear(), 0, 0)) / 864e5);
-  $('quote').textContent = FRASES[dia % FRASES.length];
-  load();
-}
-function logout(msg) {
-  store.del('socios_token'); store.del('socios_user'); store.del('socios_rol');
-  session = {}; socios = [];
-  document.querySelectorAll('.overlay.open').forEach(o => o.classList.remove('open'));
-  showLogin(msg);
-}
-$('loginForm').addEventListener('submit', async e => {
-  e.preventDefault();
-  const btn = $('loginBtn');
-  $('loginErr').textContent = '';
-  btn.disabled = true; btn.textContent = 'Verificando…';
-  try {
-    const r = await api.post('login', { user: $('lu').value.trim(), pass: $('lp').value });
-    session = { token: r.token, user: r.user };
-    store.set('socios_token', r.token); store.set('socios_user', r.user); store.set('socios_rol', r.rol || '');
-    session.rol = r.rol || '';
-    $('lp').value = '';
-    showApp();
-  } catch (err) {
-    $('loginErr').textContent = err.message;
-    const b = document.querySelector('.badge');
-    b.classList.remove('shake'); void b.offsetWidth; b.classList.add('shake');
-  } finally { btn.disabled = false; btn.textContent = 'Entrar'; }
-});
-$('eye').addEventListener('click', () => { const p = $('lp'); p.type = p.type === 'password' ? 'text' : 'password'; });
-
-/* ================= LISTA ================= */
-const FILTROS = {
-  todos:      { label: 'Todos',              test: () => true },
-  ineRevisar: { label: 'INE por revisar',    test: s => s.ineEstado === 'revisar' },
-  sinIne:     { label: 'Sin INE',            test: s => !s.ineFrente && !s.ineReverso },
-  sinFoto:    { label: 'Sin foto',           test: s => !photoSrc(s) },
-  incompletos:{ label: 'Datos incompletos',  test: s => faltantes(s).length > 0 }
-};
-const VACIOS = {
-  ineRevisar: ['¡Todas las INE están en orden!', 'No hay credenciales pendientes de revisar.'],
-  sinIne: ['¡Todos tienen su INE!', 'No hay socios sin credencial escaneada.'],
-  sinFoto: ['¡Todos tienen foto!', 'No hay gafetes sin foto.'],
-  incompletos: ['Todos los registros están completos', 'No hay socios con datos faltantes.']
-};
-function setFiltro(f) { filtro = f; render(); }
-
-async function load() {
-  $('list').innerHTML = '<div class="loader"><i></i><i></i><i></i></div>';
-  try {
-    const r = await api.list();
-    socios = r.data || [];
-    CAMPOS = r.campos || [];
-    if (r.rol) { session.rol = r.rol; store.set('socios_rol', r.rol); }
-    aplicarRol();
-    // Si la hoja quitó el cero inicial del C.P. (2160 → 02160), se recupera
-    socios.forEach(x => { if (/^\d{1,4}$/.test(x.cp || '')) x.cp = x.cp.padStart(5, '0'); });
-    socios.sort((a, b) => String(a.numero).localeCompare(String(b.numero), 'es', { numeric: true }));
-    render();
-  } catch (err) {
-    if (err.auth) return logout(err.message);
-    $('list').innerHTML = `<div class="empty"><h3>No pudimos cargar los socios</h3><p>${esc(err.message)}</p><br><button class="btn btn-soft" onclick="load()">Reintentar</button></div>`;
-  }
-}
-
-function avatar(s, cls = 'photo', extra = '') {
-  const src = photoSrc(s);
-  return `<div class="${cls}${src ? ' clickable' : ''}" ${extra} ${src ? `onclick="event.stopPropagation();zoom(this.querySelector('img')?.src)"` : ''}>
-    ${esc(initials(s.nombre))}${src ? `<img src="${esc(src)}" alt="" loading="lazy" onerror="this.remove()">` : ''}</div>`;
-}
-function ineChip(s) {
-  if (!s.ineFrente && !s.ineReverso) return '<span class="st">Sin INE</span>';
-  if (s.ineEstado === 'ok') return '<span class="st ok">INE ✓</span>';
-  return '<span class="st warn">INE · revisar</span>';
-}
-
-function render() {
-  const q = fold($('q').value.trim());
-  const items = socios.filter(FILTROS[filtro].test)
-    .filter(s => !q || [s.nombre, s.numero, s.concesion, s.curp, s.colonia, soloTel(s.telefono), ...Object.values(extrasDe(s))].some(v => fold(v).includes(q)));
-
-  $('count').textContent = String(socios.length).padStart(2, '0');
-  $('countLbl').textContent = socios.length === 1 ? 'socio registrado' : 'socios registrados';
-  $('stats').innerHTML = Object.entries(FILTROS).map(([k, f]) =>
-    `<button class="chip${k === filtro ? ' on' : ''}" onclick="setFiltro('${k}')">${f.label} <b>${socios.filter(f.test).length}</b></button>`).join('');
-
-  if (!items.length) {
-    $('list').innerHTML = q
-      ? `<div class="empty"><h3>Nadie por aquí</h3><p>No hay socios que coincidan con “${esc($('q').value)}”.</p></div>`
-      : filtro !== 'todos' && socios.length
-      ? `<div class="empty"><h3>${VACIOS[filtro][0]}</h3><p>${VACIOS[filtro][1]}</p><br><button class="btn btn-soft" onclick="setFiltro('todos')">Ver todos</button></div>`
-      : `<div class="empty">
-          <svg width="120" height="80" viewBox="0 0 120 80" fill="none"><rect x="20" y="10" width="80" height="60" rx="12" fill="#eafaf8" stroke="#7ff3f0" stroke-width="3" stroke-dasharray="6 6"/><circle cx="60" cy="34" r="10" fill="#7ff3f0"/><rect x="42" y="50" width="36" height="6" rx="3" fill="#7ff3f0"/></svg>
-          <h3>Aún no hay socios</h3><p>Agrega el primero con el botón <b>+</b></p></div>`;
-    return;
-  }
-
-  $('list').innerHTML = '<div class="grid">' + items.map((s, i) => {
-    return `
-    <article class="card" style="animation-delay:${Math.min(i, 12) * 35}ms" onclick="openDetail('${esc(s.id)}')">
-      <div class="band"><i class="band-ck checker"></i><span class="tag">SOCIO</span><span class="num"><i>N.º </i><u>#</u>${esc(s.numero)}</span></div>
-      ${avatar(s)}
-      <div class="card-body">
-        <h3>${esc(s.nombre)}</h3>
-        ${s.concesion
-          ? `<div class="plate"><small>CONCESIÓN</small><b>${esc(s.concesion)}</b></div>`
-          : `<div class="plate none"><b>Sin concesión</b></div>`}
-        <div class="meta-row">${ineChip(s)}${FILTROS.incompletos.test(s) ? `<span class="st warn" title="Falta: ${esc(faltantes(s).join(', '))}">Falta: ${esc(faltantes(s)[0])}${faltantes(s).length > 1 ? ' +' + (faltantes(s).length - 1) : ''}</span>` : ''}</div>
-      </div>
-      <div class="card-actions">
-        <button onclick="event.stopPropagation();openForm('${esc(s.id)}')" aria-label="Editar">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h4L19 9l-4-4L4 16z"/></svg><span>Editar</span>
-        </button>
-        <button class="solo-admin" onclick="event.stopPropagation();askDelete('${esc(s.id)}')" aria-label="Eliminar">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13"/></svg><span>Eliminar</span>
-        </button>
-      </div>
-    </article>`;
-  }).join('') + '</div>';
-}
-
-/* ================= DETALLE ================= */
-const ineCache = {};
-function openDetail(id) {
-  const s = socios.find(x => x.id === id); if (!s) return;
-  const e = edad(s.nacimiento);
-  const fila = (t, v, cls = '') => `<div><dt>${t}</dt><dd class="${cls}">${v ? esc(v) : '<span style="color:var(--muted);font-weight:500">—</span>'}</dd></div>`;
-  $('det').innerHTML = `
-    <div class="grab"></div>
-    <div class="det-head">
-      ${avatar(s)}
-      <div>
-        <h2>${esc(s.nombre)}</h2>
-        <div class="chips"><span class="st info">Socio N.º ${esc(s.numero)}</span>${s.concesion ? `<span class="st info">Concesión ${esc(s.concesion)}</span>` : ''}${ineChip(s)}</div>
-      </div>
-    </div>
-    <dl class="det-list">
-      ${(() => { const t = soloTel(s.telefono); return `<div><dt>Teléfono</dt><dd>${t ? `<span class="mono">${esc(telBonito(t))}</span><div class="tel-acts"><a href="tel:+52${t}">📞 Llamar</a><a class="wa" href="https://wa.me/52${t}" target="_blank" rel="noopener">💬 WhatsApp</a></div>` : '<span style="color:var(--muted);font-weight:500">—</span>'}</dd></div>`; })()}
-      ${fila('Fecha de nacimiento', fechaCorta(s.nacimiento))}
-      ${fila('Edad', e !== null ? e + ' años' : '')}
-      ${fila('Dirección', componerDireccion(s))}
-      ${fila('CURP', s.curp, 'mono')}
-      ${fila('Clave elector', s.claveElector, 'mono')}
-      ${(() => { const x = extrasDe(s); return CAMPOS.map(c => fila(esc(c.etiqueta), valorExtra(c, x[c.id]))).join(''); })()}
-    </dl>
-    <div class="ine-view">
-      <figure><figcaption>INE · frente</figcaption><div class="box" id="iv-frente">${s.ineFrente ? 'Cargando…' : 'Sin imagen'}</div></figure>
-      <figure><figcaption>INE · reverso</figcaption><div class="box" id="iv-reverso">${s.ineReverso ? 'Cargando…' : 'Sin imagen'}</div></figure>
-    </div>
-    <div class="lock-note"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>Las imágenes de la INE se guardan en una carpeta privada.</div>
-    ${s.ineEstado === 'revisar' && s.ineFrente && s.ineReverso ? `<button class="btn btn-turq verify" id="verifyBtn" onclick="verificarIne('${esc(s.id)}')">✓ Revisé la INE: marcar como verificada</button>` : ''}
-    <div class="sheet-actions">
-      <button class="btn btn-soft solo-admin" onclick="closeOv('detOv');askDelete('${esc(s.id)}')" style="color:var(--coral)">Eliminar</button>
-      <button class="btn btn-main" onclick="closeOv('detOv');openForm('${esc(s.id)}')">Editar</button>
-    </div>`;
-  openOv('detOv');
-  ['frente', 'reverso'].forEach(async lado => {
-    if (!(lado === 'frente' ? s.ineFrente : s.ineReverso)) return;
-    const box = $('iv-' + lado), key = s.id + lado + s.actualizado;
+  /* aplica tema e idioma guardados antes de pintar, para evitar parpadeo */
+  (function () {
+    var d = document.documentElement;
     try {
-      const src = ineCache[key] || (ineCache[key] = (await api.post('archivo', { id: s.id, lado })).imagen);
-      if (box.isConnected) { box.innerHTML = `<img src="${src}" alt="INE ${lado}">`; box.onclick = () => zoom(src); }
-    } catch (err) {
-      if (err.auth) return logout(err.message);
-      box.textContent = 'No se pudo cargar';
-    }
-  });
-}
-async function verificarIne(id) {
-  const b = $('verifyBtn'); b.disabled = true; b.textContent = 'Guardando…';
-  try {
-    await api.post('estadoIne', { id, estado: 'ok' });
-    const s = socios.find(x => x.id === id); s.ineEstado = 'ok';
-    toast('✓ INE verificada'); render(); openDetail(id);
-  } catch (err) { if (err.auth) return logout(err.message); toast(err.message, true); b.disabled = false; }
-}
-
-/* ================= FORMULARIO ================= */
-let editingId = null, newPhoto = null, removePhoto = false;
-const ine = { frente: {}, reverso: {} };   // { data, estado, local, existing }
-const AUTO_FIELDS = ['nombre', 'nacimiento', 'curp', 'claveElector'];
-let dirIne = null;   // dirección leída de la INE (solo se usa si el usuario lo pide)
-
-function nextNumber() {
-  const nums = socios.map(s => parseInt(String(s.numero).replace(/\D/g, ''), 10)).filter(n => !isNaN(n));
-  return String((nums.length ? Math.max(...nums) : 0) + 1).padStart(3, '0');
-}
-function setPick(src) {
-  $('pickImg').hidden = !src; $('pickIcon').style.display = src ? 'none' : '';
-  if (src) $('pickImg').src = src; else $('pickImg').removeAttribute('src');
-  $('pickRemove').hidden = !src;
-  $('pickHint').textContent = src ? 'Toca para cambiarla' : 'Opcional · toca para tomarla';
-}
-function setSlot(lado, { img, cls = '', st = 'Pendiente', stCls = '' } = {}) {
-  const el = $('slot-' + lado), im = el.querySelector('img');
-  el.className = 'ine-slot ' + cls;
-  if (img) { im.src = img; im.hidden = false; } else if (img === null) { im.hidden = true; im.removeAttribute('src'); }
-  el.querySelector('.st').className = 'st ' + stCls;
-  el.querySelector('.st').textContent = st;
-}
-function showMsg(cls, html) { const m = $('ineMsg'); m.className = 'ine-msg ' + cls; m.innerHTML = html; m.hidden = !html; }
-
-function openForm(id = null) {
-  editingId = id; newPhoto = null; removePhoto = false;
-  const s = id ? socios.find(x => x.id === id) : null;
-  $('formTitle').textContent = s ? 'Editar socio' : 'Nuevo socio';
-  $('formSub').textContent = s ? `Actualiza los datos de ${s.nombre.split(' ')[0]}` : 'Empieza escaneando su INE';
-  $('f_numero').value = s ? s.numero : nextNumber();
-  ['concesion', 'nombre', 'nacimiento', 'curp', 'claveElector', ...DIR_KEYS].forEach(k => $('f_' + k).value = s ? (s[k] || '') : '');
-  if (!s) $('f_estado').value = 'Quintana Roo';
-  dirIne = null; $('addrIne').hidden = true;
-  document.querySelectorAll('#form .lf.bad').forEach(x => x.classList.remove('bad'));
-  toggleAddr(false); resumenDireccion();
-  AUTO_FIELDS.forEach(k => $('lf_' + k).classList.remove('auto'));
-  setPick(s ? photoSrc(s) : '');
-  renderExtras(s ? extrasDe(s) : {});
-  $('f_telefono').value = s ? telBonito(s.telefono) : ''; marcarTel('');
-  $('file').value = '';
-  for (const lado of ['frente', 'reverso']) {
-    const has = s && (lado === 'frente' ? s.ineFrente : s.ineReverso);
-    ine[lado] = { existing: !!has };
-    setSlot(lado, has
-      ? { img: null, cls: 'has ' + (s.ineEstado === 'ok' ? 'ok' : 'warn'), st: s.ineEstado === 'ok' ? 'Guardada ✓' : 'Guardada', stCls: s.ineEstado === 'ok' ? 'ok' : 'warn' }
-      : { img: null });
-  }
-  showMsg('', ''); pintarCoincidencia(null);
-  openOv('formOv');
-}
-
-$('pickBtn').addEventListener('click', () => $('file').click());
-$('pickRemove').addEventListener('click', () => { newPhoto = null; removePhoto = true; setPick(''); });
-$('file').addEventListener('change', async e => {
-  const f = e.target.files[0]; if (!f) return;
-  try {
-    const img = await loadImage(f);
-    newPhoto = toJpeg(img, 240, 0.72);
-    if (newPhoto.length > 45000) newPhoto = toJpeg(img, 200, 0.6);
-    removePhoto = false; setPick(newPhoto);
-  } catch (err) { toast(err.message, true); }
-});
-
-/* ---------- Imágenes ---------- */
-function loadImage(file) {
-  return new Promise((resolve, reject) => {
-    const url = URL.createObjectURL(file), img = new Image();
-    img.onload = () => { URL.revokeObjectURL(url); resolve(img); };
-    img.onerror = () => { URL.revokeObjectURL(url); reject(new Error('No se pudo leer esa imagen.')); };
-    img.src = url;
-  });
-}
-function toCanvas(src, max, sx = 0, sy = 0, sw, sh) {
-  sw = sw ?? (src.videoWidth || src.naturalWidth || src.width);
-  sh = sh ?? (src.videoHeight || src.naturalHeight || src.height);
-  const k = Math.min(1, max / sw);
-  const c = document.createElement('canvas');
-  c.width = Math.round(sw * k); c.height = Math.round(sh * k);
-  c.getContext('2d', { willReadFrequently: true }).drawImage(src, sx, sy, sw, sh, 0, 0, c.width, c.height);
-  return c;
-}
-function toJpeg(src, max, q) { return toCanvas(src, max).toDataURL('image/jpeg', q); }
-
-/* ---------- Detector de calidad (en el teléfono) ---------- */
-function calidad(canvas, srcWidth) {
-  const w = 320, h = Math.max(1, Math.round(canvas.height * w / canvas.width));
-  const t = document.createElement('canvas'); t.width = w; t.height = h;
-  const x = t.getContext('2d', { willReadFrequently: true });
-  x.drawImage(canvas, 0, 0, w, h);
-  const d = x.getImageData(0, 0, w, h).data, n = w * h, g = new Float32Array(n);
-  let sum = 0, glare = 0;
-  for (let i = 0, j = 0; i < n; i++, j += 4) { const v = 0.299 * d[j] + 0.587 * d[j + 1] + 0.114 * d[j + 2]; g[i] = v; sum += v; if (v >= 250) glare++; }
-  const mean = sum / n;
-  let vs = 0; for (let i = 0; i < n; i++) vs += (g[i] - mean) ** 2;
-  const std = Math.sqrt(vs / n);
-  let ls = 0, lq = 0, m = 0;
-  for (let y = 1; y < h - 1; y++) for (let xx = 1; xx < w - 1; xx++) {
-    const i = y * w + xx, L = 4 * g[i] - g[i - 1] - g[i + 1] - g[i - w] - g[i + w];
-    ls += L; lq += L * L; m++;
-  }
-  const nitidez = lq / m - (ls / m) ** 2, reflejo = glare / n;
-  const issues = [];
-  if (mean < 65) issues.push('Está muy oscura: busca más luz');
-  else if (mean > 215) issues.push('Tiene demasiada luz');
-  if (reflejo > 0.03) issues.push('Hay un reflejo de luz sobre la credencial');
-  if (std < 28) issues.push('No se distingue bien la credencial');
-  else if (nitidez < 110) issues.push('Está borrosa: mantén el teléfono quieto');
-  if (srcWidth && srcWidth < 640) issues.push('La imagen es muy pequeña: acerca la credencial');
-  return { ok: !issues.length, issues, mean, nitidez, reflejo };
-}
-
-/* ---------- Escáner con cámara ---------- */
-const scan = { lado: 'frente', stream: null, timer: null };
-
-async function startScan(lado) {
-  scan.lado = lado;
-  $('scanTitle').textContent = lado === 'frente' ? 'Frente de la INE' : 'Reverso de la INE';
-  if (!navigator.mediaDevices?.getUserMedia) return $('ineFile').click();
-  try {
-    scan.stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: { ideal: 'environment' }, width: { ideal: 1920 }, height: { ideal: 1080 } }, audio: false });
-  } catch (e) {
-    toast('No se pudo abrir la cámara. Elige una foto de la INE.', true);
-    return $('ineFile').click();
-  }
-  const v = $('cam'); v.srcObject = scan.stream;
-  $('scanner').classList.add('open');
-  try { await v.play(); } catch {}
-  hint('Buscando la credencial…', '');
-  clearInterval(scan.timer);
-  scan.timer = setInterval(liveCheck, 450);
-}
-function stopScan() {
-  clearInterval(scan.timer);
-  scan.stream?.getTracks().forEach(t => t.stop());
-  scan.stream = null;
-  $('scanner').classList.remove('open');
-}
-function hint(text, cls) {
-  $('scanHint').textContent = text; $('scanHint').className = 'scan-hint ' + cls;
-  const f = $('scanFrame');
-  f.classList.toggle('good', cls === 'good'); f.classList.toggle('bad', cls === 'bad');
-}
-// Permite escanear la credencial "parada"; luego se endereza sola
-function girarMarco() {
-  const v = $('scanFrame').classList.toggle('vert');
-  $('scanRot').textContent = v ? '↻ Horizontal' : '↻ Vertical';
-}
-// Gira una imagen 0/90/180/270 grados
-function rotar(canvas, deg) {
-  if (!deg) return canvas;
-  const c = document.createElement('canvas'), lado = deg % 180 !== 0;
-  c.width = lado ? canvas.height : canvas.width; c.height = lado ? canvas.width : canvas.height;
-  const x = c.getContext('2d');
-  x.translate(c.width / 2, c.height / 2); x.rotate(deg * Math.PI / 180);
-  x.drawImage(canvas, -canvas.width / 2, -canvas.height / 2);
-  return c;
-}
-// Convierte el marco de la pantalla en coordenadas de la imagen de la cámara
-function frameCrop() {
-  const v = $('cam'), vr = v.getBoundingClientRect(), fr = $('scanFrame').getBoundingClientRect();
-  const k = Math.max(vr.width / v.videoWidth, vr.height / v.videoHeight);
-  const ox = (vr.width - v.videoWidth * k) / 2, oy = (vr.height - v.videoHeight * k) / 2;
-  const pad = 0.04 * fr.width;
-  let sx = (fr.left - vr.left - ox - pad) / k, sy = (fr.top - vr.top - oy - pad) / k;
-  let sw = (fr.width + pad * 2) / k, sh = (fr.height + pad * 2) / k;
-  sx = Math.max(0, sx); sy = Math.max(0, sy);
-  sw = Math.min(sw, v.videoWidth - sx); sh = Math.min(sh, v.videoHeight - sy);
-  return { sx, sy, sw, sh };
-}
-function liveCheck() {
-  const v = $('cam'); if (!v.videoWidth) return;
-  const { sx, sy, sw, sh } = frameCrop();
-  const q = calidad(toCanvas(v, 320, sx, sy, sw, sh), sw);
-  if (q.ok) hint('¡Se ve bien! Toma la foto', 'good');
-  else hint(q.issues[0], 'bad');
-}
-$('shutter').addEventListener('click', () => {
-  const v = $('cam'); if (!v.videoWidth) return;
-  const { sx, sy, sw, sh } = frameCrop();
-  const full = toCanvas(v, 2000);   // foto completa; el recorte inicial es el marco
-  const vw = v.videoWidth, vh = v.videoHeight;
-  $('flash').classList.remove('go'); void $('flash').offsetWidth; $('flash').classList.add('go');
-  setTimeout(stopScan, 180);
-  abrirEditor(scan.lado, full, { x: sx / vw, y: sy / vh, w: sw / vw, h: sh / vh }, 'camara', vw / full.width);
-});
-$('ineFile').addEventListener('change', async e => {
-  const f = e.target.files[0]; e.target.value = ''; if (!f) return;
-  try {
-    const img = await loadImage(f);
-    const base = toCanvas(img, 2000);
-    abrirEditor(scan.lado, base, null, 'archivo', img.naturalWidth / base.width);
-  } catch (err) { toast(err.message, true); }
-});
-
-/* ---------- Editor: recortar, girar, voltear y aceptar ---------- */
-const ed = { lado: null, base: null, W: null, rot: 0, flip: false, crop: null, cropInicial: null, origen: '', escala: 1, drag: null, disp: null };
-const CROP_DEF = { x: 0.03, y: 0.03, w: 0.94, h: 0.94 };
-const clamp = (v, a, b) => Math.min(Math.max(v, a), b);
-
-function abrirEditor(lado, canvas, crop, origen, escala = 1) {
-  Object.assign(ed, { lado, base: canvas, rot: 0, flip: false, origen, escala, cropInicial: crop ? { ...crop } : null });
-  $('edTitle').textContent = lado === 'frente' ? 'Ajusta el frente' : 'Ajusta el reverso';
-  $('editor').classList.add('open');
-  requestAnimationFrame(() => edRender(crop ? { ...crop } : { ...CROP_DEF }));
-}
-function cerrarEditor() { $('editor').classList.remove('open'); ed.drag = null; }
-function edRender(crop) {
-  let c = rotar(ed.base, ed.rot);
-  if (ed.flip) {
-    const f = document.createElement('canvas'); f.width = c.width; f.height = c.height;
-    const x = f.getContext('2d'); x.translate(f.width, 0); x.scale(-1, 1); x.drawImage(c, 0, 0); c = f;
-  }
-  ed.W = c;
-  const cv = $('edCanvas'); cv.width = c.width; cv.height = c.height;
-  cv.getContext('2d').drawImage(c, 0, 0);
-  ed.crop = crop || { ...CROP_DEF };
-  edLayout(); edCalidad();
-}
-function edLayout() {
-  const st = $('edStage'), cv = $('edCanvas');
-  const k = Math.min(st.clientWidth / cv.width, st.clientHeight / cv.height);
-  const w = cv.width * k, h = cv.height * k;
-  cv.style.width = w + 'px'; cv.style.height = h + 'px';
-  ed.disp = { w, h, x: (st.clientWidth - w) / 2, y: (st.clientHeight - h) / 2 };
-  edBox();
-}
-function edBox() {
-  const b = $('edBox'), d = ed.disp, c = ed.crop;
-  b.style.left = d.x + c.x * d.w + 'px'; b.style.top = d.y + c.y * d.h + 'px';
-  b.style.width = c.w * d.w + 'px'; b.style.height = c.h * d.h + 'px';
-}
-function edCrop(max) {
-  const W = ed.W, c = ed.crop;
-  return toCanvas(W, max, c.x * W.width, c.y * W.height, c.w * W.width, c.h * W.height);
-}
-const edAnchoReal = () => Math.round(ed.crop.w * ed.W.width * ed.escala);
-function edCalidad() {
-  const q = calidad(edCrop(480), edAnchoReal());
-  const el = $('edQ');
-  el.className = 'ed-q ' + (q.ok ? 'good' : 'bad');
-  el.textContent = q.ok ? '✓ Se ve bien' : '⚠ ' + q.issues[0];
-  $('edBox').classList.toggle('good', q.ok); $('edBox').classList.toggle('bad', !q.ok);
-}
-function edRotar(d) { ed.rot = (ed.rot + d + 360) % 360; edRender(null); }
-function edVoltear() {
-  ed.flip = !ed.flip;
-  const c = ed.crop;
-  edRender({ ...c, x: 1 - c.x - c.w });
-}
-function edReset() { ed.rot = 0; ed.flip = false; edRender(ed.cropInicial ? { ...ed.cropInicial } : null); }
-function repetirEscaneo() {
-  cerrarEditor();
-  if (ed.origen === 'camara') startScan(ed.lado);
-  else { scan.lado = ed.lado; $('ineFile').click(); }
-}
-function aceptarEditor() {
-  const c = edCrop(1400), w = edAnchoReal();
-  cerrarEditor();
-  procesarIne(ed.lado, c, w);
-}
-// Arrastrar el recuadro (mover) o sus esquinas/lados (recortar)
-$('edBox').addEventListener('pointerdown', e => {
-  e.preventDefault();
-  ed.drag = { h: e.target.dataset.h || 'move', x0: e.clientX, y0: e.clientY, c0: { ...ed.crop } };
-  $('edBox').setPointerCapture(e.pointerId);
-});
-$('edBox').addEventListener('pointermove', e => {
-  if (!ed.drag) return;
-  const dx = (e.clientX - ed.drag.x0) / ed.disp.w, dy = (e.clientY - ed.drag.y0) / ed.disp.h;
-  let { x, y, w, h } = ed.drag.c0; const hd = ed.drag.h, m = 0.08;
-  if (hd === 'move') { x = clamp(x + dx, 0, 1 - w); y = clamp(y + dy, 0, 1 - h); }
-  else {
-    if (hd.includes('l')) { const nx = clamp(x + dx, 0, x + w - m); w += x - nx; x = nx; }
-    if (hd.includes('r')) w = clamp(w + dx, m, 1 - x);
-    if (hd.includes('t')) { const ny = clamp(y + dy, 0, y + h - m); h += y - ny; y = ny; }
-    if (hd.includes('b')) h = clamp(h + dy, m, 1 - y);
-  }
-  ed.crop = { x, y, w, h }; edBox();
-});
-['pointerup', 'pointercancel'].forEach(t => $('edBox').addEventListener(t, () => { if (ed.drag) { ed.drag = null; edCalidad(); } }));
-window.addEventListener('resize', () => { if ($('editor').classList.contains('open')) edLayout(); });
-
-/* ---------- Lectura del texto (OCR) y detector de legibilidad ---------- */
-const N = s => String(s || '').toUpperCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
-const CURP_RE = /[A-Z][AEIOUX][A-Z]{2}\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])[HM][A-Z]{2}[B-DF-HJ-NP-TV-Z]{3}[A-Z\d]\d/;
-const CLAVE_RE = /[A-Z]{6}\d{8}[HM]\d{3}/;
-
-function curpFecha(curp) {
-  const m = /^.{4}(\d{2})(\d{2})(\d{2}).{6}(.)/.exec(curp || ''); if (!m) return '';
-  return `${/\d/.test(m[4]) ? '19' : '20'}${m[1]}-${m[2]}-${m[3]}`;
-}
-function leerFrente(texto) {
-  const lines = String(texto || '').split('\n').map(l => l.trim()).filter(Boolean);
-  const U = lines.map(N);
-  const c = {}, notas = [];
-  let score = 0;
-  const marca = U.some(l => /INSTITUTO (NACIONAL|FEDERAL) ELECTORAL|CREDENCIAL PARA VOTAR/.test(l));
-  if (marca) score++;
-  for (const l of U) { const m = l.replace(/[\s.]/g, '').match(CURP_RE); if (m) { c.curp = m[0]; break; } }
-  for (const l of U) { const m = l.replace(/[\s.]/g, '').match(CLAVE_RE); if (m) { c.claveElector = m[0]; break; } }
-  for (const l of U) {
-    const m = l.match(/(\d{2})\s*[\/-]\s*(\d{2})\s*[\/-]\s*(\d{4})/);
-    if (m && +m[2] >= 1 && +m[2] <= 12 && +m[1] >= 1 && +m[1] <= 31) { c.nacimiento = `${m[3]}-${m[2]}-${m[1]}`; break; }
-  }
-  const STOP = /DOMICILIO|SEXO|FECHA|CLAVE|CURP|ANO DE|SECCION|VIGENCIA|EMISION|REGISTRO|ESTADO|MUNICIPIO|LOCALIDAD|EDAD/;
-  const iN = U.findIndex(l => /^NOMBRE\b/.test(l));
-  if (iN >= 0) {
-    const partes = [];
-    const resto = lines[iN].replace(/^nombre\s*/i, '').trim();
-    if (resto && !STOP.test(N(resto))) partes.push(resto);
-    for (let i = iN + 1; i < lines.length && partes.length < 4; i++) {
-      if (STOP.test(U[i])) break;
-      if (/^[A-ZÑ][A-ZÑ .'-]+$/.test(U[i]) && U[i].length > 1) partes.push(lines[i]);
-    }
-    if (partes.length >= 3) c.nombre = titulo([...partes.slice(2), partes[0], partes[1]].join(' '));
-    else if (partes.length === 2) c.nombre = titulo(partes[1] + ' ' + partes[0]);
-  }
-  const iD = U.findIndex(l => /^DOMICILIO\b/.test(l));
-  if (iD >= 0) {
-    const partes = [];
-    const resto = lines[iD].replace(/^domicilio\s*/i, '').trim();
-    if (resto) partes.push(resto);
-    const STOP2 = /CLAVE|CURP|ANO DE|FECHA|SECCION|VIGENCIA|EMISION|REGISTRO|SEXO|ESTADO \d|MUNICIPIO|LOCALIDAD/;
-    for (let i = iD + 1; i < lines.length && partes.length < 4; i++) { if (STOP2.test(U[i])) break; partes.push(lines[i]); }
-    if (partes.length) c.domicilio = partes;
-  }
-  if (c.nombre) score++;
-  if (c.domicilio) score++;
-  if (c.curp) score++;
-  if (c.nacimiento) score++;
-  if (c.claveElector) score++;
-  if (c.curp && c.nacimiento) {
-    if (curpFecha(c.curp) === c.nacimiento) score++;
-    else notas.push('La fecha de nacimiento no coincide con la CURP: revísala.');
-  } else if (c.curp && !c.nacimiento) { c.nacimiento = curpFecha(c.curp); notas.push('La fecha se tomó de la CURP.'); }
-  // Se aprueba si se pueden leer los datos: al menos 2 datos clave (o el encabezado INE + 1 dato)
-  const claves = [c.nombre, c.curp, c.nacimiento, c.claveElector].filter(Boolean).length;
-  const estado = claves >= 2 || (marca && claves >= 1) ? 'ok' : (marca || claves || c.domicilio) ? 'parcial' : 'ilegible';
-  return { estado, campos: c, notas, score, marca };
-}
-function leerReverso(texto) {
-  const T = N(texto).replace(/«/g, '<<').replace(/ /g, '');
-  const ls = T.split('\n').filter(Boolean);
-  const c = {}; let score = 0;
-  if (ls.some(l => /^IDMEX/.test(l))) score++;
-  for (const l of ls) { const m = l.match(/(\d{6})\d([MF<])\d{6}/); if (m) { c.yymmdd = m[1]; c.sexo = m[2]; score++; break; } }
-  for (const l of ls) {
-    if (/^IDMEX/.test(l) || !/<</.test(l) || !/^[A-Z<]+$/.test(l)) continue;
-    const [ap, nom] = l.split(/<<+/);
-    if (ap && nom) { c.nombre = titulo(nom.replace(/</g, ' ') + ' ' + ap.replace(/</g, ' ')); score++; break; }
-  }
-  return { estado: c.nombre || c.yymmdd ? 'ok' : score >= 1 ? 'parcial' : 'ilegible', campos: c, score };
-}
-
-function autollenar(campos, soloVacios = false) {
-  const llenos = [];
-  for (const k of AUTO_FIELDS) {
-    const v = campos[k]; if (!v) continue;
-    const el = $('f_' + k), lf = $('lf_' + k);
-    if (!el.value.trim() || (!soloVacios && lf.classList.contains('auto'))) { el.value = v; lf.classList.add('auto'); llenos.push(k); }
-  }
-  return llenos;
-}
-
-async function procesarIne(lado, canvas0, srcWidth) {
-  const nombreLado = lado === 'frente' ? 'el frente' : 'el reverso';
-  // Si la foto viene "parada" (vertical), primero se acuesta; si no se lee, se prueba al revés
-  const vertical = canvas0.height > canvas0.width;
-  const giros = vertical ? [90, 270] : [0, 180];
-  let canvas = rotar(canvas0, giros[0]);
-  let data = canvas.toDataURL('image/jpeg', 0.85);
-  const local = calidad(canvas, vertical && srcWidth ? Math.round(srcWidth * canvas0.height / canvas0.width) : srcWidth);
-  ine[lado] = { ...ine[lado], data, local, estado: null };
-  setSlot(lado, { img: data, cls: 'has reading', st: 'Leyendo…', stCls: 'info' });
-  showMsg('info', `<b class="t">Leyendo ${nombreLado} de la INE…</b>${vertical ? 'La foto venía vertical: se enderezó automáticamente. ' : ''}Esto toma unos segundos.`);
-
-  let texto = null, ocrOff = false, girada = vertical, best = null, falla = null;
-  for (let i = 0; i < giros.length; i++) {
-    const c = i === 0 ? canvas : rotar(canvas0, giros[i]);
-    const d = i === 0 ? data : c.toDataURL('image/jpeg', 0.85);
-    if (i > 0) { setSlot(lado, { img: d, cls: 'has reading', st: 'Girando…', stCls: 'info' }); showMsg('info', `<b class="t">Probando con la imagen girada…</b>La credencial parecía estar de cabeza o de lado.`); }
-    let t = '';
-    try { t = (await api.post('leerIne', { imagen: d })).texto || ''; }
-    catch (err) {
-      if (err.auth) { closeOv('formOv'); return logout(err.message); }
-      if (err.ocrOff) { ocrOff = true; break; }
-      falla = err; break;          // error del servidor: no es culpa de la imagen
-    }
-    const fr = leerFrente(t), rv = leerReverso(t);
-    const score = Math.max(fr.score, rv.score);
-    if (!best || score > best.score) best = { c, d, t, score, giro: giros[i] };
-    const propio = lado === 'frente' ? fr : rv;
-    if (propio.estado === 'ok' || score >= 3) break;   // ya se lee bien: no hace falta girar más
-  }
-  if (falla) {
-    ine[lado].estado = 'sinLeer';
-    setSlot(lado, { img: data, cls: 'has warn', st: 'Sin leer', stCls: 'warn' });
-    const viejo = /acci[oó]n no v[aá]lida/i.test(falla.message);
-    return showMsg('warn', `<b class="t">⚠ El servidor no pudo leer la INE</b>${viejo
-      ? 'El servidor todavía tiene la <b>versión anterior</b> del código. En Apps Script: <b>Implementar → Administrar implementaciones → ✏️ → Nueva versión → Implementar</b>.'
-      : 'Respuesta del servidor: <b>' + esc(falla.message) + '</b>'}<br>La imagen sí se guardará; puedes capturar los datos a mano.`);
-  }
-  if (best) {
-    canvas = best.c; data = best.d; texto = best.t; girada = best.giro !== 0;
-    ine[lado].data = data;
-    setSlot(lado, { img: data, cls: 'has reading', st: 'Leyendo…', stCls: 'info' });
-  }
-
-  if (ocrOff) {
-    ine[lado].estado = 'sinLeer';
-    setSlot(lado, { cls: 'has ' + (local.ok ? '' : 'warn'), st: local.ok ? 'Capturada' : 'Revisar', stCls: local.ok ? 'info' : 'warn' });
-    return showMsg(local.ok ? 'info' : 'warn', `<b class="t">Imagen guardada, sin lectura automática</b>La lectura de la INE no está activada en el servidor; captura los datos a mano.${local.ok ? '' : `<ul>${local.issues.map(i => `<li>${esc(i)}</li>`).join('')}</ul>`}`);
-  }
-
-  const f = leerFrente(texto), r = leerReverso(texto);
-  const res = lado === 'frente' ? f : r;
-  const otro = lado === 'frente' ? r : f;
-  ine[lado].estado = res.estado;
-
-  // ¿Escaneó el lado equivocado?
-  if (res.estado === 'ilegible' && otro.score >= 2) {
-    ine[lado] = { existing: ine[lado].existing };
-    setSlot(lado, { img: null, cls: 'bad', st: 'Lado equivocado', stCls: 'bad' });
-    return showMsg('bad', `<b class="t">Parece que escaneaste ${lado === 'frente' ? 'el reverso' : 'el frente'}</b>Voltea la credencial y vuelve a escanear ${nombreLado}.`);
-  }
-
-  const campos = { ...res.campos };
-  if (lado === 'reverso') {   // del reverso solo usamos el nombre y la fecha (zona MRZ)
-    ine.reverso.mrz = { nombre: r.campos.nombre, yymmdd: r.campos.yymmdd, sexo: r.campos.sexo };
-    if (r.campos.yymmdd) {
-      const yy = +r.campos.yymmdd.slice(0, 2), ahora = new Date().getFullYear() % 100;
-      campos.nacimiento = `${yy > ahora ? '19' : '20'}${r.campos.yymmdd.slice(0, 2)}-${r.campos.yymmdd.slice(2, 4)}-${r.campos.yymmdd.slice(4, 6)}`;
-    }
-    delete campos.yymmdd; delete campos.sexo;
-  }
-  ine[lado].campos = campos;
-  const llenos = autollenar(campos, lado === 'reverso');
-  if (campos.domicilio) {
-    dirIne = parseDomicilio(campos.domicilio);
-    $('addrIne').hidden = false;
-  }
-
-  const etiquetas = { nombre: 'Nombre', nacimiento: 'Nacimiento', curp: 'CURP', claveElector: 'Clave elector', domicilio: 'Domicilio INE' };
-  const det = Object.entries(campos).filter(([k, v]) => v && etiquetas[k])
-    .map(([k, v]) => `<span>${etiquetas[k]}</span><em>${esc(k === 'nacimiento' ? fechaCorta(v) : k === 'domicilio' ? v.map(titulo).join(', ') : v)}</em>`).join('');
-  if (campos.domicilio) (res.notas = res.notas || []).push('La dirección no se copia sola: si la de la INE es la actual, usa "Copiar la dirección de la INE" en Dirección.');
-  const notas = [...(res.notas || [])];
-  const consejos = local.issues.length ? local.issues : ['Busca buena luz, sin reflejos', 'Que la credencial llene el marco', 'Mantén el teléfono quieto'];
-
-  let cls, html;
-  if (res.estado === 'ok') {
-    setSlot(lado, { cls: 'has ok', st: 'Leída ✓', stCls: 'ok' });
-    if (girada) notas.unshift('La imagen se enderezó automáticamente.');
-    const falta = lado === 'frente' ? !ine.reverso.data && !ine.reverso.existing : !ine.frente.data && !ine.frente.existing;
-    cls = 'ok';
-    html = `<b class="t">✓ ${lado === 'frente' ? 'Frente' : 'Reverso'} leído correctamente</b>${llenos.length ? 'Se llenaron los campos marcados con <b>INE</b>. Revísalos antes de guardar.' : ''}<div class="det">${det}</div>${notas.length ? `<ul>${notas.map(n => `<li>${esc(n)}</li>`).join('')}</ul>` : ''}${falta ? `<br>Ahora escanea el <b>${lado === 'frente' ? 'reverso' : 'frente'}</b>.` : ''}`;
-  } else if (res.estado === 'parcial') {
-    setSlot(lado, { cls: 'has warn', st: 'Lectura parcial', stCls: 'warn' });
-    cls = 'warn';
-    html = `<b class="t">⚠ Solo se leyó una parte de ${nombreLado}</b>Revisa los datos o vuelve a escanear.${det ? `<div class="det">${det}</div>` : ''}<ul>${[...notas, ...consejos].map(n => `<li>${esc(n)}</li>`).join('')}</ul>`;
-  } else {
-    setSlot(lado, { cls: 'has bad', st: 'No se leyó', stCls: 'bad' });
-    cls = 'bad';
-    html = `<b class="t">✕ No se pudo leer ${nombreLado} de la INE</b>${!f.marca && lado === 'frente' && !otro.score ? 'No parece una credencial INE. ' : ''}Toca la imagen para escanear de nuevo.<ul>${consejos.map(n => `<li>${esc(n)}</li>`).join('')}</ul>`;
-  }
-
-  // ¿El frente y el reverso son de la misma credencial?
-  const cmp = compararLados();
-  pintarCoincidencia(cmp);
-  if (cmp?.comparado && !cmp.coincide) {
-    cls = 'bad';
-    ['frente', 'reverso'].forEach(l => setSlot(l, { cls: 'has bad', st: 'No coincide', stCls: 'bad' }));
-    html = `<b class="t">✕ El frente y el reverso no parecen ser de la misma INE</b>Vuelve a escanear ambos lados de <b>la misma credencial</b>.${listaChecks(cmp)}`;
-  } else if (cmp?.comparado) {
-    html += `<br><b>Frente y reverso coinciden:</b>${listaChecks(cmp)}`;
-  }
-  showMsg(cls, html);
-}
-
-/* ---------- Verificación frente ↔ reverso ---------- */
-function lev(a, b) {
-  const d = Array.from({ length: a.length + 1 }, (_, i) => [i]);
-  for (let j = 1; j <= b.length; j++) d[0][j] = j;
-  for (let i = 1; i <= a.length; i++) for (let j = 1; j <= b.length; j++)
-    d[i][j] = Math.min(d[i - 1][j] + 1, d[i][j - 1] + 1, d[i - 1][j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1));
-  return d[a.length][b.length];
-}
-// Compara nombres tolerando acentos, orden y pequeños errores de lectura
-function mismoNombre(a, b) {
-  const tk = x => N(x).replace(/[^A-Z ]/g, ' ').split(/\s+/).filter(t => t.length > 1);
-  const A = tk(a), B = tk(b);
-  if (!A.length || !B.length) return null;
-  const hits = A.filter(t => B.some(u => lev(t, u) <= (t.length >= 5 ? 1 : 0))).length;
-  return hits >= Math.min(2, A.length, B.length) && hits / Math.min(A.length, B.length) >= 0.66;
-}
-function compararLados() {
-  if (!ine.frente.data || !ine.reverso.data) return null;
-  const F = ine.frente.campos || {}, M = ine.reverso.mrz || {};
-  const nombreF = F.nombre || $('f_nombre').value.trim();
-  const nacF = F.nacimiento || curpFecha(F.curp) || '';
-  const checks = [];
-  if (nombreF && M.nombre) { const r = mismoNombre(nombreF, M.nombre); if (r !== null) checks.push(['Nombre', r]); }
-  if (nacF && M.yymmdd) checks.push(['Fecha de nacimiento', nacF.slice(2).replace(/-/g, '') === M.yymmdd]);
-  if (F.curp && M.sexo && M.sexo !== '<') checks.push(['Sexo', ({ H: 'M', M: 'F' })[F.curp[10]] === M.sexo]);
-  return checks.length ? { comparado: true, coincide: checks.every(c => c[1]), checks } : { comparado: false };
-}
-function listaChecks(cmp) {
-  return '<ul>' + cmp.checks.map(([k, ok]) => `<li>${ok ? '✓' : '✕'} ${k} ${ok ? 'coincide' : 'no coincide'}</li>`).join('') + '</ul>';
-}
-function pintarCoincidencia(cmp) {
-  const el = $('ineMatch');
-  if (!cmp) { el.hidden = true; return; }
-  el.hidden = false;
-  el.className = 'ine-match ' + (!cmp.comparado ? 'info' : cmp.coincide ? 'ok' : 'bad');
-  el.textContent = !cmp.comparado ? 'No hay datos suficientes para comparar frente y reverso'
-    : cmp.coincide ? '✓ Frente y reverso son de la misma INE' : '✕ Frente y reverso no coinciden';
-}
-
-function estadoIneFinal(prev) {
-  const F = ine.frente, R = ine.reverso;
-  if (!F.data && !R.data) return undefined;               // no cambió
-  const hasF = F.data || F.existing, hasR = R.data || R.existing;
-  const fOk = F.data ? F.estado === 'ok' : prev === 'ok';
-  const rOk = R.data ? R.estado === 'ok' : prev === 'ok';
-  const cmp = compararLados();
-  if (cmp?.comparado && !cmp.coincide) return 'revisar';
-  return hasF && hasR && fOk && rOk ? 'ok' : 'revisar';
-}
-
-$('form').addEventListener('submit', async e => {
-  e.preventDefault();
-  const v = k => $('f_' + k).value.trim();
-  const data = {
-    numero: v('numero'), nombre: v('nombre').replace(/\s+/g, ' '), concesion: v('concesion').toUpperCase(),
-    nacimiento: v('nacimiento'), curp: v('curp').toUpperCase(), claveElector: v('claveElector').toUpperCase()
-  };
-  DIR_KEYS.forEach(k => data[k] = v(k));
-  data.numExt = data.numExt.toUpperCase(); data.numInt = data.numInt.toUpperCase();
-  data.direccion = componerDireccion(data);
-  if (!data.numero) { toast('Falta el número de socio', true); return $('f_numero').focus(); }
-  if (!data.nombre) { toast('Falta el nombre', true); return $('f_nombre').focus(); }
-  data.telefono = soloTel($('f_telefono').value);
-  if (data.telefono.length !== 10) {
-    const m = data.telefono ? 'El teléfono debe tener 10 dígitos' : 'Falta el teléfono';
-    marcarTel(m); toast(m, true); $('f_telefono').scrollIntoView({ behavior: 'smooth', block: 'center' }); return $('f_telefono').focus();
-  }
-  if (data.curp && !CURP_RE.test(data.curp)) { toast('La CURP no tiene un formato válido', true); return $('f_curp').focus(); }
-  const errDir = validarDireccion(true);
-  if (errDir) { toggleAddr(true); $('addr').classList.add('err'); toast(errDir, true); $('addr').scrollIntoView({ behavior: 'smooth', block: 'center' }); return; }
-  const errX = validarExtras();
-  if (errX) { toast(errX, true); return; }
-  data.extras = leerExtras();
-  const prev = editingId ? socios.find(x => x.id === editingId) : null;
-  const est = estadoIneFinal(prev?.ineEstado);
-  if (est !== undefined) data.ineEstado = est;
-  if (ine.frente.data) data.ineFrente = ine.frente.data;
-  if (ine.reverso.data) data.ineReverso = ine.reverso.data;
-  if (newPhoto) data.fotoThumb = newPhoto;
-  if (removePhoto) data.quitarFoto = true;
-
-  const btn = $('saveBtn');
-  btn.disabled = true; btn.textContent = (data.ineFrente || data.ineReverso) ? 'Subiendo INE…' : 'Guardando…';
-  try {
-    await api.post(editingId ? 'update' : 'create', { id: editingId, data });
-    closeOv('formOv');
-    toast(editingId ? '✓ Datos actualizados' : `✓ ¡Bienvenido, ${data.nombre.split(' ')[0]}!`);
-    await load();
-  } catch (err) {
-    if (err.auth) { closeOv('formOv'); return logout(err.message); }
-    toast(err.message, true);
-  } finally { btn.disabled = false; btn.textContent = 'Guardar'; }
-});
-['nombre', 'nacimiento', 'curp', 'claveElector'].forEach(k =>
-  $('f_' + k).addEventListener('input', () => $('lf_' + k).classList.remove('auto')));
-
-/* ---------- Teléfono ---------- */
-function marcarTel(m) { $('lf_telefono').classList.toggle('bad', !!m); $('lf_telefono').querySelector('.msg').textContent = m || ''; }
-$('f_telefono').addEventListener('input', e => {
-  let t = e.target.value.replace(/\D/g, '');
-  if (t.length > 10 && t.startsWith('52')) t = t.slice(t.startsWith('521') && t.length > 12 ? 3 : 2);   // quita el +52
-  t = t.slice(0, 10);
-  e.target.value = t.length > 6 ? `${t.slice(0, 3)} ${t.slice(3, 6)} ${t.slice(6)}` : t.length > 3 ? `${t.slice(0, 3)} ${t.slice(3)}` : t;
-  marcarTel('');
-});
-
-/* ---------- Dirección desplegable y validación ---------- */
-$('f_estado').innerHTML = '<option value="">Elige…</option>' + ESTADOS.map(([n]) => `<option>${n}</option>`).join('');
-function toggleAddr(abrir) {
-  const a = $('addr'), open = abrir ?? !a.classList.contains('open');
-  a.classList.toggle('open', open); $('addrBody').hidden = !open;
-  if (open && abrir === undefined) setTimeout(() => (DIR_KEYS.map(k => $('f_' + k)).find(el => !el.value) || $('f_calle')).focus(), 50);
-  if (!open) { validarDireccion(false); resumenDireccion(); }
-}
-function marcar(k, msg) {
-  const lf = $('lf_' + k); lf.classList.toggle('bad', !!msg); lf.querySelector('.msg').textContent = msg || '';
-}
-// Devuelve el primer error (o '') y marca los campos con problema
-function validarDireccion(estricto) {
-  const v = k => $('f_' + k).value.trim();
-  let primero = '';
-  const err = (k, m) => { if (estricto || v(k)) marcar(k, m); if (!primero) primero = m; };
-  DIR_KEYS.forEach(k => marcar(k, ''));
-  if (v('calle').length < 3) err('calle', v('calle') ? 'Escribe el nombre completo de la calle' : 'Falta la calle');
-  if (!/^(\d+[A-Z]?(-[A-Z0-9]+)?|S\/?N|[A-Z]?\d+[A-Z]?)$/i.test(v('numExt'))) err('numExt', v('numExt') ? 'Usa un número (ej. 245, 12-B) o S/N' : 'Falta el núm. exterior');
-  if (v('colonia').length < 3) err('colonia', v('colonia') ? 'Escribe el nombre completo' : 'Falta la colonia');
-  const cp = v('cp');
-  if (!/^\d{5}$/.test(cp)) err('cp', cp ? 'Debe tener 5 dígitos' : 'Falta el C.P.');
-  else if (!estadoDeCP(cp)) err('cp', 'Este C.P. no existe');
-  if (!v('estado')) err('estado', 'Elige el estado');
-  else if (/^\d{5}$/.test(cp) && estadoDeCP(cp) && estadoDeCP(cp) !== v('estado')) err('estado', `El C.P. ${cp} es de ${estadoDeCP(cp)}`);
-  if (v('municipio').length < 3) err('municipio', v('municipio') ? 'Escribe el nombre completo' : 'Falta el municipio');
-  $('addr').classList.toggle('err', !!primero && estricto);
-  return primero ? primero + ' (dirección)' : '';
-}
-function resumenDireccion() {
-  const d = {}; DIR_KEYS.forEach(k => d[k] = $('f_' + k).value.trim());
-  const faltan = Object.keys(DIR_REQ).filter(k => !d[k]).length;
-  const algo = DIR_KEYS.some(k => k !== 'estado' && d[k]);
-  const partes = [[d.calle, d.numExt, d.numInt && 'Int. ' + d.numInt].filter(Boolean).join(' '), d.colonia && 'Col. ' + d.colonia, d.cp && 'C.P. ' + d.cp, d.municipio, d.estado].filter(Boolean);
-  $('addrTxt').textContent = algo ? partes.join(', ') : 'Toca para capturar la dirección';
-  $('addrTxt').classList.toggle('vacio', !algo);
-  const ok = !faltan && !validarDireccionSilenciosa();
-  $('addrSt').className = 'st ' + (ok ? 'ok' : algo ? 'warn' : '');
-  $('addrSt').textContent = ok ? 'Completa ✓' : faltan ? `Faltan ${faltan}` : algo ? 'Revisar' : 'Pendiente';
-  if (ok) $('addr').classList.remove('err');
-}
-function validarDireccionSilenciosa() {
-  const cp = $('f_cp').value.trim(), est = $('f_estado').value;
-  return !/^\d{5}$/.test(cp) || !estadoDeCP(cp) || (est && estadoDeCP(cp) !== est);
-}
-$('f_cp').addEventListener('input', e => {
-  e.target.value = e.target.value.replace(/\D/g, '').slice(0, 5);
-  const est = estadoDeCP(e.target.value);
-  if (est) $('f_estado').value = est;
-  resumenDireccion();
-});
-DIR_KEYS.forEach(k => $('f_' + k).addEventListener(k === 'estado' ? 'change' : 'input', () => { marcar(k, ''); resumenDireccion(); }));
-
-// Separa el domicilio de la INE en calle / número / colonia / C.P. / municipio
-function parseDomicilio(lineas) {
-  const L = lineas.map(l => l.trim()).filter(Boolean), d = {};
-  if (L[0]) {
-    const m = L[0].match(/^(.*?\D)\s+(\d+\s*[A-Z]?|S\/?N)(?:\s+(?:INT\.?|INTERIOR|DEPTO\.?|DEP\.?)\s*(\S+))?\s*$/i);
-    if (m) { d.calle = titulo(m[1]); d.numExt = m[2].replace(/\s/g, '').toUpperCase(); if (m[3]) d.numInt = m[3].toUpperCase(); }
-    else d.calle = titulo(L[0]);
-  }
-  const resto = L.slice(1).join(' ');
-  const cp = resto.match(/\b(\d{5})\b/);
-  if (cp) { d.cp = cp[1]; d.estado = estadoDeCP(cp[1]); }
-  if (L[1]) d.colonia = titulo(L[1].replace(/\b\d{5}\b/, '').replace(/^(COL\.?|COLONIA|FRACC\.?|FRACCIONAMIENTO|BARRIO|BO\.?)\s+/i, '').trim());
-  if (L[2]) d.municipio = titulo(L[2].split(',')[0].replace(/\b\d{5}\b/, '').trim());
-  return d;
-}
-function usarDireccionIne() {
-  if (!dirIne) return;
-  DIR_KEYS.forEach(k => { if (dirIne[k]) $('f_' + k).value = dirIne[k]; });
-  resumenDireccion(); validarDireccion(false);
-  toast('Dirección copiada de la INE: revísala');
-}
-
-/* ================= ELIMINAR ================= */
-function askDelete(id) {
-  const s = socios.find(x => x.id === id);
-  $('delPhoto').outerHTML = avatar(s, 'photo confirm-photo', 'id="delPhoto"');
-  $('delText').innerHTML = `<b>${esc(s.nombre)}</b> (N.º ${esc(s.numero)}) saldrá del registro junto con su INE. Esto no se puede deshacer.`;
-  $('delBtn').onclick = () => doDelete(id);
-  openOv('delOv');
-}
-async function doDelete(id) {
-  const btn = $('delBtn');
-  btn.disabled = true; btn.textContent = 'Eliminando…';
-  try {
-    await api.post('delete', { id });
-    closeOv('delOv'); toast('Socio dado de baja'); await load();
-  } catch (err) {
-    if (err.auth) { closeOv('delOv'); return logout(err.message); }
-    toast(err.message, true);
-  } finally { btn.disabled = false; btn.textContent = 'Sí, eliminar'; }
-}
-
-/* ================= EVENTOS ================= */
-$('q').addEventListener('input', render);
-document.querySelectorAll('.overlay').forEach(o => o.addEventListener('click', e => { if (e.target === o) o.classList.remove('open'); }));
-document.addEventListener('keydown', e => {
-  if (e.key !== 'Escape') return;
-  if ($('editor').classList.contains('open')) return cerrarEditor();
-  if ($('scanner').classList.contains('open')) return stopScan();
-  document.querySelectorAll('.overlay.open,.lightbox.open').forEach(o => o.classList.remove('open'));
-});
-
-/* ================= CAMPOS PERSONALIZADOS EN EL FORMULARIO ================= */
-function renderExtras(valores) {
-  $('secExtras').hidden = !CAMPOS.length;
-  $('extras').innerHTML = CAMPOS.map(c => {
-    const v = valores[c.id] || '', req = c.obligatorio ? ' <span class="req">*</span>' : '';
-    let input;
-    if (c.tipo === 'sino') input = `<div class="seg" data-x="${c.id}" data-v="${esc(v)}"><button type="button" data-val="si" class="${v === 'si' ? 'on' : ''}">Sí</button><button type="button" data-val="no" class="${v === 'no' ? 'on' : ''}">No</button></div>`;
-    else if (c.tipo === 'lista') input = `<div class="inp"><select data-x="${c.id}"><option value="">Elige…</option>${c.opciones.map(o => `<option${o === v ? ' selected' : ''}>${esc(o)}</option>`).join('')}</select></div>`;
-    else if (c.tipo === 'fecha') input = `<div class="inp"><input type="date" data-x="${c.id}" value="${esc(v)}"></div>`;
-    else if (c.tipo === 'numero') input = `<div class="inp"><input inputmode="decimal" data-x="${c.id}" value="${esc(v)}"></div>`;
-    else input = `<div class="inp"><input data-x="${c.id}" maxlength="500" value="${esc(v)}"></div>`;
-    return `<div class="lf" id="lfx_${c.id}"><label>${esc(c.etiqueta)}${req}</label>${input}<span class="msg"></span></div>`;
-  }).join('');
-}
-$('extras').addEventListener('click', e => {
-  const b = e.target.closest('.seg button'); if (!b) return;
-  const seg = b.parentElement, val = seg.dataset.v === b.dataset.val ? '' : b.dataset.val;
-  seg.dataset.v = val;
-  seg.querySelectorAll('button').forEach(x => x.classList.toggle('on', x.dataset.val === val));
-});
-['input', 'change', 'click'].forEach(t => $('extras').addEventListener(t, e => {
-  const lf = e.target.closest('.lf'); if (lf && lf.classList.contains('bad')) { lf.classList.remove('bad'); }
-}));
-function leerExtras() {
-  const o = {};
-  CAMPOS.forEach(c => { const el = document.querySelector(`[data-x="${c.id}"]`); if (el) o[c.id] = (c.tipo === 'sino' ? el.dataset.v : el.value).trim(); });
-  return o;
-}
-function validarExtras() {
-  const x = leerExtras(); let primero = '';
-  CAMPOS.forEach(c => {
-    const lf = $('lfx_' + c.id); if (!lf) return;
-    let m = '';
-    if (c.obligatorio && !x[c.id]) m = 'Falta este dato';
-    else if (c.tipo === 'numero' && x[c.id] && !/^-?\d+([.,]\d+)?$/.test(x[c.id])) m = 'Escribe solo números';
-    lf.classList.toggle('bad', !!m); lf.querySelector('.msg').textContent = m;
-    if (m && !primero) { primero = `${c.etiqueta}: ${m.toLowerCase()}`; lf.scrollIntoView({ behavior: 'smooth', block: 'center' }); }
-  });
-  return primero;
-}
-
-/* ================= ADMINISTRAR ================= */
-let USUARIOS = [], editCampo = null, editUser = null;
-function abrirAdmin() { verTab('campos'); $('campoEd').hidden = true; $('userEd').hidden = true; renderCampos(); openOv('admOv'); }
-function verTab(t) {
-  $('tab-campos').hidden = t !== 'campos'; $('tab-usuarios').hidden = t !== 'usuarios';
-  $('tabBtnCampos').classList.toggle('on', t === 'campos'); $('tabBtnUsuarios').classList.toggle('on', t === 'usuarios');
-  if (t === 'usuarios') cargarUsuarios();
-}
-// Botón eliminar de dos toques: el primero pregunta, el segundo elimina
-function dosToques(btn, accion) {
-  if (btn.classList.contains('confirm')) return accion();
-  document.querySelectorAll('.del.confirm').forEach(b => { b.classList.remove('confirm'); b.textContent = '🗑'; });
-  btn.classList.add('confirm'); btn.textContent = '¿Eliminar?';
-  setTimeout(() => { if (btn.isConnected) { btn.classList.remove('confirm'); btn.textContent = '🗑'; } }, 3500);
-}
-
-function renderCampos() {
-  $('camposList').innerHTML = CAMPOS.length ? CAMPOS.map((c, i) => `
-    <div class="crow">
-      <div class="ci"><b>${esc(c.etiqueta)}</b><small>${TIPOS[c.tipo]}${c.tipo === 'lista' ? ` (${c.opciones.length})` : ''}${c.obligatorio ? ' · Obligatorio' : ' · Opcional'}</small></div>
-      <div class="acts">
-        <button onclick="moverCampo(${i},-1)" ${i === 0 ? 'disabled' : ''} aria-label="Subir">↑</button>
-        <button onclick="moverCampo(${i},1)" ${i === CAMPOS.length - 1 ? 'disabled' : ''} aria-label="Bajar">↓</button>
-        <button onclick="editarCampo(${i})" aria-label="Editar">✏️</button>
-        <button class="del" onclick="dosToques(this,()=>borrarCampo(${i}))" aria-label="Eliminar">🗑</button>
-      </div>
-    </div>`).join('') : '<div class="vacio-box">Aún no hay campos personalizados. Agrega uno para pedir más datos en el registro.</div>';
-}
-function editarCampo(i) {
-  editCampo = i;
-  const c = i === null ? { etiqueta: '', tipo: 'texto', opciones: [], obligatorio: false } : CAMPOS[i];
-  $('campoEdT').textContent = i === null ? 'Nuevo campo' : 'Editar campo';
-  $('ce_etq').value = c.etiqueta; $('ce_tipo').value = c.tipo; $('ce_obl').checked = c.obligatorio;
-  $('ce_ops').value = (c.opciones || []).join('\n'); $('ce_opsBox').hidden = c.tipo !== 'lista';
-  $('campoEd').hidden = false; $('campoEd').scrollIntoView({ behavior: 'smooth', block: 'center' });
-  setTimeout(() => $('ce_etq').focus(), 200);
-}
-async function guardarCampos(lista, msg, btn) {
-  if (btn) { btn.disabled = true; btn._t = btn.textContent; btn.textContent = 'Guardando…'; }
-  try {
-    const r = await api.post('guardarCampos', { campos: lista });
-    CAMPOS = r.campos; renderCampos(); render(); toast(msg); return true;
-  } catch (err) { if (err.auth) { closeOv('admOv'); logout(err.message); } else toast(err.message, true); return false; }
-  finally { if (btn) { btn.disabled = false; btn.textContent = btn._t; } }
-}
-async function guardarCampo() {
-  const etiqueta = $('ce_etq').value.trim().replace(/\s+/g, ' ');
-  const tipo = $('ce_tipo').value;
-  const opciones = $('ce_ops').value.split('\n').map(x => x.trim()).filter(Boolean);
-  if (!etiqueta) { toast('Escribe el nombre del campo', true); return $('ce_etq').focus(); }
-  if (/tel[eé]f/i.test(etiqueta)) return toast('El teléfono ya es un campo fijo del registro', true);
-  if (CAMPOS.some((c, i) => i !== editCampo && c.etiqueta.toLowerCase() === etiqueta.toLowerCase())) return toast('Ya existe un campo con ese nombre', true);
-  if (tipo === 'lista' && opciones.length < 2) { toast('La lista necesita al menos 2 opciones', true); return $('ce_ops').focus(); }
-  const c = { ...(editCampo !== null ? CAMPOS[editCampo] : {}), etiqueta, tipo, opciones: tipo === 'lista' ? opciones : [], obligatorio: $('ce_obl').checked };
-  const lista = [...CAMPOS];
-  if (editCampo === null) lista.push(c); else lista[editCampo] = c;
-  if (await guardarCampos(lista, editCampo === null ? `✓ Campo "${etiqueta}" agregado` : '✓ Campo actualizado', $('ce_save'))) $('campoEd').hidden = true;
-}
-function moverCampo(i, d) { const l = [...CAMPOS]; [l[i], l[i + d]] = [l[i + d], l[i]]; guardarCampos(l, '✓ Orden actualizado'); }
-function borrarCampo(i) { const n = CAMPOS[i].etiqueta; guardarCampos(CAMPOS.filter((_, j) => j !== i), `Campo "${n}" eliminado (los datos ya capturados se conservan)`); }
-
-async function cargarUsuarios() {
-  try { USUARIOS = (await api.post('usuarios')).usuarios; renderUsuarios(); }
-  catch (err) { if (err.auth) { closeOv('admOv'); return logout(err.message); } $('usersList').innerHTML = `<div class="vacio-box">${esc(err.message)}</div>`; }
-}
-function renderUsuarios() {
-  $('usersList').innerHTML = USUARIOS.map(u => `
-    <div class="crow">
-      <div class="av">${esc(u.user[0].toUpperCase())}</div>
-      <div class="ci"><b>${esc(u.user)}${u.user === session.user ? ' <span class="st info">tú</span>' : ''}</b><small>${u.rol === 'admin' ? 'Administrador' : 'Capturista'}</small></div>
-      <div class="acts">
-        <button onclick="editarUsuario('${esc(u.user)}')" aria-label="Editar">✏️</button>
-        ${u.user === session.user ? '' : `<button class="del" onclick="dosToques(this,()=>borrarUsuario('${esc(u.user)}'))" aria-label="Eliminar">🗑</button>`}
-      </div>
-    </div>`).join('');
-}
-function editarUsuario(user) {
-  editUser = user;
-  const u = USUARIOS.find(x => x.user === user);
-  $('userEdT').textContent = user ? `Editar a ${user}` : 'Nuevo usuario';
-  $('ue_user').value = user || ''; $('ue_pass').value = ''; $('ue_pass').type = 'password';
-  $('ue_passL').textContent = user ? 'Nueva contraseña (déjala vacía para no cambiarla)' : 'Contraseña';
-  $('ue_rol').value = u ? u.rol : 'capturista';
-  $('userEd').hidden = false; $('userEd').scrollIntoView({ behavior: 'smooth', block: 'center' });
-  setTimeout(() => $('ue_user').focus(), 200);
-}
-async function guardarUsuario() {
-  const user = $('ue_user').value.trim().toLowerCase(), pass = $('ue_pass').value, rol = $('ue_rol').value;
-  if (!/^[a-z0-9._-]{3,20}$/.test(user)) { toast('Usuario: de 3 a 20 letras o números, sin espacios ni acentos', true); return $('ue_user').focus(); }
-  if (!editUser && !pass) { toast('Escribe una contraseña', true); return $('ue_pass').focus(); }
-  if (pass && pass.length < 8) { toast('La contraseña debe tener al menos 8 caracteres', true); return $('ue_pass').focus(); }
-  const btn = $('ue_save'); btn.disabled = true; btn.textContent = 'Guardando…';
-  try {
-    const r = await api.post('guardarUsuario', { original: editUser || '', user, pass, rol });
-    USUARIOS = r.usuarios; renderUsuarios(); $('userEd').hidden = true;
-    toast(editUser ? `✓ Usuario ${user} actualizado` : `✓ Usuario ${user} creado`);
-    if (r.yo && (r.renombrado || pass)) { closeOv('admOv'); return logout('Tus datos de acceso cambiaron. Entra de nuevo.'); }
-    if (r.yo && rol !== 'admin') { closeOv('admOv'); session.rol = rol; store.set('socios_rol', rol); aplicarRol(); }
-  } catch (err) { if (err.auth) { closeOv('admOv'); return logout(err.message); } toast(err.message, true); }
-  finally { btn.disabled = false; btn.textContent = 'Guardar usuario'; }
-}
-async function borrarUsuario(user) {
-  try { USUARIOS = (await api.post('eliminarUsuario', { user })).usuarios; renderUsuarios(); toast(`Usuario ${user} eliminado`); }
-  catch (err) { if (err.auth) { closeOv('admOv'); return logout(err.message); } toast(err.message, true); }
-}
-
-/* ---------- Mi cuenta ---------- */
-function abrirCuenta() {
-  $('cuentaSub').textContent = `${session.user} · ${session.rol === 'admin' ? 'Administrador' : 'Capturista'}`;
-  $('cu_user').value = session.user || '';
-  ['cu_act', 'cu_new', 'cu_rep'].forEach(k => $(k).value = '');
-  openOv('cuentaOv'); setTimeout(() => $('cu_act').focus(), 200);
-}
-$('cuentaForm').addEventListener('submit', async e => {
-  e.preventDefault();
-  const actual = $('cu_act').value, nueva = $('cu_new').value;
-  if (!actual) { toast('Escribe tu contraseña actual', true); return $('cu_act').focus(); }
-  if (nueva.length < 8) { toast('La nueva contraseña debe tener al menos 8 caracteres', true); return $('cu_new').focus(); }
-  if (nueva !== $('cu_rep').value) { toast('Las contraseñas nuevas no coinciden', true); return $('cu_rep').focus(); }
-  const btn = $('cu_save'); btn.disabled = true; btn.textContent = 'Guardando…';
-  try { await api.post('cambiarClave', { actual, nueva }); closeOv('cuentaOv'); toast('✓ Contraseña cambiada'); }
-  catch (err) { if (err.auth) { closeOv('cuentaOv'); return logout(err.message); } toast(err.message, true); }
-  finally { btn.disabled = false; btn.textContent = 'Cambiar contraseña'; }
-});
-
-/* ================= APP INSTALABLE ================= */
-let promptInstalar = null;
-const esApp = () => matchMedia('(display-mode: standalone)').matches || navigator.standalone === true;
-const esIOS = () => /iphone|ipad|ipod/i.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
-function mostrarInstalar() {
-  const ver = !esApp() && !DEMO && (!!promptInstalar || esIOS());
-  $('instTop').hidden = !ver; $('instLogin').hidden = !ver;
-}
-window.addEventListener('beforeinstallprompt', e => { e.preventDefault(); promptInstalar = e; mostrarInstalar(); });
-window.addEventListener('appinstalled', () => { promptInstalar = null; mostrarInstalar(); toast('✓ App instalada: búscala como “Socios”'); });
-async function instalarApp() {
-  if (promptInstalar) {
-    promptInstalar.prompt();
-    await promptInstalar.userChoice.catch(() => {});
-    promptInstalar = null; mostrarInstalar();
-    return;
-  }
-  $('instIos').hidden = !esIOS(); $('instOtro').hidden = esIOS();
-  openOv('instOv');
-}
-if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) {
-  window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
-}
-mostrarInstalar();
-
-session.token ? showApp() : showLogin();
+      d.dataset.theme = localStorage.getItem('gp-theme') || 'light';
+      d.dataset.lang = localStorage.getItem('gp-lang') || 'es';
+      d.dataset.pal = '1';
+      d.dataset.intro = sessionStorage.getItem('gp-intro') ? 'no' : 'si';
+    } catch (e) { d.dataset.lang = 'es'; d.dataset.intro = 'si'; }
+  })();
 </script>
+</head>
+<body style="margin:0">
+<div id="gp" class="gp light">
+
+<a class="skip" href="#inicio" data-i18n="skip">Saltar al contenido</a>
+
+<div class="intro" aria-hidden="true">
+  <img src="img/coyote-blanco.png" alt="" width="84" height="64">
+  <div class="bar"><span></span></div>
+</div>
+
+<header class="hdr">
+  <div class="topbar" style="border-bottom: 1px solid rgba(var(--rgb-marfil),.12);">
+    <div class="wrap" style="display: flex; justify-content: space-between; align-items: center; gap: 13px; min-height: 40px; font-size: 13px; color: var(--c-marfil);">
+      <span data-i18n="topbar">Trámites vehiculares en Quintana Roo</span>
+    </div>
+  </div>
+  <div class="wrap" style="display: flex; align-items: center; justify-content: space-between; gap: 13px; padding-top: 21px; padding-bottom: 21px;">
+    <a href="#inicio" data-i18n-aria="homeAria" aria-label="Gestoría Paredes, inicio" style="display: flex; align-items: center; gap: 13px; text-decoration: none; color: var(--c-marfil);">
+      <img src="img/coyote-blanco.png" alt="" width="44" height="34" style="width: 44px; height: auto; display: block;">
+      <span style="display: flex; flex-direction: column; gap: 2px;">
+        <span style="font-weight: 600; font-size: 16px; letter-spacing: 0.32em; line-height: 26px;">PAREDES</span>
+        <span data-i18n="descriptor" style="font-size: 10px; letter-spacing: 0.24em; line-height: 16px; color: var(--c-gris_c);">GESTORÍA Y TRAMITOLOGÍA</span>
+      </span>
+    </a>
+    <div class="nav-desk" style="align-items: center; gap: 34px;">
+      <nav data-i18n-aria="navAria" aria-label="Principal" style="display: flex; align-items: center; gap: 34px; font-size: 13px;">
+        <a href="#requisitos" data-i18n="nav2">Requisitos</a>
+        <a href="#proceso" data-i18n="nav3">Cómo funciona</a>
+        <a href="#contacto" data-i18n="nav4">Contacto</a>
+        <a href="documentos.html" data-i18n="nav5">Subir documentos</a>
+      </nav>
+      <div class="seg" role="group" data-i18n-aria="langAria" aria-label="Idioma">
+        <button type="button" data-set-lang="es" aria-pressed="true">ES</button>
+        <button type="button" data-set-lang="en" aria-pressed="false">EN</button>
+      </div>
+    </div>
+    <button type="button" id="menu-open" class="icon-btn burger" data-i18n-aria="menuOpen" aria-label="Abrir menú" aria-expanded="false" aria-controls="menu" style="color: var(--c-marfil);">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h10"></path></svg>
+    </button>
+  </div>
+</header>
+
+<div id="menu" class="menu" role="dialog" aria-modal="true" data-i18n-aria="menuLabel" aria-label="Menú" hidden>
+  <div style="display: flex; align-items: center; justify-content: space-between;">
+    <img src="img/coyote-blanco.png" alt="" width="40" height="30" style="width: 40px; height: auto;">
+    <button type="button" id="menu-close" class="icon-btn" data-i18n-aria="menuClose" aria-label="Cerrar" style="color: var(--c-marfil);">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"></path></svg>
+    </button>
+  </div>
+  <nav data-i18n-aria="navAria" aria-label="Principal" class="disp" style="margin-top: 34px; font-size: 34px; line-height: 1.05; font-weight: 500; text-transform: uppercase;">
+    <a href="#requisitos" data-close-menu data-i18n="nav2">Requisitos</a>
+    <a href="#proceso" data-close-menu data-i18n="nav3">Cómo funciona</a>
+    <a href="#contacto" data-close-menu data-i18n="nav4">Contacto</a>
+    <a href="documentos.html" data-close-menu data-i18n="nav5">Subir documentos</a>
+  </nav>
+  <div style="margin-top: auto; display: flex; flex-direction: column; gap: 21px;">
+    <div style="display: flex; gap: 13px; align-items: center;">
+      <div class="seg" role="group" data-i18n-aria="langAria" aria-label="Idioma">
+        <button type="button" data-set-lang="es" aria-pressed="true">ES</button>
+        <button type="button" data-set-lang="en" aria-pressed="false">EN</button>
+      </div>
+    </div>
+    <a class="btn btn-y" href="https://wa.me/529841297165" target="_blank" rel="noopener" style="width: 100%;" data-i18n="ctaWa">Iniciar trámite por WhatsApp</a>
+    <button type="button" class="btn btn-o btn-app" data-instalar hidden style="width: 100%;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="2" width="12" height="20" rx="2.5"/><path d="M12 7v7m-3-3 3 3 3-3"/></svg><span data-i18n="instalar">Instalar app</span></button>
+  </div>
+</div>
+
+<main>
+<section id="inicio" class="hero" aria-labelledby="titulo-inicio">
+  <div class="hero-top"></div>
+  <picture class="hero-pic hero-pic-desk">
+    <source srcset="img/hero-auto.webp" data-car="desk">
+    <img class="hero-img" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-i18n-alt="heroAlt" alt="Frente de un auto clásico amarillo con placa 595 AOK" width="2127" height="956" fetchpriority="high">
+  </picture>
+  <div class="scrim" aria-hidden="true"></div>
+  <div class="wrap hero-inner">
+    <div style="max-width: 791px; display: flex; flex-direction: column; gap: 34px;">
+      <h1 id="titulo-inicio" class="h1 disp">
+        <span class="ln"><span data-i18n="h1a">Gestoría vehicular.</span></span>
+        <span class="ln"><span data-i18n="h1b">Trámites sin</span></span>
+        <span class="ln"><span data-i18n="h1c" style="color: var(--c-acc);">hacer filas.</span></span>
+      </h1>
+      <div class="hero-rest" style="display: flex; flex-direction: column; gap: 34px;">
+        <p data-i18n="lead" style="margin: 0; font-size: 21px; line-height: 34px; color: var(--c-marfil); max-width: 30em;">Usted reúne sus documentos; nosotros nos encargamos de la cita, la gestión y el seguimiento.</p>
+        <picture class="hero-pic-mob" aria-hidden="false">
+          <source media="(max-width: 1100px)" srcset="img/hero-auto-movil.webp" data-car="mob">
+          <img class="hero-car-mob" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-i18n-alt="heroAlt" alt="Frente de un auto clásico amarillo con placa 595 AOK" width="2300" height="900">
+        </picture>
+        <div class="svc2" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr)); gap: 13px;">
+          <a class="svc-plate" href="#requisitos" data-go-tab="primera">
+            <span class="disp" data-i18n="s1" style="font-size: 21px; line-height: 26px; font-weight: 600; text-transform: uppercase;">Licencias de conducir</span>
+            <span data-i18n="s1sub" style="font-size: 13px; line-height: 21px; color: var(--c-gris_c);">Motociclista · Automovilista · Chofer · Servicio público o privado</span>
+            <span class="go"><span data-i18n="reqLink">Ver requisitos</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="m13 6 6 6-6 6"></path></svg></span>
+          </a>
+          <a class="svc-plate" href="#requisitos" data-go-tab="propietario">
+            <span class="disp" data-i18n="s2" style="font-size: 21px; line-height: 26px; font-weight: 600; text-transform: uppercase;">Cambio de propietario</span>
+            <span data-i18n="s2sub" style="font-size: 13px; line-height: 21px; color: var(--c-gris_c);">Autos particulares · Tarjeta de circulación a su nombre</span>
+            <span class="go"><span data-i18n="reqLink">Ver requisitos</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="m13 6 6 6-6 6"></path></svg></span>
+          </a>
+          <a class="svc-plate" href="#requisitos" data-go-tab="emplacamiento">
+            <span class="disp" data-i18n="s3" style="font-size: 21px; line-height: 26px; font-weight: 600; text-transform: uppercase;">Emplacamiento</span>
+            <span data-i18n="s3sub" style="font-size: 13px; line-height: 21px; color: var(--c-gris_c);">Autos nuevos · De otro estado · Autos extranjeros</span>
+            <span class="go"><span data-i18n="reqLink">Ver requisitos</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="m13 6 6 6-6 6"></path></svg></span>
+          </a>
+          <a class="svc-plate" href="#requisitos" data-go-tab="federales">
+            <span class="disp" data-i18n="s4" style="font-size: 21px; line-height: 26px; font-weight: 600; text-transform: uppercase;">Placas federales</span>
+            <span data-i18n="s4sub" style="font-size: 13px; line-height: 21px; color: var(--c-gris_c);">Carga · Pasajeros · Turismo · Transporte privado</span>
+            <span class="go"><span data-i18n="reqLink">Ver requisitos</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="m13 6 6 6-6 6"></path></svg></span>
+          </a>
+        </div>
+        <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 13px 21px;">
+          <a class="btn btn-y" href="https://wa.me/529841297165" target="_blank" rel="noopener"><span data-i18n="ctaWa">Iniciar trámite por WhatsApp</span><svg class="arr" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="m13 6 6 6-6 6"></path></svg></a>
+          <span data-i18n="ctaNote" style="font-size: 13px; color: var(--c-niebla2);">Atención personalizada de principio a fin.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="road" aria-hidden="true" style="position: absolute; left: 0; right: 0; bottom: 40px;"></div>
+</section>
+
+<section class="band" data-i18n-aria="band1Aria" aria-label="Asesoría" style="background: var(--c-acc); color: var(--c-dark);">
+  <div class="wrap rv" style="padding-top: 34px; padding-bottom: 34px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 21px 34px;">
+    <p class="disp" data-i18n="band1" style="margin: 0; font-size: clamp(21px, 3vw, 34px); line-height: 1.15; font-weight: 500; max-width: 24em;">¿No sabe qué tipo de licencia necesita? Le orientamos sin compromiso.</p>
+    <a class="btn" href="https://wa.me/529841297165" target="_blank" rel="noopener" style="background: var(--c-dark); color: var(--c-marfil);"><span data-i18n="band1Cta">Consultar por WhatsApp</span><svg class="arr" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="m13 6 6 6-6 6"></path></svg></a>
+  </div>
+</section>
+
+<section id="requisitos" aria-labelledby="titulo-requisitos" style="background: var(--sunken); transition: background-color .4s ease;">
+  <div class="wrap" style="padding-top: 144px; padding-bottom: 144px; display: flex; flex-wrap: wrap; gap: 55px 89px; align-items: flex-start;">
+    <div class="rv" style="flex: 1 1 calc((100% - 90px) * 0.382); min-width: min(300px, 100%); display: flex; flex-direction: column; gap: 21px;">
+      <h2 id="titulo-requisitos" class="disp" data-i18n="reqTitle" style="margin: 0; font-weight: 700; font-size: clamp(34px, 5vw, 55px); line-height: 1; text-transform: uppercase;">Requisitos</h2>
+      <span aria-hidden="true" style="display: block; width: 55px; height: 2px; background: var(--oro);"></span>
+      <p data-i18n="reqLead" style="margin: 0; font-size: 16px; line-height: 26px; color: var(--muted); max-width: 24em;">Marque lo que ya tiene y envíenos su lista. Original y copia de cada documento.</p>
+      <div id="tabs" role="group" data-i18n-aria="tabsAria" aria-label="Elegir trámite" style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: 13px;"></div>
+    </div>
+
+    <div class="paper rv" style="flex: 1 1 calc((100% - 90px) * 0.618); min-width: min(520px, 100%); padding: clamp(21px, 4vw, 55px);">
+      <div style="display: flex; align-items: flex-end; justify-content: space-between; flex-wrap: wrap; gap: 13px 21px; padding-bottom: 21px; border-bottom: 2px solid var(--c-dark);">
+        <div style="display: flex; flex-direction: column; gap: 5px;">
+          <span data-i18n="expediente" style="font-size: 13px; letter-spacing: 0.18em; color: var(--c-gris);">SU EXPEDIENTE</span>
+          <h3 id="req-titulo" class="disp" style="margin: 0; font-weight: 600; font-size: 34px; line-height: 1.05; text-transform: uppercase;"></h3>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 8px; min-width: 180px;">
+          <span id="req-progreso" aria-live="polite" style="font-size: 13px; color: var(--c-gris);"></span>
+          <div style="height: 4px; background: var(--c-line_l); border-radius: 5px; overflow: hidden;"><div id="req-barra" style="height: 100%; width: 0; background: var(--c-oro_d); transition: width .4s cubic-bezier(.2,.7,.2,1);"></div></div>
+        </div>
+      </div>
+      <div id="req-skeleton" aria-hidden="true" hidden style="display: flex; flex-direction: column; gap: 21px; padding: 21px 0 8px;">
+        <div class="sk" style="width: 80%;"></div><div class="sk" style="width: 62%;"></div><div class="sk" style="width: 74%;"></div><div class="sk" style="width: 55%;"></div><div class="sk" style="width: 68%;"></div>
+      </div>
+      <div id="req-lista" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr)); gap: 34px 55px; padding-top: 8px;"></div>
+      <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 21px 34px; margin-top: 34px;">
+        <p id="req-nota" style="margin: 0; font-size: 13px; line-height: 21px; color: var(--c-gris); flex: 1 1 280px;"></p>
+        <div style="display: flex; flex-wrap: wrap; gap: 13px;"><a id="req-wa" class="btn" href="https://wa.me/529841297165" target="_blank" rel="noopener" style="background: var(--c-dark); color: var(--c-marfil);"><span data-i18n="sendList">Enviar mi lista por WhatsApp</span><svg class="arr" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="m13 6 6 6-6 6"></path></svg></a><a class="btn btn-o" href="documentos.html"><span data-i18n="upDocs">Subir mis documentos</span></a></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="proceso" class="proc" aria-labelledby="titulo-proceso">
+  <div class="wrap" style="padding-top: 144px; padding-bottom: 144px; display: flex; flex-wrap: wrap; gap: 55px 89px; align-items: flex-start;">
+    <div class="rv proc-intro" style="flex: 1 1 calc((100% - 90px) * 0.382); min-width: min(300px, 100%); display: flex; flex-direction: column; gap: 21px;">
+      <h2 id="titulo-proceso" class="disp" data-i18n="procTitle" style="margin: 0; font-weight: 700; font-size: clamp(34px, 5vw, 55px); line-height: 1.1; text-transform: uppercase; color: var(--c-marfil);">Cómo funciona</h2>
+      <span aria-hidden="true" style="display: block; width: 55px; height: 2px; background: var(--c-oro);"></span>
+      <p data-i18n="procLead" style="margin: 0; font-size: 16px; line-height: 26px; color: var(--c-niebla); max-width: 24em;">Usted solo participa al inicio y al final. Todo lo de en medio corre por nuestra cuenta.</p>
+      <ul class="proc-legend" aria-hidden="true">
+        <li><span class="sw sw-you"></span><span data-i18n="legendYou">Lo hace usted</span></li>
+        <li><span class="sw sw-us"></span><span data-i18n="legendUs">Lo hacemos nosotros</span></li>
+      </ul>
+      <div style="margin-top: 13px;"><a class="btn btn-y" href="https://wa.me/529841297165" target="_blank" rel="noopener"><span data-i18n="ctaWa">Iniciar trámite por WhatsApp</span><svg class="arr" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="m13 6 6 6-6 6"></path></svg></a></div>
+    </div>
+    <ol class="track" style="flex: 1 1 calc((100% - 90px) * 0.618); min-width: min(400px, 100%);">
+      <li class="step rv">
+        <span class="step-plate plate-you" aria-hidden="true">01</span>
+        <div class="step-body">
+          <span class="step-who who-you" data-i18n="whoYou">USTED</span>
+          <h3 class="disp step-title" data-i18n="p1t">Contáctenos</h3>
+          <p class="step-text" data-i18n="p1d">Escríbanos por WhatsApp o llámenos y díganos qué trámite necesita.</p>
+        </div>
+      </li>
+      <li class="step rv">
+        <span class="step-plate plate-us" aria-hidden="true">02</span>
+        <div class="step-body">
+          <span class="step-who who-us" data-i18n="whoUs">NOSOTROS</span>
+          <h3 class="disp step-title" data-i18n="p2t">Revisamos sus documentos</h3>
+          <p class="step-text" data-i18n="p2d">Le confirmamos qué tiene completo y qué falta, antes de ir a cualquier oficina.</p>
+        </div>
+      </li>
+      <li class="step rv">
+        <span class="step-plate plate-us" aria-hidden="true">03</span>
+        <div class="step-body">
+          <span class="step-who who-us" data-i18n="whoUs">NOSOTROS</span>
+          <h3 class="disp step-title" data-i18n="p3t">Realizamos el trámite</h3>
+          <p class="step-text" data-i18n="p3d">Agendamos la cita, hacemos la gestión y damos seguimiento ante la dependencia.</p>
+        </div>
+      </li>
+      <li class="step rv">
+        <span class="step-plate plate-you" aria-hidden="true">04</span>
+        <div class="step-body">
+          <span class="step-who who-you" data-i18n="whoYou">USTED</span>
+          <h3 class="disp step-title" data-i18n="p4t">Reciba su documento</h3>
+          <p class="step-text" data-i18n="p4d">Le avisamos en cuanto su licencia o tarjeta de circulación esté lista.</p>
+        </div>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<section id="contacto" aria-labelledby="titulo-contacto" style="background: var(--sunken); position: relative; overflow: hidden; transition: background-color .4s ease;">
+  <img class="mark" src="img/coyote-blanco.png" alt="" aria-hidden="true" loading="lazy" style="position: absolute; left: -140px; bottom: -110px; width: 620px; height: auto; pointer-events: none;">
+  <div class="wrap" style="position: relative; padding-top: 144px; padding-bottom: 144px; display: flex; flex-wrap: wrap; gap: 55px 89px; align-items: flex-start;">
+
+    <div class="rv" style="flex: 1 1 calc((100% - 90px) * 0.382); min-width: min(340px, 100%); display: flex; flex-direction: column; gap: 34px;">
+      <h2 id="titulo-contacto" class="disp" data-i18n="contTitle" style="margin: 0; font-weight: 700; font-size: clamp(34px, 5vw, 55px); line-height: 1; text-transform: uppercase;">Contacto</h2>
+      <div style="border: 2px dashed var(--yl); border-radius: 13px; padding: 34px; display: flex; flex-direction: column; gap: 21px;">
+        <p style="margin: 0; font-size: 16px; color: var(--muted);"><span data-i18n="aSusOrdenes">A sus órdenes</span> <span aria-hidden="true" style="color: var(--yl);">|</span> <span data-i18n="telLabel">Llamadas y WhatsApp</span></p>
+        <p class="disp" data-i18n="contHook" style="margin: 0; font-weight: 600; font-size: clamp(21px, 3.2vw, 34px); line-height: 1.1;">Escríbanos o llámenos; con gusto le atendemos.</p>
+        <div style="display: flex; flex-wrap: wrap; gap: 13px;">
+          <a class="btn btn-y" href="https://wa.me/529841297165" target="_blank" rel="noopener"><span data-i18n="ctaWa">Iniciar trámite por WhatsApp</span><svg class="arr" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="m13 6 6 6-6 6"></path></svg></a>
+          <a class="btn btn-o" href="tel:+529841297165" data-i18n="ctaCall">Llamar ahora</a>
+        </div>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 13px;">
+        <span data-i18n="siganos" style="font-size: 13px; letter-spacing: 0.14em; color: var(--muted);">SÍGANOS</span>
+        <div class="rrss">
+          <a href="https://wa.me/529841297165" target="_blank" rel="noopener" aria-label="WhatsApp"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"></path></svg></a>
+          <a href="404.html" aria-label="Facebook"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 8h3V4h-3a4 4 0 0 0-4 4v3H7v4h3v6h4v-6h3l1-4h-4V8z"></path></svg></a>
+          <a href="404.html" aria-label="Instagram"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="5"></rect><circle cx="12" cy="12" r="4"></circle><circle cx="17.3" cy="6.7" r="0.9" fill="currentColor" stroke="none"></circle></svg></a>
+          <a href="404.html" aria-label="TikTok"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3v11.5a3.5 3.5 0 1 1-3.5-3.5"></path><path d="M14 3c.4 2.6 2.2 4.4 5 4.6"></path></svg></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="rv" style="flex: 1 1 calc((100% - 90px) * 0.618); min-width: min(400px, 100%); background: var(--bg); border: 1px solid var(--line); border-radius: 8px; padding: clamp(21px, 4vw, 34px); transition: background-color .4s ease;">
+      <div id="form-ok" class="fadein" role="status" hidden style="display: flex; flex-direction: column; gap: 21px; padding: 21px 0;">
+        <span style="width: 55px; height: 55px; border-radius: 999px; background: var(--c-acc); color: var(--c-dark); display: flex; align-items: center; justify-content: center;"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5 9-10"></path></svg></span>
+        <h3 class="disp" data-i18n="okTitle" style="margin: 0; font-weight: 600; font-size: 34px; line-height: 1.05;">Su mensaje está listo</h3>
+        <p data-i18n="okText" style="margin: 0; font-size: 16px; line-height: 26px; color: var(--muted);">Abrimos WhatsApp con sus datos. Solo presione enviar para iniciar su trámite.</p>
+        <div style="display: flex; flex-wrap: wrap; gap: 13px;">
+          <a id="form-wa" class="btn btn-y" href="https://wa.me/529841297165" target="_blank" rel="noopener" data-i18n="okOpen">Abrir WhatsApp de nuevo</a>
+          <button type="button" id="form-reset" class="btn btn-o" data-i18n="okAgain">Enviar otro</button>
+        </div>
+      </div>
+      <form id="form" novalidate style="display: flex; flex-direction: column; gap: 21px;">
+        <div style="display: flex; flex-direction: column; gap: 5px;">
+          <h3 class="disp" data-i18n="formTitle" style="margin: 0; font-weight: 600; font-size: 34px; line-height: 1.05;">Déjenos sus datos</h3>
+          <p data-i18n="formLead" style="margin: 0; font-size: 16px; line-height: 26px; color: var(--muted);">Al continuar se abrirá WhatsApp con su mensaje listo.</p>
+        </div>
+        <div class="fld">
+          <label for="f-nombre" data-i18n="fNombre">Nombre completo</label>
+          <input id="f-nombre" name="nombre" class="inp" type="text" autocomplete="name" aria-invalid="false" aria-describedby="e-nombre">
+          <span id="e-nombre" class="err" hidden></span>
+        </div>
+        <div class="fld">
+          <label for="f-tel" data-i18n="fTel">Teléfono (10 dígitos)</label>
+          <input id="f-tel" name="telefono" class="inp" type="tel" inputmode="numeric" autocomplete="tel" placeholder="984 000 0000" aria-invalid="false" aria-describedby="e-tel">
+          <span id="e-tel" class="err" hidden></span>
+        </div>
+        <div class="fld">
+          <label for="f-tramite" data-i18n="fTramite">Trámite</label>
+          <select id="f-tramite" name="tramite" class="inp" aria-invalid="false" aria-describedby="e-tramite"></select>
+          <span id="e-tramite" class="err" hidden></span>
+        </div>
+        <div class="fld">
+          <label for="f-msg"><span data-i18n="fMsg">Mensaje</span> <span data-i18n="opcional" style="font-weight: 400; color: var(--muted);">(opcional)</span></label>
+          <textarea id="f-msg" name="mensaje" class="inp" rows="3" maxlength="500" style="resize: vertical;"></textarea>
+        </div>
+        <button type="submit" class="btn btn-y" style="width: 100%;" data-i18n="send">Continuar en WhatsApp</button>
+        <p style="margin: 0; font-size: 13px; line-height: 21px; color: var(--muted);"><span data-i18n="privacy">Sus datos no se guardan en este sitio; solo se envían por WhatsApp.</span> <a href="aviso-de-privacidad.html" data-i18n="privacyLink">Aviso de privacidad</a></p>
+      </form>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer style="background: var(--c-deep); color: var(--c-marfil);">
+  <div class="wrap" style="padding-top: 55px; padding-bottom: 89px; display: flex; flex-direction: column; gap: 34px;">
+    <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 21px 55px;">
+      <a href="#inicio" data-i18n-aria="homeAria" aria-label="Gestoría Paredes, inicio" style="display: flex; align-items: center; gap: 13px; text-decoration: none; color: var(--c-marfil);">
+        <img src="img/coyote-blanco.png" alt="" loading="lazy" width="34" height="26" style="width: 34px; height: auto; display: block;">
+        <span style="font-size: 13px; letter-spacing: 0.3em; font-weight: 600;">PAREDES</span>
+      </a>
+      <nav data-i18n-aria="footNavAria" aria-label="Pie de página" style="display: flex; flex-wrap: wrap; gap: 8px 34px; font-size: 13px;">
+        <a class="ul" href="#requisitos" data-i18n="nav2" style="color: var(--c-niebla);">Requisitos</a>
+        <a class="ul" href="#proceso" data-i18n="nav3" style="color: var(--c-niebla);">Cómo funciona</a>
+        <a class="ul" href="#contacto" data-i18n="nav4" style="color: var(--c-niebla);">Contacto</a>
+        <a class="ul" href="documentos.html" data-i18n="nav5" style="color: var(--c-niebla);">Subir documentos</a>
+        <a class="ul" href="aviso-de-privacidad.html" data-i18n="privacyLink" style="color: var(--c-niebla);">Aviso de privacidad</a>
+      </nav>
+      <div class="redes" style="display: flex; gap: 10px;">
+        <a class="red" href="https://www.instagram.com/gestoria.paredes/" target="_blank" rel="noopener" aria-label="Instagram: @gestoria.paredes">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r="1.1" fill="currentColor" stroke="none"/></svg>
+        </a>
+        <a class="red" href="https://www.facebook.com/profile.php?id=61596618631892" target="_blank" rel="noopener" aria-label="Facebook: Gestoría Paredes">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13.5 21v-7.5h2.6l.4-3.1h-3V8.5c0-.9.3-1.5 1.6-1.5h1.6V4.2c-.3 0-1.2-.1-2.3-.1-2.3 0-3.9 1.4-3.9 4v2.3H7.9v3.1h2.6V21h3z"/></svg>
+        </a>
+      </div>
+    </div>
+    <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 21px 55px; padding-top: 21px; border-top: 1px solid var(--c-line_d);">
+      <p data-i18n="legal" style="margin: 0; font-size: 13px; line-height: 21px; color: var(--c-gris_c); max-width: 46em;">Gestoría privada e independiente; no somos una dependencia de gobierno. Realizamos los trámites en su representación ante IMOVEQROO y SEFIPLAN. Los requisitos pueden cambiar: los confirmamos con usted antes de iniciar.</p>
+      <div style="display: flex; flex-direction: column; align-items: flex-start; gap: 8px;">
+        <a class="ul adm-link" href="admin.html" rel="nofollow" style="display: inline-flex; align-items: center; gap: 8px; font-size: 13px; color: var(--c-niebla); text-decoration: none;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg><span data-i18n="adminLink">Acceso administradores</span></a>
+        <button type="button" class="ul foot-app" data-instalar hidden><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="2" width="12" height="20" rx="2.5"/><path d="M12 7v7m-3-3 3 3 3-3"/></svg><span data-i18n="instalar">Instalar app</span></button>
+        <p style="margin: 0; font-size: 13px; color: var(--c-gris_c);">© <span id="year">2026</span> Gestoría Paredes</p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<a class="wa" href="https://wa.me/529841297165" target="_blank" rel="noopener" data-i18n-aria="waBubble" aria-label="Escríbanos por WhatsApp">
+  <span class="wa-tip" aria-hidden="true" data-i18n="waTip">¿Dudas? Escríbanos</span>
+  <span class="wa-dot">
+    <svg width="30" height="30" viewBox="0 0 24 24" fill="#FFFFFF" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"></path></svg>
+  </span>
+</a>
+
+<button type="button" id="theme-fab" class="theme-fab" aria-label="Cambiar a modo oscuro">
+  <svg class="ico-sun" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg>
+  <svg class="ico-moon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path></svg>
+</button>
+
+<button type="button" id="totop" class="totop" data-i18n-aria="toTop" aria-label="Volver arriba" hidden>
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5"></path><path d="m6 11 6-6 6 6"></path></svg>
+</button>
+
+<aside id="exit" class="exitcard" role="dialog" aria-labelledby="exit-t" hidden>
+  <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 13px;">
+    <h2 id="exit-t" class="disp" data-i18n="exitTitle" style="margin: 0; font-size: 21px; line-height: 26px; font-weight: 600;">¿Le quedó alguna duda?</h2>
+    <button type="button" id="exit-close" class="icon-btn" data-i18n-aria="menuClose" aria-label="Cerrar" style="width: 34px; height: 34px; margin: -8px -8px 0 0;">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"></path></svg>
+    </button>
+  </div>
+  <p data-i18n="exitText" style="margin: 8px 0 21px; font-size: 13px; line-height: 21px; color: var(--muted);">Consulte por WhatsApp qué documentos requiere su caso, sin compromiso.</p>
+  <a class="btn btn-y" href="https://wa.me/529841297165" target="_blank" rel="noopener" style="width: 100%;" data-i18n="ctaWa">Iniciar trámite por WhatsApp</a>
+</aside>
+
+</div>
+<script src="js/config.js?v=202611191300" defer></script>
+<script src="js/textos.js?v=202611191300" defer></script>
+<script src="js/requisitos.js?v=202611191300" defer></script>
+<script src="js/contenido.js?v=202611191300" defer></script>
+<script src="js/whatsapp.js?v=202611191300" defer></script>
+<script src="js/main.js?v=202611191300" defer></script>
+<script src="js/instalar.js?v=202611191300" defer></script>
 </body>
 </html>
