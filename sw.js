@@ -3,9 +3,9 @@
  * Archivos (css, js, imágenes): se muestran de la copia y se actualizan en segundo plano.
  * Nunca guarda nada del servidor de Google (expedientes, inicio de sesión, documentos).
  */
-var VERSION = 'gp-20261119';
-var BASE = ['./', 'index.html', 'admin.html', 'documentos.html', 'offline.html', 'manifest.webmanifest', 'admin.webmanifest',
-  'img/icon-192.png', 'img/admin-192.png', 'img/coyote-blanco.png'];
+var VERSION = 'gp-20261120b';
+var BASE = ['./', 'index.html', 'admin.html', 'documentos.html', 'escaner.html', 'offline.html', 'manifest.webmanifest', 'admin.webmanifest', 'escaner.webmanifest',
+  'img/icon-192.png', 'img/admin-192.png', 'img/escaner-192.png', 'img/coyote-blanco.png'];
 
 self.addEventListener('install', function (e) {
   e.waitUntil(caches.open(VERSION).then(function (c) { return c.addAll(BASE); }).then(function () { return self.skipWaiting(); }));

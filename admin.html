@@ -18,8 +18,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&amp;family=Poppins:wght@400;500;600&amp;display=swap">
-<link rel="stylesheet" href="css/styles.css?v=202611191300">
-<link rel="stylesheet" href="css/app.css?v=202611191300">
+<link rel="stylesheet" href="css/styles.css?v=202611201130">
+<link rel="stylesheet" href="css/app.css?v=202611201130">
 </head>
 <body style="margin:0">
 <div class="gp light adm-body" id="gp">
@@ -30,12 +30,33 @@
         <span>PAREDES</span>
       </a>
       <div class="adm-user" id="adm-user" hidden>
-        <button type="button" class="adm-cuenta adm-app" data-instalar hidden aria-label="Instalar el panel como app"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="2" width="12" height="20" rx="2.5"/><path d="M12 7v7m-3-3 3 3 3-3"/></svg><span>Instalar app</span></button>
-        <button type="button" class="adm-cuenta" id="adm-cuenta" aria-label="Mi cuenta: cambiar usuario o contraseña">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>
-          <span id="adm-nombre"></span>
-        </button>
-        <button type="button" class="linkbtn" id="adm-salir" style="margin:0; color: var(--c-niebla);">Salir</button>
+        <div class="adm-menu">
+          <button type="button" class="adm-cuenta adm-menu-btn" id="adm-menu-btn" aria-haspopup="menu" aria-expanded="false" aria-controls="adm-menu">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>
+            <span id="adm-nombre"></span>
+            <svg class="adm-chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </button>
+          <div class="adm-menu-pop" id="adm-menu" role="menu" aria-label="Opciones de administrador" hidden>
+            <p class="adm-menu-h"><b id="adm-menu-nombre"></b><span id="adm-menu-usuario"></span></p>
+            <button type="button" class="adm-mi" role="menuitem" id="adm-cuenta">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>
+              <span><b>Mi cuenta</b><small>Cambiar usuario o contraseña</small></span>
+            </button>
+            <button type="button" class="adm-mi" role="menuitem" id="adm-apps">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+              <span><b>Apps</b><small>Instalar la página, el panel y el escáner</small></span>
+            </button>
+            <a class="adm-mi" role="menuitem" href="escaner.html">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7V5a2 2 0 0 1 2-2h2M17 3h2a2 2 0 0 1 2 2v2M21 17v2a2 2 0 0 1-2 2h-2M7 21H5a2 2 0 0 1-2-2v-2"/><path d="M7 12h10"/></svg>
+              <span><b>Abrir escáner</b><small>Escanear documentos con el celular</small></span>
+            </a>
+            <div class="adm-mi-sep" role="separator"></div>
+            <button type="button" class="adm-mi adm-mi-salir" role="menuitem" id="adm-salir">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="m16 17 5-5-5-5M21 12H9"/></svg>
+              <span><b>Salir</b></span>
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   </header>
@@ -173,11 +194,11 @@
     <iframe class="adm-frame" id="v-frame" title="Documento PDF" hidden></iframe>
   </div>
 </div>
-<script src="js/config.js?v=202611191300" defer></script>
-<script src="js/textos.js?v=202611191300" defer></script>
-<script src="js/requisitos.js?v=202611191300" defer></script>
-<script src="js/admin.js?v=202611191300" defer></script>
-<script src="js/editor.js?v=202611191300" defer></script>
-<script src="js/instalar.js?v=202611191300" defer></script>
+<script src="js/config.js?v=202611201130" defer></script>
+<script src="js/textos.js?v=202611201130" defer></script>
+<script src="js/requisitos.js?v=202611201130" defer></script>
+<script src="js/admin.js?v=202611201130" defer></script>
+<script src="js/editor.js?v=202611201130" defer></script>
+<script src="js/instalar.js?v=202611201130" defer></script>
 </body>
 </html>

@@ -375,6 +375,43 @@
     });
   }
   $('adm-cuenta').addEventListener('click', miCuenta);
+  /* ---------- menú de administrador ---------- */
+  var menuBtn = $('adm-menu-btn'), menu = $('adm-menu');
+  function abrirMenu(si) {
+    menu.hidden = !si; menuBtn.setAttribute('aria-expanded', si ? 'true' : 'false');
+    if (si) {
+      $('adm-menu-nombre').textContent = ses ? ses.nombre : '';
+      $('adm-menu-usuario').textContent = ses && ses.usuario ? 'Usuario: ' + ses.usuario : '';
+      var primero = menu.querySelector('.adm-mi'); if (primero) primero.focus();
+    }
+  }
+  menuBtn.addEventListener('click', function (e) { e.stopPropagation(); abrirMenu(menu.hidden); });
+  document.addEventListener('click', function (e) { if (!menu.hidden && !menu.contains(e.target)) abrirMenu(false); });
+  menu.addEventListener('click', function (e) { if (e.target.closest('.adm-mi')) abrirMenu(false); });
+  menu.addEventListener('keydown', function (e) {
+    var its = Array.prototype.slice.call(menu.querySelectorAll('.adm-mi')), i = its.indexOf(document.activeElement);
+    if (e.key === 'Escape') { abrirMenu(false); menuBtn.focus(); }
+    if (e.key === 'ArrowDown') { e.preventDefault(); its[(i + 1) % its.length].focus(); }
+    if (e.key === 'ArrowUp') { e.preventDefault(); its[(i - 1 + its.length) % its.length].focus(); }
+  });
+
+  /* ---------- Apps ---------- */
+  var ESTA_APP = (window.matchMedia && matchMedia('(display-mode: standalone)').matches) || navigator.standalone === true;
+  function apps() {
+    var tarjeta = function (ic, t, d, accion) { return '<li class="app-c"><img src="' + ic + '" alt="" width="56" height="56"><div><b>' + t + '</b><p>' + d + '</p></div>' + accion + '</li>'; };
+    abrirDlg(
+      '<p class="kicker">Panel de administrador</p><h2 id="dlg-t">Apps</h2>' +
+      '<p class="adm-dlg-p">Instálelas en su celular o computadora: quedan con su propio ícono, sin Play Store ni App Store.</p>' +
+      '<ul class="apps">' +
+      tarjeta('img/escaner-192.png', 'Escáner', 'Fotos de documentos → recorte, mejora y PDF listo para guardar o compartir. Solo para administradores.', '<a class="btn btn-y" href="escaner.html?instalar=1">Instalar</a>') +
+      tarjeta('img/icon-192.png', 'Página de la gestoría', 'La página pública: requisitos, subir documentos y WhatsApp. Útil para enseñársela a un cliente.', '<a class="btn btn-o" href="./?instalar=1">Instalar</a>') +
+      tarjeta('img/admin-192.png', 'Panel de administración', 'Expedientes y edición de la página. La sesión se mantiene abierta al cerrar la app.', ESTA_APP ? '<span class="app-ok">Ya está instalada</span>' : '<button type="button" class="btn btn-o" data-instalar data-cerrar>Instalar</button>') +
+      '</ul>' +
+      '<p class="adm-dlg-p" style="font-size:12px">Al tocar «Instalar» se abre la app y aparece el botón para instalarla. <b>Celular:</b> Android con Chrome, o iPhone desde Safari (Compartir → Agregar a inicio). <b>Computadora:</b> Windows o Mac con Google Chrome o Microsoft Edge; en Mac también Safari (Archivo → Agregar al Dock).</p>' +
+      '<div class="adm-dlg-acts"><button type="button" class="btn btn-o" data-cerrar>Cerrar</button></div>', '.apps .btn');
+  }
+  $('adm-apps').addEventListener('click', apps);
+
 
   /* ---------- inicio ---------- */
   if (IS_MOBILE) $('v-desc').hidden = true;

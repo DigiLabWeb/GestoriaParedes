@@ -3,7 +3,7 @@
   'use strict';
   var CFG = window.GP_CONFIG || {};
   var REQ = window.GP_REQ || {}, ORDER = window.GP_REQ_ORDER || [];
-  var MAX_ARCHIVOS = 40, MAX_MB_ARCHIVO = 40, MAX_MB_PDF = 24, LADO_MAX = 1700, CALIDAD = 0.74; // ~200 ppp en tamaño carta: legible y mucho más ligero de subir
+  var MAX_ARCHIVOS = 40, MAX_MB_ARCHIVO = 40, MAX_MB_PDF = 24, LADO_MAX = 2000, CALIDAD = 0.82; // ~230 ppp en tamaño carta: letras nítidas; el fondo blanco comprime muy bien
   // pdf-lib (500 KB) se carga en segundo plano, no antes de mostrar la página
   var pdfLib = null;
   function libPDF() {
@@ -106,12 +106,20 @@
       it.estado = 'ok'; it.msg = ''; pintar(); validar(false);
     }).catch(function () { it.url = it.orig; it.estado = 'ok'; pintar(); validar(false); });
   }
+  function guardarEscaneo(it, cv) {
+    it.estado = 'cargando'; it.msg = 'Guardando…'; pintar();
+    return new Promise(function (ok) { cv.toBlob(ok, 'image/jpeg', 0.88); }).then(function (blob) {
+      if (it.url && it.url !== it.orig) URL.revokeObjectURL(it.url);
+      it.url = blob ? URL.createObjectURL(blob) : it.orig;
+      it.estado = 'ok'; it.msg = ''; pintar(); validar(false);
+    });
+  }
   function ajustar(it, nuevo) {
     if (!window.GPScan || !it.img) return Promise.resolve();
     var resto = nuevo ? pendientes() - 1 : 0;
     var nota = '«' + it.name + '»' + (resto > 0 ? ' · faltan ' + resto + (resto === 1 ? ' foto' : ' fotos') + ' después de esta' : '');
     return window.GPScan.editor(it.img, { quad: it.quad, modo: it.modo, nota: nota }).then(function (r) {
-      if (r) { it.quad = r.quad; it.modo = r.modo; return escanear(it); }
+      if (r) { it.quad = r.quad; it.modo = r.modo; it.rot = 0; return r.canvas ? guardarEscaneo(it, r.canvas) : escanear(it); }
       if (nuevo) { quitar(it.id); return; }
       var b = document.querySelector('[data-id="' + it.id + '"] [data-ajustar]'); if (b) b.focus();
     });

@@ -264,3 +264,4 @@ body.menu-open{overflow:hidden}
 .menu .btn-app:hover{border-color:#F6F3EC!important}
 footer a.red{color:#C9D0D0}
 footer a.red:hover,footer a.red:focus-visible{color:#141C1E}
+.ins .ins-no{display:block;width:100%;margin-top:8px;padding:12px;border:0;background:none;color:#4F5A5C;font:500 14px/1 "Poppins",system-ui,sans-serif;cursor:pointer}

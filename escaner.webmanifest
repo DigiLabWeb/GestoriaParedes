@@ -1,0 +1,18 @@
+{
+  "id": "./escaner.html",
+  "name": "Paredes Escáner",
+  "short_name": "Escáner",
+  "description": "Escáner de documentos de Gestoría Paredes: foto, recorte, mejora y PDF listo para compartir.",
+  "lang": "es-MX",
+  "start_url": "./escaner.html?app=1",
+  "scope": "./escaner",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#141C1E",
+  "theme_color": "#141C1E",
+  "icons": [
+    { "src": "img/escaner-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "img/escaner-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "img/escaner-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
